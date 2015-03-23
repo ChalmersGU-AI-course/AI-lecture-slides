@@ -1,0 +1,106 @@
+%% Style file for Poole & Mackworth "Artificial Intelligence" Beamer Presentations
+%% Copyright David L. Poole and Alan K. Mackworth, 2010-2013
+%% Copyright Peter Ljunglöf, 2015
+
+%% This work is licensed under CC BY-NC-SA 4.0, the Creative Commons
+%% Attribution-NonCommercial-ShareAlike 4.0 International License. 
+%% To view a copy of this license: http://creativecommons.org/licenses/by-nc-sa/4.0/
+
+\usepackage[noend]{algpseudocode}
+\usepackage{chngpage}
+
+\usetheme{EastLansing}
+\setbeamersize{text margin left=1cm, text margin right=1cm}
+
+%% Font family: Concrete Math
+\usepackage{ccfonts}
+\usefonttheme[onlylarge]{structureitalicserif}
+\usefonttheme[stillsansserifsmall]{serif}
+\usefonttheme[onlysmall]{structurebold}
+
+% make the tertiary text lighter, and its background:
+\setbeamercolor{palette tertiary}{
+  use={palette primary}, 
+  fg=palette primary.bg!50!white, 
+  bg=palette primary.fg!70!white
+}
+
+\setbeamertemplate{navigation symbols}{\insertslidenavigationsymbol}
+\setbeamertemplate{itemize item}[ball]
+% \setbeamercolor{itemize subitems}[triangle]
+% \setbeamerfont{itemize subsubitem}{size=\Large}
+% \setbeamerfont{itemize subitem}{size=\Large}
+
+% Highlights.
+\definecolor{purple}{rgb}{1,0,1}
+\definecolor{dred}{rgb}{0.7,0,0}
+\definecolor{myred}{rgb}{1,0,0}
+\definecolor{dblue}{rgb}{0,0,0.7}
+\definecolor{dgreen}{rgb}{0,0.5,0}
+\definecolor{myyellow}{rgb}{1,1,0}
+% \hilitea{text} highlights text (for short text)
+\newcommand{\hilitea}[1]{\colorbox{dblue}{\color{myyellow} #1}}
+\newcommand{\hiliteb}[1]{\colorbox{myyellow}{\color{dred} #1}}
+\newcommand{\hilitec}[1]{\colorbox{myyellow}{\color{dgreen} #1}}
+\newcommand{\keyword}[1]{\hiliteb{#1}}
+\let\alert\hiliteb
+
+\newcommand{\barrow}{\mbox{\color{red}$\Longrightarrow$}}
+
+% these are taked from dpstandard.sty
+\newenvironment{pcode}{\begin{tabbing}
+ \hspace*{8mm}\=\hspace*{8mm}\=\hspace*{8mm}\=\hspace*{8mm}\=
+ \hspace*{8mm}\=\hspace*{8mm}\=\hspace*{8mm}\=\hspace*{8mm}\=
+ \hspace*{8mm}\=\hspace*{8mm}\=\kill}{\end{tabbing}}
+\newcommand{\pcodecomm}[1]{\parbox{\columnwidth}{{\em \{#1\}}}}
+\newcommand{\tuple}[1]{\left<#1\right>}
+\newcommand{\triple}[1]{\left<#1\right>}
+\newcommand{\stuple}[1]{\langle #1\rangle}
+\newcommand{\AND}{\wedge \mbox{}}
+\newcommand{\OAND}{\:\&\:}
+\newcommand{\OANDsymb}{\&}
+\newcommand{\IF}{\leftarrow \mbox{}}
+\newcommand{\IFF}{\leftrightarrow \mbox{}}
+\newcommand{\OIF}{\Leftarrow \mbox{}}
+\newcommand{\is}{\mbox{ is }}
+\newcommand{\negn}{\mbox{$\sim$}}
+\newcommand{\notmodels}{\not\models}
+\newcommand{\WHY}{\mbox{\small WHY}}
+\newcommand{\HOW}{\mbox{\small HOW}}
+\newcommand{\WHYNOT}{\mbox{\small WHYNOT}}
+\newcommand{\D}{\mathbf{D}}              % was \mathcal{D}
+\newenvironment{code}{\begin{eqnarray*}}{\end{eqnarray*}} %conflicts with hyperlatex
+\newenvironment{cicode}{\begin{eqnarray*}}{\end{eqnarray*}} %conflicts with hyperlatex
+\newcommand{\head}[1]{\lefteqn{{%\mathit
+        {#1}}}}
+\newcommand{\body}[1]{&&{%\mathit
+        {#1}}}
+ 
+
+% Local additions to the algpseudocode package which is part of the algorithmicx package 
+\algblock{Inputs}{EndInputs}
+\algnotext{EndInputs}
+\algloop{Output}
+\algblock[Output]{Outputs}{EndOutputs}
+\algnotext{EndOutputs}
+\algrenewtext{Outputs}{\textbf{Output}}
+\algblock{Local}{EndLocal} 
+\algnotext{EndLocal}
+\algblockdefx{ForEach}{EndForEach}[1]{\textbf{for each} #1
+  \textbf{do}}{}%{\textbf{end for each}}
+\algnotext{EndForEach}
+\algblockdefx{RepeatTimes}{EndRepeatTimes}[1]{\textbf{repeat} #1
+  \textbf{times}}{\textbf{end repeat}}
+\algnotext{EndRepeatTimes}
+\algblockdefx{RepeatForever}{EndRepeatForever}{\textbf{repeat}}{\textbf{until} termination}
+%\algnotext{EndRepeatForever}
+\algblockdefx{RepeatForAWhile}{EndRepeatForAWhile}{\textbf{repeat}}{\textbf{until} termination}
+%\algnotext{EndRepeatForAWhile}
+\algblockdefx{Either}{EndEither}{\textbf{either}}{\textbf{end either}}
+\algcblock{Either}{Or}{EndEither}
+\algnotext{EndEither}
+\algblockdefx{NonDetProc}{EndNonDetProc}[2]{\textbf{non-deterministic procedure} \textprocedure{#1}(#2)}{}%{\textbf{end for each}}
+\algnotext{EndNonDetProc}
+\algblockdefx{Controller}{EndController}[2]{
+  \textbf{controller} \textprocedure{#1}(#2)}{}%{\textbf{end for each}}
+\algnotext{EndController}
