@@ -3903,7 +3903,7 @@ the Shrdlite project
 \end_layout
 
 \begin_layout Itemize
-a written essay 
+the written essay 
 \begin_inset Newline newline
 \end_inset
 
@@ -3911,7 +3911,7 @@ a written essay
 \end_layout
 
 \begin_layout Itemize
-a written examination 
+the written examination 
 \begin_inset Newline newline
 \end_inset
 
@@ -3924,6 +3924,20 @@ a written examination
 <cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
+\begin_layout Itemize
+The people
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+the teachers
+\end_layout
+
+\begin_layout Itemize
+the student representatives
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 The project groups:
 \end_layout
