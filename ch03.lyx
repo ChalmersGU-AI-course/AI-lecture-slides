@@ -4622,7 +4622,7 @@ A heuristic function can be found by solving a simpler (less constrained)
 status open
 
 \begin_layout Plain Layout
-Example heuristic: Bulgaria
+Example heuristic: Romania
 \end_layout
 
 \end_inset
@@ -4729,7 +4729,7 @@ It treats the frontier as a priority queue ordered by
 status open
 
 \begin_layout Plain Layout
-Example: Bulgaria
+Example: Romania
 \end_layout
 
 \end_inset
@@ -5239,7 +5239,7 @@ How does the goal affect the search?
 status open
 
 \begin_layout Plain Layout
-Example: Bulgaria
+Example: Romania
 \end_layout
 
 \end_inset
@@ -7226,6 +7226,51 @@ path.
 
 \end_layout
 
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Example demo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Here is an example demo of several different search algorithms, including
+ 
+\begin_inset Formula $A^{*}$
+\end_inset
+
+.
+ Furthermore you can play with different heuristics:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://qiao.github.io/PathFinding.js/visual/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that this demo is tailor-made for planar grids, which is a special
+ case of all possible search graphs.
+\end_layout
+
+\end_deeper
 \begin_layout Section
 More sophisticated search
 \end_layout
