@@ -227,6 +227,44 @@ end{frame}
 }
 \end_layout
 
+\begin_layout Plain Layout
+
+
+\backslash
+AtBeginSection[]
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+begin{frame}<beamer>[plain]{Outline}
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+tableofcontents[currentsection]
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+end{frame}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
 \end_inset
 
 
@@ -3240,7 +3278,7 @@ Question time: Breadth-first search
 
 \begin_deeper
 \begin_layout Standard
-Which shaded goal will a depth-first search find first?
+Which shaded goal will a breadth-first search find first?
 \end_layout
 
 \begin_layout Standard
@@ -4600,15 +4638,17 @@ If the nodes are locations and cost is time, we can use the distance to
 \end_layout
 
 \begin_layout Itemize
-If the goal is to collect all of the coins and not run out of fuel, the
- cost is an estimate of how many steps it will take to collect the rest
- of the coins, refuel when necessary, and return to goal position.
- 
+If the goal is to collect all of the coins and not run out of fuel, we can
+ use an estimate of how many steps it will take to collect the rest of the
+ coins and return to goal position, without caring about the fuel consumption.
 \end_layout
 
 \begin_layout Itemize
-A heuristic function can be found by solving a simpler (less constrained)
- version of the problem.
+A heuristic function can be found by solving a simpler (less
+\begin_inset space ~
+\end_inset
+
+constrained) version of the problem.
  
 \end_layout
 
@@ -5469,7 +5509,7 @@ status open
 \begin_inset Formula $A^{*}$
 \end_inset
 
- can always find a solution if there is one: 
+ can always find a solution if there is one, because: 
 \end_layout
 
 \begin_layout Itemize
@@ -5509,7 +5549,7 @@ status open
 
 \begin_deeper
 \begin_layout Standard
-The first path to a goal selected is an optimal path:
+The first path to a goal selected is an optimal path, because:
 \end_layout
 
 \begin_layout Itemize
@@ -6349,6 +6389,13 @@ status open
 begin{adjustwidth}{-1cm}{-1cm} % adjust the L and R margins by 1 cm
 \end_layout
 
+\begin_layout Plain Layout
+
+
+\backslash
+small
+\end_layout
+
 \end_inset
 
 
@@ -6357,7 +6404,7 @@ begin{adjustwidth}{-1cm}{-1cm} % adjust the L and R margins by 1 cm
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="5">
+<lyxtabular version="3" rows="7" columns="5">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="left" valignment="top">
 <column alignment="left" valignment="top">
@@ -6365,7 +6412,7 @@ begin{adjustwidth}{-1cm}{-1cm} % adjust the L and R margins by 1 cm
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
-<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell multirow="3" alignment="left" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -6376,13 +6423,13 @@ Strategy
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
 \series bold
-Frontier Selection
+Frontier
 \end_layout
 
 \end_inset
@@ -6393,7 +6440,7 @@ Frontier Selection
 \begin_layout Plain Layout
 
 \series bold
-Complete
+Halts if
 \end_layout
 
 \end_inset
@@ -6404,18 +6451,71 @@ Complete
 \begin_layout Plain Layout
 
 \series bold
-Halts 
+Halts if no
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+<cell multirow="3" alignment="center" valignment="middle" topline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
 \series bold
 Space
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+selection
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+solution?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+solution?
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -7205,12 +7305,35 @@ end{adjustwidth}
 \end_layout
 
 \begin_layout Description
-Complete: If there a path to a goal, it can find one, even on infinite graphs.
+Halts
+\begin_inset space ~
+\end_inset
+
+if: If there a path to a goal, it can find one, even on 
+\emph on
+infinite graphs
+\emph default
+.
 \end_layout
 
 \begin_layout Description
-Halts: Even if there is no solution, it will halt on a finite graph (perhaps
- with cycles).
+Halts
+\begin_inset space ~
+\end_inset
+
+if
+\begin_inset space ~
+\end_inset
+
+no: Even if there is no solution, it will halt on a 
+\emph on
+finite
+\begin_inset space ~
+\end_inset
+
+graph
+\emph default
+ (perhaps with cycles).
 \end_layout
 
 \begin_layout Description
