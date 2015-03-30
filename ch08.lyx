@@ -774,7 +774,7 @@ status collapsed
 \end_layout
 
 \begin_layout Section
-Representing actions
+Representing actions (8.1)
 \end_layout
 
 \begin_layout Frame
@@ -1131,7 +1131,7 @@ Actions:
 \end_layout
 
 \begin_layout Subsection
-State-space representation
+State-space representation (8.1.1)
 \end_layout
 
 \begin_layout Frame
@@ -1477,7 +1477,7 @@ This table will have
 \end_layout
 
 \begin_layout Subsection
-Feature-based representation
+Feature-based representation (8.1.2)
 \end_layout
 
 \begin_layout Frame
@@ -1705,7 +1705,7 @@ RLoc'=cs & \IF & RLoc=cs\AND Act\neq cc\AND Act\neq mcc & (\mbox{frame rule})
 \end_layout
 
 \begin_layout Subsection
-STRIPS representation
+STRIPS representation (8.1.3)
 \end_layout
 
 \begin_layout Frame
@@ -2464,7 +2464,7 @@ status collapsed
 \end_layout
 
 \begin_layout Section
-Planning
+Planning (8.2--8.4)
 \end_layout
 
 \begin_layout Frame
@@ -2509,7 +2509,7 @@ g the goal.
 \end_layout
 
 \begin_layout Subsection
-Forward planning
+Forward planning (8.2)
 \end_layout
 
 \begin_layout Frame
@@ -2765,7 +2765,7 @@ no move
 \end_layout
 
 \begin_layout Subsection
-Regression planning
+Regression planning (8.3)
 \end_layout
 
 \begin_layout Frame
@@ -3277,7 +3277,7 @@ Regression planning is unconstrained by the initial state
 \end_layout
 
 \begin_layout Subsection
-Planning as a CSP
+Planning as a CSP (8.4)
 \end_layout
 
 \begin_layout Frame

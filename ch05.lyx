@@ -650,7 +650,7 @@ The interpretation maps each proposition to a truth value.
 truth table:
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 \noindent
 \align center
 \begin_inset Tabular
@@ -4941,7 +4941,7 @@ status collapsed
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Bottom-up proof procedure (5.2.2.1)
 \end_layout
 
@@ -5897,7 +5897,7 @@ status collapsed
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Top-down proof procedure (5.2.2.2)
 \end_layout
 
@@ -6510,7 +6510,7 @@ Example: Successful derivation
 
 \begin_inset Formula 
 \[
-\begin{array}{l@{\hspace{3em}}l@{\hspace{3em}}lcccccccccccccccccccccccccccccc}
+\begin{array}{l@{\hspace{3em}}l@{\hspace{3em}}lcccccccccccccccccccccccccccccccccccc}
 a\IF b\AND c & a\IF e\AND f & b\IF f\AND k\\
 c\IF e & d\IF k & e\\
 f\IF j\AND e & f\IF c & j\IF c
@@ -6539,7 +6539,7 @@ pause
  
 \begin_inset Formula 
 \[
-\begin{array}{ll@{\hspace{4em}}llccccccccccccccc}
+\begin{array}{ll@{\hspace{4em}}llcccccccccccccccccc}
 \gamma_{0}: & yes\IF\select a & \qquad & (a\IF e\AND f)\\
 \gamma_{1}: & yes\IF\select e\AND f &  & (e)\\
 \gamma_{2}: & yes\IF\select f &  & (f\IF c)\\
@@ -6574,7 +6574,7 @@ Example: Failing derivation
 \begin_layout Frame
 \begin_inset Formula 
 \[
-\begin{array}{l@{\hspace{3em}}l@{\hspace{3em}}lcccccccccccccccccccccccccccccc}
+\begin{array}{l@{\hspace{3em}}l@{\hspace{3em}}lcccccccccccccccccccccccccccccccccccc}
 a\IF b\AND c & a\IF e\AND f & b\IF f\AND k\\
 c\IF e & d\IF k & e\\
 f\IF j\AND e & f\IF c & j\IF c
@@ -6594,7 +6594,7 @@ Query:
  
 \begin_inset Formula 
 \[
-\begin{array}{ll@{\hspace{4em}}llccccccccccccccc}
+\begin{array}{ll@{\hspace{4em}}llcccccccccccccccccc}
 \gamma_{0}: & yes\IF\select a & \qquad & (a\IF b\AND c)\\
 \gamma_{1}: & yes\IF\select b\AND c &  & (b\IF f\AND k)\\
 \gamma_{2}: & yes\IF\select f\AND k\AND c &  & (f\IF c)\\
@@ -6622,7 +6622,7 @@ Query:
  
 \begin_inset Formula 
 \[
-\begin{array}{ll@{\hspace{4em}}llccccccccccccccccccccc}
+\begin{array}{ll@{\hspace{4em}}llcccccccccccccccccccccccc}
 \gamma_{0}: & yes\IF a\\
 \gamma_{1}: & yes\IF b\AND c & \gamma_{2}': & yes\IF f\AND h\AND c\\
 \gamma_{2}: & yes\IF d\AND c & \gamma_{3}': & yes\IF g\AND h\AND c\\
