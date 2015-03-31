@@ -129,7 +129,7 @@ status open
 \end_layout
 
 \begin_layout Title (Plain Frame)
-Chapters 4: Feature and Constraints
+Chapters 4: Features and Constraints
 \end_layout
 
 \begin_layout Subtitle
@@ -2453,7 +2453,7 @@ ldots,V_n$.
 \end_layout
 
 \begin_layout Itemize
-A node is an assignment values to some of the variables.
+A node is an assignment of values to some of the variables.
  
 \end_layout
 
