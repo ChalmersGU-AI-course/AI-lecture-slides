@@ -171,6 +171,58 @@ Peter Ljunglöf
 1 April, 2015
 \end_layout
 
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Quotation
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+em
+\end_layout
+
+\end_inset
+
+ For when I am presented with a false theorem, I do not need to examine
+ or even to know the demonstration, since I shall discover its falsity 
+\emph on
+a posteriori
+\emph default
+ by means of an easy experiment, that is, by a calculation, costing no more
+ than paper and ink, which will show the error no matter how small it is…
+\end_layout
+
+\begin_layout Quotation
+And if someone would doubt my results, I should say to him: "Let us calculate,
+ Sir," and thus by taking to pen and ink, we should soon settle the question.
+ 
+\end_layout
+
+\begin_layout Standard
+\align right
+---Gottfried Wilhelm Leibniz [1677] 
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
 \begin_layout PlainFrame
 \begin_inset Argument 4
 status open
@@ -270,58 +322,6 @@ emph{false}}
 
 \begin_layout Section
 Propositions (5.1--5.2)
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Quotation
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-em
-\end_layout
-
-\end_inset
-
- For when I am presented with a false theorem, I do not need to examine
- or even to know the demonstration, since I shall discover its falsity 
-\emph on
-a posteriori
-\emph default
- by means of an easy experiment, that is, by a calculation, costing no more
- than paper and ink, which will show the error no matter how small it is…
-\end_layout
-
-\begin_layout Quotation
-And if someone would doubt my results, I should say to him: "Let us calculate,
- Sir," and thus by taking to pen and ink, we should soon settle the question.
- 
-\end_layout
-
-\begin_layout Standard
-\align right
----Gottfried Wilhelm Leibniz [1677] 
-\end_layout
-
-\end_deeper
-\begin_layout Separator
-
 \end_layout
 
 \begin_layout Standard
@@ -429,6 +429,68 @@ end{slide}
 status open
 
 \begin_layout Plain Layout
+Interpretations, models and propositions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+An 
+\emph on
+interpretation
+\emph default
+ is an assignment of values to variables.
+ 
+\end_layout
+
+\begin_layout Itemize
+A 
+\emph on
+model
+\emph default
+ is an interpretation that satisfies the constraints.
+ 
+\end_layout
+
+\begin_layout Standard
+Often we don't want to just find a model, but we want to know 
+\begin_inset Newline newline
+\end_inset
+
+what is true in all models:
+\end_layout
+
+\begin_layout Itemize
+A 
+\emph on
+proposition
+\emph default
+ is statement that is true or false in each interpretation.
+ 
+\end_layout
+
+\begin_layout Itemize
+Propositions are built using 
+\emph on
+logical connectives
+\emph default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Syntax of propositional calculus
 \end_layout
 
@@ -439,12 +501,20 @@ Syntax of propositional calculus
 
 \begin_deeper
 \begin_layout Standard
-Propositions are built from simpler propositions using logical connectives.
+Propositions are built from simpler propositions using 
+\begin_inset Newline newline
+\end_inset
+
+logical connectives.
  A proposition is either:
 \end_layout
 
 \begin_layout Itemize
-an atomic proposition (also called atom, symbol or a boolean variable),
+an atomic proposition (also called atom, symbol or 
+\begin_inset Newline newline
+\end_inset
+
+boolean variable),
 \end_layout
 
 \begin_layout Itemize
@@ -538,66 +608,6 @@ The precedence of the connectives is in the above order.
 status open
 
 \begin_layout Plain Layout
-Interpretations, models and propositions
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-An 
-\emph on
-interpretation
-\emph default
- is an assignment of values to all symbols.
- 
-\end_layout
-
-\begin_layout Itemize
-A 
-\emph on
-model
-\emph default
- is an interpretation that satisfies the constraints.
- 
-\end_layout
-
-\begin_layout Itemize
-Often we don't want to just find a model, but want to know what is true
- in all models.
- 
-\end_layout
-
-\begin_layout Itemize
-A 
-\emph on
-proposition
-\emph default
- is statement that is true or false in each interpretation.
- 
-\end_layout
-
-\begin_layout Itemize
-Propositions are built using 
-\emph on
-logical connectives
-\emph default
-.
-\end_layout
-
-\end_deeper
-\begin_layout Separator
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
 Semantics of propositional calculus
 \end_layout
 
@@ -628,11 +638,15 @@ if
 \begin_inset Formula $false$
 \end_inset
 
-), we say atom 
+), we say that atom 
 \begin_inset Formula $a$
 \end_inset
 
- is true (false) in the interpretation
+ is true (false) 
+\begin_inset Newline newline
+\end_inset
+
+in the interpretation
 \end_layout
 
 \begin_layout Itemize
@@ -644,8 +658,16 @@ we can also think of
 \end_layout
 
 \begin_layout Standard
-The interpretation maps each proposition to a truth value.
- The truth value of a compound proposition is built using this 
+The interpretation maps each proposition to a 
+\emph on
+truth value
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The value of a compound proposition is built using this 
 \emph on
 truth table:
 \end_layout
@@ -1512,6 +1534,14 @@ Simple language: Propositional definite clauses
 \end_layout
 
 \begin_deeper
+\begin_layout Standard
+The 
+\emph on
+definite clauses
+\emph default
+ are a subset of all propositions:
+\end_layout
+
 \begin_layout Itemize
 An 
 \begin_inset ERT
@@ -1996,7 +2026,8 @@ end{slide}
 \end_inset
 
 
-\end_layout
+\begin_inset Note Note
+status open
 
 \begin_layout Frame
 \begin_inset Argument 4
@@ -2072,6 +2103,11 @@ Step
 \end_layout
 
 \end_deeper
+\end_inset
+
+
+\end_layout
+
 \begin_layout Separator
 
 \end_layout
@@ -2081,7 +2117,7 @@ Step
 status open
 
 \begin_layout Plain Layout
-Role of semantics
+Human's vs computer's view of semantics
 \end_layout
 
 \end_inset
@@ -2101,6 +2137,115 @@ Role of semantics
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "55text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+hiliteb
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+In the user's mind:
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $light1\_broken$
+\end_inset
+
+: light 
+\begin_inset Formula $\#1$
+\end_inset
+
+ is
+\begin_inset space ~
+\end_inset
+
+broken 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $sw\_up$
+\end_inset
+
+: switch is up 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $power$
+\end_inset
+
+: there is power in the
+\begin_inset space ~
+\end_inset
+
+building 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $unlit\_light1$
+\end_inset
+
+: light 
+\begin_inset Formula $\#1$
+\end_inset
+
+ isn't lit 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $lit\_light2$
+\end_inset
+
+: light 
+\begin_inset Formula $\#2$
+\end_inset
+
+ is lit 
+\end_layout
+
+\end_inset
+
+
 \begin_inset Box Frameless
 position "t"
 hor_pos "c"
@@ -2138,7 +2283,7 @@ status collapsed
 
 \end_inset
 
-In computer:
+In the computer:
 \begin_inset ERT
 status collapsed
 
@@ -2240,7 +2385,7 @@ status collapsed
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -2474,107 +2619,6 @@ end{code}
 \end_inset
 
 
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "50text%"
-special "none"
-height "1in"
-height_special "totalheight"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-hiliteb
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-In user's mind:
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $light1\_broken$
-\end_inset
-
-: light 
-\begin_inset Formula $\#1$
-\end_inset
-
- is broken 
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $sw\_up$
-\end_inset
-
-: switch is up 
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $power$
-\end_inset
-
-: there is power in the building 
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $unlit\_light1$
-\end_inset
-
-: light 
-\begin_inset Formula $\#1$
-\end_inset
-
- isn't lit 
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $lit\_light2$
-\end_inset
-
-: light 
-\begin_inset Formula $\#2$
-\end_inset
-
- is lit 
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -2617,7 +2661,7 @@ status collapsed
 
 \end_inset
 
-Conclusion: 
+Logical conclusion: 
 \begin_inset Formula $light1\_broken$
 \end_inset
 
@@ -2672,7 +2716,7 @@ The user can interpret the symbol using their meaning
 status open
 
 \begin_layout Plain Layout
-Semantics
+Semantics for definite clauses
 \end_layout
 
 \end_inset
@@ -2722,90 +2766,54 @@ status collapsed
 \end_inset
 
  
-\begin_inset Formula $I$
-\end_inset
-
+\emph on
+I
+\emph default
  assigns a truth value to each atom.
  
 \end_layout
 
 \begin_layout Itemize
-A body 
-\begin_inset Formula $b_{1}\AND\dots\AND b_{k}$
+A rule 
+\begin_inset Formula $h\IF b_{1}\AND\dots\AND b_{k}$
 \end_inset
 
  is 
-\begin_inset Formula $true$
-\end_inset
-
- in 
-\begin_inset Formula $I$
-\end_inset
-
- if all 
-\begin_inset Formula $b_{i}$
-\end_inset
-
-'s are 
-\begin_inset Formula $true$
-\end_inset
-
- in 
-\begin_inset Formula $I$
-\end_inset
-
-, and is 
-\begin_inset Formula $false$
-\end_inset
-
- otherwise.
- 
+\emph on
+false in I
+\emph default
+ if:
 \end_layout
 
+\begin_deeper
 \begin_layout Itemize
-A rule 
-\begin_inset Formula $h\IF b$
-\end_inset
-
- is 
-\begin_inset Formula $false$
-\end_inset
-
- in 
-\begin_inset Formula $I$
-\end_inset
-
- if 
-\begin_inset Formula $b$
-\end_inset
-
- is 
-\begin_inset Formula $true$
-\end_inset
-
- in 
-\begin_inset Formula $I$
-\end_inset
-
- and 
 \begin_inset Formula $h$
 \end_inset
 
  is 
-\begin_inset Formula $false$
+\emph on
+false in I,
+\emph default
+ and
+\end_layout
+
+\begin_layout Itemize
+all 
+\begin_inset Formula $b_{i}$
 \end_inset
 
- in 
-\begin_inset Formula $I$
-\end_inset
+'s are 
+\emph on
+true in I.
+\end_layout
 
+\end_deeper
+\begin_layout Itemize
+Otherwise the rule is 
+\emph on
+true in I
+\emph default
 .
- The rule is 
-\begin_inset Formula $true$
-\end_inset
-
- otherwise.
- 
 \end_layout
 
 \begin_layout Itemize
@@ -2814,25 +2822,21 @@ A knowledge base
 \end_inset
 
  is 
-\begin_inset Formula $true$
+\emph on
+true in I
+\emph default
+ if and only if
+\begin_inset Newline newline
 \end_inset
 
- in 
-\begin_inset Formula $I$
-\end_inset
-
- if and only if every clause in 
+ every clause in 
 \begin_inset Formula $KB$
 \end_inset
 
  is 
-\begin_inset Formula $true$
-\end_inset
-
- in 
-\begin_inset Formula $I$
-\end_inset
-
+\emph on
+true in I
+\emph default
 .
  
 \end_layout
@@ -2892,7 +2896,11 @@ status collapsed
 
 \end_inset
 
- of a set of clauses is an interpretation in which all the clauses are 
+ of a set of clauses is an interpretation in which 
+\begin_inset Newline newline
+\end_inset
+
+all the clauses are 
 \emph on
 true
 \emph default
@@ -3020,6 +3028,10 @@ That is,
 \end_inset
 
  if there is no interpretation in which 
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset Formula $KB$
 \end_inset
 
@@ -3974,7 +3986,7 @@ status collapsed
 
 \end_inset
 
-axiomatizing the domain.
+axiomatising the domain.
 \begin_inset ERT
 status collapsed
 
@@ -4099,7 +4111,20 @@ If
 \begin_deeper
 \begin_layout Itemize
 \begin_inset ERT
-status open
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+pause
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -4133,6 +4158,22 @@ status collapsed
 \end_inset
 
 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+pause
+\end_layout
+
+\end_inset
+
+(then there is something wrong with the axiomatisation)
 \end_layout
 
 \end_deeper
@@ -4995,18 +5036,28 @@ status collapsed
 
 \end_inset
 
- 
+ a generalized 
 \begin_inset Newline newline
 \end_inset
 
-a generalized form of 
+form of 
 \emph on
 modus ponens
 \emph default
 : 
 \end_layout
 
-\begin_layout Quote
+\begin_deeper
+\begin_layout Standard
+
+\emph on
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
 If 
 \begin_inset Quotes eld
 \end_inset
@@ -5019,7 +5070,11 @@ If
 \begin_inset Quotes erd
 \end_inset
 
- is a clause in the knowledge base, and each 
+ is a clause in the knowledge base, 
+\begin_inset Newline newline
+\end_inset
+
+and each 
 \begin_inset Formula $b_{i}$
 \end_inset
 
@@ -5029,8 +5084,32 @@ If
 
  can be derived.
  
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
 \end_layout
 
+\begin_layout Standard
+(This rule also covers the case when 
+\begin_inset Formula $m=0$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 This is called 
 \begin_inset ERT
@@ -5070,16 +5149,6 @@ status collapsed
  on the clause.
 \end_layout
 
-\begin_deeper
-\begin_layout Standard
-(This rule also covers the case when 
-\begin_inset Formula $m=0$
-\end_inset
-
-.)
-\end_layout
-
-\end_deeper
 \end_deeper
 \begin_layout Separator
 
@@ -5100,7 +5169,7 @@ Bottom-up proof procedure
 
 \begin_deeper
 \begin_layout Standard
-After this procedure, 
+After the following procedure, 
 \begin_inset Formula $KB\vdash g$
 \end_inset
 
@@ -5285,24 +5354,11 @@ AND c.}
 
 
 \backslash
-head{a 
-\backslash
-IF e 
-\backslash
-AND f.}
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-%
-\backslash
 head{b 
 \backslash
-IF d.}
+IF d 
+\backslash
+AND e.}
 \backslash
 
 \backslash
@@ -5315,9 +5371,9 @@ IF d.}
 \backslash
 head{b 
 \backslash
-IF f 
+IF g 
 \backslash
-AND k.}
+AND e.}
 \backslash
 
 \backslash
@@ -5341,9 +5397,7 @@ IF e.}
 
 
 \backslash
-head{d 
-\backslash
-IF k.}
+head{d.}
 \backslash
 
 \backslash
@@ -5367,35 +5421,9 @@ head{e.}
 \backslash
 head{f 
 \backslash
-IF j 
+IF a 
 \backslash
-AND e.}
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-head{f 
-\backslash
-IF c.}
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-head{j 
-\backslash
-IF c.}
+AND g.}
 \end_layout
 
 \begin_layout Plain Layout
@@ -5430,6 +5458,10 @@ Soundness of bottom-up proof procedure
 
 \begin_deeper
 \begin_layout Standard
+Proof by contradiction:
+\end_layout
+
+\begin_layout Itemize
 Assume there is a 
 \begin_inset Formula $g$
 \end_inset
@@ -5657,7 +5689,9 @@ Let
  
 \end_layout
 
-\begin_layout Itemize
+\begin_deeper
+\begin_layout Description
+Theorem: 
 \begin_inset Formula $I$
 \end_inset
 
@@ -5668,7 +5702,6 @@ Let
 .
 \end_layout
 
-\begin_deeper
 \begin_layout Description
 Proof: Suppose 
 \begin_inset Formula $h\leftarrow b_{1}\wedge\ldots\wedge b_{m}$
@@ -5778,7 +5811,7 @@ status collapsed
 status open
 
 \begin_layout Plain Layout
-Completeness
+Completeness of the bottom-up proof procedure
 \end_layout
 
 \end_inset
@@ -5787,8 +5820,8 @@ Completeness
 \end_layout
 
 \begin_deeper
-\begin_layout Standard
-Suppose 
+\begin_layout Itemize
+Assume that 
 \begin_inset Formula $KB\models g$
 \end_inset
 
@@ -5914,7 +5947,7 @@ Top-down proof procedure (5.2.2.2)
 status open
 
 \begin_layout Plain Layout
-Top-down definite clause proof procedure
+Top-down proof procedure
 \end_layout
 
 \end_inset
@@ -5924,7 +5957,7 @@ Top-down definite clause proof procedure
 
 \begin_deeper
 \begin_layout Standard
- A 
+A 
 \begin_inset ERT
 status collapsed
 
@@ -5959,7 +5992,11 @@ status collapsed
 
 \end_inset
 
- is a body that we want to determine if it is a logical consequence of 
+ is a body that we want to determine  whether it is 
+\begin_inset Newline newline
+\end_inset
+
+a logical consequence of 
 \begin_inset Formula $KB$
 \end_inset
 
@@ -6425,8 +6462,11 @@ The top-down interpreter uses two kinds of nondeterministic choice:
 \end_layout
 
 \begin_layout Description
-don't-care If one selection doesn't lead to a solution, there is no point
- trying other alternatives.
+don't-care If one selection doesn't lead to a solution, 
+\begin_inset Newline newline
+\end_inset
+
+there is no point trying other alternatives.
 \end_layout
 
 \begin_deeper
@@ -6457,8 +6497,11 @@ select
 
 \end_deeper
 \begin_layout Description
-don't-know If one choice doesn't lead to a solution, there might be other
- choices that will.
+don't-know If one choice doesn't lead to a solution, 
+\begin_inset Newline newline
+\end_inset
+
+there might be other choices that will.
 \end_layout
 
 \begin_deeper
@@ -6510,7 +6553,7 @@ Example: Successful derivation
 
 \begin_inset Formula 
 \[
-\begin{array}{l@{\hspace{3em}}l@{\hspace{3em}}lcccccccccccccccccccccccccccccccccccc}
+\begin{array}{l@{\hspace{3em}}l@{\hspace{3em}}lcccccccccccccccccccccccccccccccccccccccccc}
 a\IF b\AND c & a\IF e\AND f & b\IF f\AND k\\
 c\IF e & d\IF k & e\\
 f\IF j\AND e & f\IF c & j\IF c
@@ -6539,7 +6582,7 @@ pause
  
 \begin_inset Formula 
 \[
-\begin{array}{ll@{\hspace{4em}}llcccccccccccccccccc}
+\begin{array}{ll@{\hspace{4em}}llccccccccccccccccccccc}
 \gamma_{0}: & yes\IF\select a & \qquad & (a\IF e\AND f)\\
 \gamma_{1}: & yes\IF\select e\AND f &  & (e)\\
 \gamma_{2}: & yes\IF\select f &  & (f\IF c)\\
@@ -6574,7 +6617,7 @@ Example: Failing derivation
 \begin_layout Frame
 \begin_inset Formula 
 \[
-\begin{array}{l@{\hspace{3em}}l@{\hspace{3em}}lcccccccccccccccccccccccccccccccccccc}
+\begin{array}{l@{\hspace{3em}}l@{\hspace{3em}}lcccccccccccccccccccccccccccccccccccccccccc}
 a\IF b\AND c & a\IF e\AND f & b\IF f\AND k\\
 c\IF e & d\IF k & e\\
 f\IF j\AND e & f\IF c & j\IF c
@@ -6594,7 +6637,7 @@ Query:
  
 \begin_inset Formula 
 \[
-\begin{array}{ll@{\hspace{4em}}llcccccccccccccccccc}
+\begin{array}{ll@{\hspace{4em}}llccccccccccccccccccccc}
 \gamma_{0}: & yes\IF\select a & \qquad & (a\IF b\AND c)\\
 \gamma_{1}: & yes\IF\select b\AND c &  & (b\IF f\AND k)\\
 \gamma_{2}: & yes\IF\select f\AND k\AND c &  & (f\IF c)\\
@@ -6622,7 +6665,7 @@ Query:
  
 \begin_inset Formula 
 \[
-\begin{array}{ll@{\hspace{4em}}llcccccccccccccccccccccccc}
+\begin{array}{ll@{\hspace{4em}}llccccccccccccccccccccccccccc}
 \gamma_{0}: & yes\IF a\\
 \gamma_{1}: & yes\IF b\AND c & \gamma_{2}': & yes\IF f\AND h\AND c\\
 \gamma_{2}: & yes\IF d\AND c & \gamma_{3}': & yes\IF g\AND h\AND c\\
@@ -6663,7 +6706,7 @@ Search graph for SLD resolution
 \begin_deeper
 \begin_layout Standard
 \begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="2">
+<lyxtabular version="3" rows="9" columns="2">
 <features rotate="0" tabularvalignment="bottom">
 <column alignment="left" valignment="top">
 <column alignment="left" valignment="top">
@@ -6850,10 +6893,34 @@ Search graph for SLD resolution
 </cell>
 </row>
 <row>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Query: 
 \begin_inset Formula $?a\AND d$
 \end_inset
 
@@ -6862,7 +6929,7 @@ Search graph for SLD resolution
 
 \end_inset
 </cell>
-<cell alignment="none" valignment="top" usebox="none">
+<cell multicolumn="2" alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -7734,8 +7801,11 @@ Often you want to assume that your knowledge is complete.
 \emph on
 Example
 \emph default
-: you can state what switches are up and the agent can assume that the other
- switches are down.
+: you can state what switches are up and then 
+\begin_inset Newline newline
+\end_inset
+
+the agent can assume that the other switches are down.
 \end_layout
 
 \begin_layout Itemize
@@ -7743,7 +7813,11 @@ Example
 \emph on
 Example
 \emph default
-: assume that a database of what students are enrolled in a course is complete.
+: assume that a database is complete, 
+\begin_inset Newline newline
+\end_inset
+
+e.g., of what students are enrolled in a course.
 \end_layout
 
 \end_deeper
@@ -8517,7 +8591,7 @@ finite
 
 \begin_deeper
 \begin_layout Itemize
-example 
+counter-example: 
 \begin_inset Formula $p\IF p$
 \end_inset
 
@@ -8544,6 +8618,10 @@ Default reasoning
 \end_layout
 
 \begin_deeper
+\begin_layout Standard
+Exceptions are very common in ontological databases:
+\end_layout
+
 \begin_layout Itemize
 Birds fly.
  
@@ -8560,6 +8638,18 @@ Hummingbirds are tiny birds that can fly.
 \end_layout
 
 \begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Negation-as-failure can be used for 
+\emph on
+default reasoning:
+\emph default
+
 \begin_inset Formula 
 \begin{eqnarray*}
 flies & \leftarrow & bird\wedge\negn ab_{flying}\\

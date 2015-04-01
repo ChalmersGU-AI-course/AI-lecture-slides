@@ -198,6 +198,53 @@ status open
 
 
 \backslash
+AtBeginSection[]
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+begin{frame}<beamer>[plain]{Outline}
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+tableofcontents[currentsection]
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+end{frame}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
 AtBeginSubsection[]
 \end_layout
 
@@ -353,7 +400,7 @@ end{slide}
 status open
 
 \begin_layout Plain Layout
-Planning
+What is planning?
 \end_layout
 
 \end_inset
@@ -379,8 +426,11 @@ The world is deterministic.
 \end_layout
 
 \begin_layout Itemize
-There are no exogenous events outside of the control of the robot that change
- the state of the world.
+There are no external events outside the control of the robot
+\begin_inset Newline newline
+\end_inset
+
+ that change the state of the world.
  
 \end_layout
 
@@ -395,7 +445,11 @@ Time progresses discretely from one state to the next.
 \end_layout
 
 \begin_layout Itemize
-Goals are predicates of states that need to be achieved or maintained.
+Goals are predicates of states that need to be achieved 
+\begin_inset Newline newline
+\end_inset
+
+or maintained.
  
 \end_layout
 
@@ -406,6 +460,10 @@ The aim is to find a sequence of actions to solve a given goal.
 \end_layout
 
 \end_deeper
+\begin_layout Separator
+\begin_inset Note Note
+status open
+
 \begin_layout Separator
 
 \end_layout
@@ -769,6 +827,11 @@ status collapsed
 \end_layout
 
 \end_deeper
+\end_inset
+
+
+\end_layout
+
 \begin_layout Separator
 
 \end_layout
@@ -867,7 +930,11 @@ status collapsed
 
 \end_inset
 
- of an action specify when the action can be carried out.
+ of an action specify when the action 
+\begin_inset Newline newline
+\end_inset
+
+can be carried out.
  
 \end_layout
 
@@ -1495,7 +1562,7 @@ Feature-based representation of actions
 
 \begin_deeper
 \begin_layout Standard
-For each action: 
+Each action has a: 
 \end_layout
 
 \begin_layout Itemize
@@ -1533,12 +1600,16 @@ status collapsed
 
 \end_inset
 
- is a proposition that specifies when the action can be carried out.
+ is a proposition that specifies when the action 
+\begin_inset Newline newline
+\end_inset
+
+can be carried out.
  
 \end_layout
 
 \begin_layout Standard
-For each feature: 
+For each feature there are: 
 \end_layout
 
 \begin_layout Itemize
@@ -1645,7 +1716,7 @@ Example feature-based representation
 
 \begin_deeper
 \begin_layout Standard
-Precondition of pick-up coffee (
+Precondition of picking up coffee (
 \begin_inset Formula $Act=puc$
 \end_inset
 
@@ -1736,7 +1807,7 @@ derived features -- there are rules specifying how they are derived from
 \end_layout
 
 \begin_layout Standard
-For each action: 
+Each action has: 
 \end_layout
 
 \begin_layout Itemize
@@ -1813,15 +1884,18 @@ status collapsed
 
 \end_inset
 
- a set of assignments of values to primitive features that are made true
- by this action.
+ -- a set of assignments of values to primitive features 
+\begin_inset Newline newline
+\end_inset
+
+that are made true by this action.
  
 \end_layout
 
 \begin_layout Standard
 
 \emph on
-STRIPS assumption
+The STRIPS assumption
 \emph default
 : 
 \end_layout
@@ -2498,8 +2572,11 @@ A goal to achieve
 \end_layout
 
 \begin_layout Standard
-Find a sequence of actions that is possible and will result in a state satisfyin
-g the goal.
+We want to find a sequence of actions that is possible and will 
+\begin_inset Newline newline
+\end_inset
+
+result in a state satisfying the goal.
  
 \end_layout
 
@@ -2570,11 +2647,20 @@ The nodes represent the states
 \end_layout
 
 \begin_layout Itemize
-The arcs correspond to the actions: The arcs from a state 
+The arcs (neighbors) correspond to the actions: 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The arcs from a state 
 \begin_inset Formula $s$
 \end_inset
 
- represent all of the actions that are legal in state 
+ represent all of the actions 
+\begin_inset Newline newline
+\end_inset
+
+that are legal in state 
 \begin_inset Formula $s$
 \end_inset
 
@@ -2582,9 +2668,13 @@ The arcs correspond to the actions: The arcs from a state
  
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
-A plan is a path from the state representing the initial state to a state
- that satisfies the goal.
+A plan is a path from the state representing the initial state 
+\begin_inset Newline newline
+\end_inset
+
+to a state that satisfies the goal.
  
 \end_layout
 
@@ -2738,7 +2828,11 @@ Sam wants coffee
 \begin_inset Quotes erd
 \end_inset
 
- is part of the goal and Rob doesn't have coffee 
+ 
+\begin_inset Newline newline
+\end_inset
+
+is part of the goal and Rob doesn't have coffee 
 \end_layout
 
 \begin_layout Itemize
@@ -2746,7 +2840,11 @@ don't pick-up coffee unless Sam wants coffee
 \end_layout
 
 \begin_layout Itemize
-unless the goal involves time constraints, don't do the 
+unless the goal involves time constraints, 
+\begin_inset Newline newline
+\end_inset
+
+don't do the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2901,20 +2999,42 @@ A node
 
 \end_inset
 
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
 This is a set of assignments you want to hold.
  
 \end_layout
 
 \begin_layout Itemize
+
+\emph on
+Note:
+\emph default
+ The assignment is on a 
+\emph on
+subset
+\emph default
+ of all variables.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 The last action is one that achieves one of the 
 \begin_inset Formula $X_{i}=v_{i}$
 \end_inset
 
-, and does not achieve 
+, 
+\begin_inset Newline newline
+\end_inset
+
+and does not achieve 
 \begin_inset Formula $X_{j}=v_{j}'$
 \end_inset
 
- where 
+ (where 
 \begin_inset Formula $v_{j}'$
 \end_inset
 
@@ -2922,7 +3042,7 @@ The last action is one that achieves one of the
 \begin_inset Formula $v_{j}$
 \end_inset
 
-.
+).
  
 \end_layout
 
@@ -3066,10 +3186,6 @@ Assume that
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\exists i$
-\end_inset
-
- 
 \begin_inset Formula $X_{i}=v_{i}$
 \end_inset
 
@@ -3078,13 +3194,17 @@ Assume that
 \end_inset
 
  
+\begin_inset Newline newline
+\end_inset
+
+(for some 
+\begin_inset Formula $1\leq i\leq n$
+\end_inset
+
+)
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\forall j$
-\end_inset
-
- 
 \begin_inset Formula $X_{j}=v_{j}'$
 \end_inset
 
@@ -3092,26 +3212,70 @@ Assume that
 \begin_inset Formula $A$
 \end_inset
 
-, where 
+ 
+\begin_inset Newline newline
+\end_inset
+
+(for all 
+\begin_inset Formula $1\leq j\leq n$
+\end_inset
+
+ and all 
 \begin_inset Formula $v_{j}'\neq v_{j}$
 \end_inset
 
- 
+)
 \end_layout
 
 \begin_layout Itemize
+\begin_inset Formula $N=\{X_{k}=v_{k}\:|\:1\leq k\leq n\:\AND\:X_{k}=v_{k}\notin effects(A)\}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula ${}\cup preconditions(A)$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+and 
 \begin_inset Formula $N$
 \end_inset
 
- is 
-\begin_inset Formula $preconditions(A)\cup\{X_{k}=v_{k}:X_{k}=v_{k}\notin effects(A)\}$
+ is consistent 
+\begin_inset Newline newline
 \end_inset
 
- and 
-\begin_inset Formula $N$
-\end_inset
-
- is consistent in that it does not assign different values to any variable.
+(in that it does not assign conflicting values to any variable).
  
 \end_layout
 
@@ -3175,7 +3339,11 @@ If you have a path to node
 \begin_inset Formula $N$
 \end_inset
 
- have already found a path to a simpler goal, you can prune the path 
+ have already found a path 
+\begin_inset Newline newline
+\end_inset
+
+to a simpler goal, you can prune the path 
 \begin_inset Formula $N$
 \end_inset
 
@@ -3295,17 +3463,28 @@ Planning as a CSP
 
 \begin_deeper
 \begin_layout Itemize
-Search over planning horizons.
+We search over 
+\emph on
+planning horizons
+\emph default
+.
  
 \end_layout
 
 \begin_layout Itemize
-For each planning horizon, create a CSP constraining possible actions and
- features 
+For each planning horizon, we create a CSP that
+\begin_inset Newline newline
+\end_inset
+
+ constrains possible actions and features.
 \end_layout
 
 \begin_layout Itemize
-Also factor actions into action features.
+We also have to factor the actions into 
+\emph on
+action features
+\emph default
+.
  
 \end_layout
 
@@ -3319,7 +3498,7 @@ Also factor actions into action features.
 status open
 
 \begin_layout Plain Layout
-Action Features
+Example: Action features
 \end_layout
 
 \end_inset
@@ -3392,11 +3571,11 @@ CSP variables
 
 \begin_deeper
 \begin_layout Standard
-Choose a planning horizon 
+First we choose a planning horizon 
 \begin_inset Formula $k$
 \end_inset
 
-.
+:
 \end_layout
 
 \begin_layout Itemize
@@ -3472,7 +3651,7 @@ status collapsed
 
 \end_inset
 
- that are constraints between variables at the same time step.
+ are constraints between variables at the same time step.
  
 \end_layout
 
@@ -3511,7 +3690,7 @@ status collapsed
 
 \end_inset
 
- between state variables at time 
+ (between state variables at time 
 \begin_inset Formula $t$
 \end_inset
 
@@ -3519,7 +3698,7 @@ status collapsed
 \begin_inset Formula $t$
 \end_inset
 
- that specify constraints on what actions are available from a state.
+), specify constraints on what actions are available from a state.
  
 \end_layout
 
@@ -3558,7 +3737,7 @@ status collapsed
 
 \end_inset
 
- between state variables at time 
+ (between state variables at time 
 \begin_inset Formula $t$
 \end_inset
 
@@ -3570,7 +3749,11 @@ status collapsed
 \begin_inset Formula $t+1$
 \end_inset
 
-.
+),
+\begin_inset Newline newline
+\end_inset
+
+ encode the effects of a rule.
  
 \end_layout
 
@@ -3609,8 +3792,8 @@ status collapsed
 
 \end_inset
 
- that specify which actions cannot co-occur.
- These are sometimes called mutual exclusion or mutex constraints.
+ specify which actions cannot co-occur.
+ Sometimes they are called mutual exclusion or mutex constraints.
  
 \end_layout
 
@@ -3649,7 +3832,11 @@ status collapsed
 
 \end_inset
 
- that are usually domain constraints on the initial state (at time 0).
+ are usually domain constraints on 
+\begin_inset Newline newline
+\end_inset
+
+the initial state (at time 0).
  
 \end_layout
 
@@ -3679,7 +3866,7 @@ status collapsed
 
 goal constraints
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3688,8 +3875,8 @@ status collapsed
 
 \end_inset
 
- that constrains the final state to be a state that satisfies the goals
- that are to be achieved.
+ constrains the final state to be a state that satisfies the goals that
+ are to be achieved.
  
 \end_layout
 
@@ -3703,7 +3890,7 @@ status collapsed
 status open
 
 \begin_layout Plain Layout
-CSP for delivery robot
+Example CSP for the delivery robot
 \end_layout
 
 \end_inset
@@ -3889,7 +4076,7 @@ status open
 status open
 
 \begin_layout Plain Layout
-Effect constraint
+Example precondition constraints
 \end_layout
 
 \end_inset
@@ -3899,369 +4086,64 @@ Effect constraint
 
 \begin_deeper
 \begin_layout Standard
+\noindent
 \align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="9" columns="4">
-<features rotate="0" tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $RHC_{i}$
-\end_inset
-
- 
-\end_layout
+\begin_inset Graphics
+	filename figures/ch08/PlanCSP.pdf
+	width 90text%
 
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-\begin_inset Formula $DelC_{i}$
-\end_inset
 
- 
-\end_layout
+\begin_inset Formula 
+\begin{eqnarray*}
+PUC_{i} & \rightarrow & (RLoc_{i}=cs)\AND\neg RHC_{i}\\
+DelC_{i} & \rightarrow & (RLoc_{i}=off)\AND RHC_{i}\\
+PUM_{i} & \rightarrow & (RLoc_{i}=mr)\AND MW_{i}\\
+DelM_{i} & \rightarrow & (RLoc_{i}=off)\AND RHM_{i}
+\end{eqnarray*}
 
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $PUC_{i}$
-\end_inset
-
- 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $RHC_{i+1}$
 \end_inset
 
 
 \end_layout
 
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
 
 \begin_layout Plain Layout
-true 
+Example effect constraints
 \end_layout
 
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-true 
+
 \end_layout
 
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true
-\end_layout
+\begin_deeper
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename figures/ch08/PlanCSP.pdf
+	width 90text%
 
 \end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-true 
-\end_layout
 
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-true
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" bottomline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" bottomline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-false
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
+\begin_inset Formula 
+\begin{eqnarray*}
+RHC_{i+1} & \IFF & PUC_{i}\;\vee\;(RHC_{i}\AND\neg DelC_{i})\\
+SWC_{i+1} & \IFF & SWC_{i}\AND\neg DelC_{i}\\
+MW_{i+1} & \IFF & \;MW_{i}\AND\neg PUM_{i}\\
+RHM_{i+1} & \IFF & PUM_{i}\;\vee\;(RHM_{i}\AND\neg DelM_{i})
+\end{eqnarray*}
 
 \end_inset
 
