@@ -285,25 +285,42 @@ Searching
 
 \begin_deeper
 \begin_layout Itemize
-Often we are not given an algorithm to solve a problem, but only a specification
- of what is a solution --- we have to search for a solution.
+Often we are not given an algorithm to solve a problem, 
+\begin_inset Newline newline
+\end_inset
+
+but only a specification of a solution --- we have to search for it.
  
 \end_layout
 
 \begin_layout Itemize
-A typical problem is when the agent is in one state, it has a set of determinist
-ic actions it can carry out, and wants to get to a goal state.
+A typical problem is when the agent is in one state, 
+\begin_inset Newline newline
+\end_inset
+
+it has a set of deterministic actions it can carry out, 
+\begin_inset Newline newline
+\end_inset
+
+and wants to get to a goal state.
  
 \end_layout
 
 \begin_layout Itemize
-Many AI problems can be abstracted into the problem of finding a path in
- a directed graph.
+Many AI problems can be abstracted into the problem 
+\begin_inset Newline newline
+\end_inset
+
+of finding a path in a directed graph.
  
 \end_layout
 
 \begin_layout Itemize
-Often there is more than one way to represent a problem as a graph.
+Often there is more than one way to represent 
+\begin_inset Newline newline
+\end_inset
+
+a problem as a graph.
  
 \end_layout
 
@@ -317,7 +334,7 @@ Often there is more than one way to represent a problem as a graph.
 status open
 
 \begin_layout Plain Layout
-State-space Search: Complexity dimensions
+State-space search: Complexity dimensions
 \end_layout
 
 \end_inset
@@ -470,6 +487,28 @@ single
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+pause 
+\end_layout
+
+\end_inset
+
+More complex problems (partly ob., stochastic, sequential, \SpecialChar \ldots{}
+) 
+\begin_inset Newline newline
+\end_inset
+
+usualy have components using state-space search.
+ 
 \end_layout
 
 \end_deeper
@@ -2097,7 +2136,11 @@ Donald Knuth has conjectured that every positive integer can be obtained
 \end_layout
 
 \begin_layout Description
-States: positive numbers (1, 2, 3, \SpecialChar \ldots{}
+States: positive numbers (1, 2, 2.5, 3, 
+\begin_inset Formula $\pi$
+\end_inset
+
+, \SpecialChar \ldots{}
 )
 \end_layout
 
@@ -2890,7 +2933,10 @@ status open
 
 \begin_layout Plain Layout
 Graph nodes vs.
- search nodes
+\begin_inset space ~
+\end_inset
+
+search nodes
 \end_layout
 
 \end_inset
@@ -5550,7 +5596,11 @@ the distance,
 \begin_inset Formula $h(n)$
 \end_inset
 
- can be the straight-line distance (SLD) from 
+ can be the straight-line distance (SLD) 
+\begin_inset Newline newline
+\end_inset
+
+from 
 \begin_inset Formula $n$
 \end_inset
 
@@ -5559,8 +5609,11 @@ the distance,
 \end_layout
 
 \begin_layout Itemize
-If the nodes are locations and cost is time, we can use the distance to
- a goal divided by the maximum speed, 
+If the nodes are locations and cost is time, we can use 
+\begin_inset Newline newline
+\end_inset
+
+the distance to a goal divided by the maximum speed, 
 \begin_inset Formula $h(n)=d(n)/v_{\max}$
 \end_inset
 
@@ -5573,9 +5626,15 @@ If the goal is to collect all of the coins and not run out of fuel,
 \begin_inset Newline newline
 \end_inset
 
-we can use an estimate of how many steps it will take to collect the rest
- of the coins and return to goal position, without caring about the fuel
- consumption.
+we can use an estimate of how many steps it will take to collect 
+\begin_inset Newline newline
+\end_inset
+
+the rest of the coins and return to goal position, without caring 
+\begin_inset Newline newline
+\end_inset
+
+about the fuel consumption.
 \end_layout
 
 \begin_layout Itemize
@@ -6435,7 +6494,7 @@ status open
 \begin_inset Formula $A^{*}$
 \end_inset
 
- can always find a solution if there is one, because: 
+ will always find a solution if there is one, because: 
 \end_layout
 
 \begin_layout Itemize
@@ -6483,8 +6542,11 @@ The
 \begin_inset Formula $f$
 \end_inset
 
--value for any node on an optimal solution path is less than or equal to
- the 
+-value for any node on an optimal solution path is 
+\begin_inset Newline newline
+\end_inset
+
+less than or equal to the 
 \begin_inset Formula $f$
 \end_inset
 
@@ -6511,7 +6573,11 @@ Thus, the
 \begin_inset Formula $f$
 \end_inset
 
--value of a node on an optimal solution path is less than the 
+-value of a node on an optimal solution path is 
+\begin_inset Newline newline
+\end_inset
+
+less than the 
 \begin_inset Formula $f$
 \end_inset
 
@@ -6520,8 +6586,11 @@ Thus, the
 \end_layout
 
 \begin_layout Itemize
-Thus, a non-optimal solution can never be chosen while a node exists on
- the frontier that leads to an optimal solution.
+Thus, a non-optimal solution can never be chosen while 
+\begin_inset Newline newline
+\end_inset
+
+a node exists on the frontier that leads to an optimal solution.
 \end_layout
 
 \begin_deeper
@@ -6536,13 +6605,17 @@ because an element with minimum
 \end_deeper
 \begin_layout Itemize
 So, before it can select a non-optimal solution, it will have to pick all
- of the nodes on an optimal path, including each of the optimal solutions.
+ of the nodes on an optimal path, including each of 
+\begin_inset Newline newline
+\end_inset
+
+the optimal solutions.
 \end_layout
 
 \end_deeper
 \begin_layout Separator
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Separator
 
@@ -6722,7 +6795,7 @@ Contour
 \end_deeper
 \begin_layout Separator
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Separator
 
@@ -7431,6 +7504,25 @@ Optimal
 \end_layout
 
 \begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset VSpace -5mm
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/ch03/consistent-graph.png
+	width 70text%
+
+\end_inset
+
+ 
+\begin_inset VSpace -5mm
+\end_inset
+
+
+\end_layout
+
 \begin_layout Itemize
 Suppose path 
 \begin_inset Formula $p$
@@ -7471,6 +7563,19 @@ Suppose path
 \end_layout
 
 \begin_layout Itemize
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+pause 
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula $p$
 \end_inset
 
@@ -7487,6 +7592,18 @@ Suppose path
 \end_layout
 
 \begin_layout Itemize
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+pause 
+\end_layout
+
+\end_inset
+
 Suppose 
 \begin_inset Formula $cost(n',n)$
 \end_inset
@@ -7508,11 +7625,11 @@ Suppose
 \begin_inset Formula $p'$
 \end_inset
 
- is shorter that 
+ is shorter than 
 \begin_inset Formula $p$
 \end_inset
 
- so: 
+: 
 \begin_inset Formula $cost(p')+cost(n',n)<cost(p)$
 \end_inset
 
@@ -7520,18 +7637,38 @@ Suppose
 \end_layout
 
 \begin_layout Itemize
-Combining the two:
-\begin_inset Formula 
-\[
-cost(n',n)<cost(p)-cost(p')\leq h(n')-h(n)
-\]
+\begin_inset ERT
+status collapsed
 
+\begin_layout Plain Layout
+
+
+\backslash
+pause 
+\end_layout
+
+\end_inset
+
+Combining the two: 
+\begin_inset Formula $cost(n',n)<cost(p)-cost(p')\leq h(n')-h(n)$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+pause 
+\end_layout
+
+\end_inset
+
 So, the problem won't occur if 
 \begin_inset Formula $|h(n')-h(n)|\leq cost(n',n)$
 \end_inset
@@ -7613,12 +7750,14 @@ status collapsed
 
 .
  
-\begin_inset Newline newline
-\end_inset
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
 (This is a form of triangle inequality)
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
 If 
 \begin_inset Formula $h$
@@ -7651,7 +7790,7 @@ This is a strengthening of admissibility.
 status open
 
 \begin_layout Plain Layout
-Summary of search strategies
+Summary of tree search strategies
 \end_layout
 
 \end_inset
@@ -8591,7 +8730,7 @@ Halts
 \begin_inset space ~
 \end_inset
 
-if: If there a path to a goal, it can find one, even on 
+if: If there is a path to a goal, it can find one, even on 
 \emph on
 infinite graphs
 \emph default
@@ -8646,8 +8785,11 @@ Example demo
 
 \begin_deeper
 \begin_layout Standard
-Here is an example demo of several different search algorithms, including
- 
+Here is an example demo of several different search algorithms, 
+\begin_inset Newline newline
+\end_inset
+
+including 
 \begin_inset Formula $A^{*}$
 \end_inset
 
@@ -8671,8 +8813,11 @@ http://qiao.github.io/PathFinding.js/visual/
 \end_layout
 
 \begin_layout Standard
-Note that this demo is tailor-made for planar grids, which is a special
- case of all possible search graphs.
+Note that this demo is tailor-made for planar grids, which is 
+\begin_inset Newline newline
+\end_inset
+
+a special case of all possible search graphs.
 \end_layout
 
 \end_deeper
