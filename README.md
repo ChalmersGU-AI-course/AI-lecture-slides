@@ -5,8 +5,6 @@ based on publicly available slides by
 Poole & Mackworth, 2010 (<http://artint.info/slides/>), 
 and Russell & Norvig, 2005 (<http://aima.cs.berkeley.edu/>)
 
-The slides are written in LyX (<http://www.lyx.org>). Apart from LyX you
-will need LaTeX, and possibly some non-standard LaTeX packages too.
 
 ## License
 
