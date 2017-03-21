@@ -1,0 +1,171 @@
+
+.reveal {
+    font-size: 26px;
+}
+
+em {
+    color: #a00;
+}
+
+strong {
+}
+
+blockquote {
+    text-align: left;
+}
+
+em > strong, strong > em {
+    color: #f00;
+}
+
+.smaller, .smaller tr, .smaller td, .smaller li, .smaller p, .smaller dd, .smaller dt {
+    font-size: 90%;
+}
+
+.reveal h1 {
+    font-size: 2em;
+}
+
+/* .reveal ul {border: 1px solid green !important} */
+/* .reveal li {border: 1px dotted red !important} */
+/* .reveal dl {border: 1px solid green !important} */
+/* .reveal dd {border: 1px dotted red !important} */
+/* .reveal dt {border: 1px dotted cyan !important} */
+
+/* http://lea.verou.me/2012/02/flexible-multiline-definition-lists-with-2-lines-of-css/ */
+/* dt, dd { display: inline; margin: 0 } */
+/* dd:after { content: '\A'; white-space: pre } */
+
+
+.reveal li {
+    margin-left: 20px;
+}
+
+.reveal li {
+    list-style: none;
+}
+
+.reveal li li {
+    list-style: disc;
+}
+
+.reveal li li li {
+    list-style: circle;
+}
+
+.reveal table.noborder th,
+.reveal table.noborder td {
+  border-bottom: 0;
+}
+
+.nospace-fragment:not(.fade-out):not(.visible),
+.nospace-fragment.fade-out.visible:not(.current-fragment),
+.nospace-fragment.current-visible.visible:not(.current-fragment),
+.nospace-fragment.fade-out.current-fragment
+{
+    display: none;
+    height: 0px;
+    line-height: 0px;
+    font-size: 0px;
+}
+
+ul.pseudocode {
+    border: 1px dotted blue;
+    background-color: #f7fcff;
+    padding: 10px 10px 10px 0;
+    border-radius: 10px;
+}
+
+.pseudocode li {
+    list-style: none !important;
+    color: #050;
+    font-size: 20px;
+    font-familys: Palatino;
+}
+
+.pseudocode li li {
+    margin-left: 0;
+}
+
+code {
+    color: #050;
+    font-size: 90%;
+}
+
+.MathJax, .MathJax_Preview {
+    color: #a00;
+}
+
+
+#markdown-toc > li {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+#markdown-toc ul ul, #markdown-toc ol ol {
+    display: none;
+}
+
+
+
+#header, #footer {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 30px;
+    line-height: 1;
+    color: white;
+}
+
+.reveal .slide-number, #header, #footer {
+    font-size: 12px;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: 300;
+    background-color: #abd;
+    padding: 0px;
+}
+
+#header {
+    top: 0px;
+}
+
+#footer {
+    bottom: 0px;
+}
+
+#header-left {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+}
+
+#header-right {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+#footer-left {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+}
+
+#footer-left .logo {
+    position: relative;
+    height: 24px;
+    bottom: -6px;
+}
+
+
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-down {
+    display: none;
+}
+
+.reveal .controls {
+    height: 20px;
+    bottom: 50px;
+    right: 20px;
+}
+

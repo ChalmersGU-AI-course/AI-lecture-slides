@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>
+      {% if page.title %}
+      {{ page.title }} | {{ site.title }}
+      {% else %}
+      {{ site.title }}
+      {% endif %}
+    </title>
+
+    {% if page.description %}
+    <meta name="description" content="{{ page.description }}" />
+    {% endif %}
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="reveal.js/css/reveal.css"/>
+    <link rel="stylesheet" href="{{ 'reveal.js/css/theme/' | append: site.reveal.theme | append: '.css' }}" id="theme"/>
+    <link rel="stylesheet" href="css/syntax.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css": "reveal.js/css/print/paper.css";
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+
+  <body>
+
+    {% assign page_slides = content | split: site.reveal.separator.slide %}
+
+    <div class="reveal">
+      {% include header-footer-slide.html %}
+
+      <div class="slides">
+
+        {% if content contains site.reveal.separator.slide %}
+        {% assign page_slides = content | split: site.reveal.separator.slide %}
+
+        {% if site.reveal.titleSlide %}
+        {% include title-slide.html %}
+        {% endif %}
+
+        {% for slide in page_slides %}
+
+        <section>
+          {% if slide contains site.reveal.separator.vertical %}
+          {% assign vertical_slides = slide | split: site.reveal.separator.vertical %}
+
+          {% for vertical_slide in vertical_slides %}
+          <section>
+            {% if vertical_slide contains site.reveal.separator.notes %}
+            {% assign slide_content = vertical_slide | split: site.reveal.separator.notes | first %}
+            {% assign slide_notes = vertical_slide | split: site.reveal.separator.notes | last %}
+
+            {{ slide_content }}
+
+            <aside class="notes">
+              {{ slide_notes }}
+            </aside>
+
+            {% else %}
+
+            {{ vertical_slide }}
+
+            {% endif %}
+          </section>
+          {% endfor %}
+
+          {% else %}
+
+          {% if slide contains site.reveal.separator.notes %}
+          {% assign slide_content = slide | split: site.reveal.separator.notes | first %}
+          {% assign slide_notes = slide | split: site.reveal.separator.notes | last %}
+
+          {{ slide_content }}
+
+          <aside class="notes">
+            {{ slide_notes }}
+          </aside>
+
+          {% else %}
+
+          {{ slide }}
+
+          {% endif %}
+
+          {% endif %}
+        </section>
+
+        {% endfor %}
+
+        {% endif %}
+
+      </div>
+    </div>
+
+    <script src="reveal.js/lib/js/head.min.js"></script>
+    <script src="reveal.js/js/reveal.js"></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      {% for item in site.reveal.configure %}
+        {{ item[0] }} : "{{ item[1] }}",
+      {% endfor %}
+
+      // Optional reveal.js plugins
+      dependencies: [
+        { src: "reveal.js/plugin/notes/notes.js", async: true },
+        { src: "reveal.js/plugin/math/math.js", async: true }
+      ]
+      });
+    </script>
+
+  </body>
+</html>

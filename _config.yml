@@ -1,0 +1,31 @@
+
+# reveal options
+reveal:
+  separator:
+    slide:       "<hr />"
+    vertical:    "<p>-</p>"
+    notes:       "<p>Notes:</p>"
+  titleSlide:    true
+  theme:         white
+  configure:
+    controls:    true
+    progress:    true
+    history:     true
+    center:      true
+    slideNumber: true
+    transition:  fade
+
+# Setup
+title:           "DIT410/TIN174, Artificial Intelligence"
+tagline:         "Lecture slides for a course in AI"
+description:     "These lecture slides are written in Github Markdown and uses reveal.js for the presentation."
+markdown:        kramdown
+kramdown:
+  input:         GFM
+
+# YAML defaults
+defaults:
+  - scope:
+      path:     ""
+    values:
+      layout:   slide

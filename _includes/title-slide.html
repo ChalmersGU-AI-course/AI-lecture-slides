@@ -1,0 +1,13 @@
+<section id="title-slide">
+  <h1>{{ page.title }}</h1>
+  <!-- <small><a href="{{ page.url }}">{{ site.url | remove: "http://" }}{{ page.url }}</a></small> -->
+  {% if page.description %}
+    <p>{{ page.description }}</p>
+  {% endif %}
+  {% if page.author %}
+    <p>{{ page.author }}</p>
+  {% endif %}
+  {% if page.when %}
+    <p>{{ page.when }}</p>
+  {% endif %}
+</section>
