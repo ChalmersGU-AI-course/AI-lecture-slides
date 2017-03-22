@@ -133,7 +133,7 @@ logo: "img/logo-Chalmers-GU.png"
 
 | **Course website** | <http://chalmersgu-ai-course.github.io/>
 | **Teachers** | Peter Ljunglöf, John J. Camilleri, Jonatan Kilhamn, Inari Listenmaa, Claes Strannegård
-| **Student representatives** | Claudia Castillo (MPALG), Ibrahim Fayaz (MPALG), Johan Ek (MPCAS), Tarun Nandakumar (MPCAS), Yan Wang (MPALG) + Additional volunteers!? 
+| **Student representatives** | Caterina Curta (N2COS), Claudia Castillo (MPALG), Ibrahim Fayaz (MPALG), Johan Ek (MPCAS), Tarun Nandakumar (MPCAS), Yan Wang (MPALG) *(updated 22nd March)*
 | **Course book** | Russell & Norvig (2002/10/14) <br/> Read it online at Chalmers library:  <http://goo.gl/6EMRZr>
 | ***<br/>Note for GU students:***{:.fragment} | ***<br/>Don't forget to register, today!***{:.fragment}
 
