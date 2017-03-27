@@ -4,7 +4,7 @@
 }
 
 em {
-    color: #a00;
+    color: #800;
 }
 
 strong {
@@ -15,7 +15,7 @@ blockquote {
 }
 
 em > strong, strong > em {
-    color: #f00;
+    color: #c00;
 }
 
 .smaller, .smaller tr, .smaller td, .smaller li, .smaller p, .smaller dd, .smaller dt {
@@ -76,11 +76,14 @@ ul.pseudocode {
     border-radius: 10px;
 }
 
+.pseudocode em, .pseudocode .MathJax, .pseudocode .MathJax_Preview, .pseudocode li {
+    color: #050;
+}
+
 .pseudocode li {
     list-style: none !important;
-    color: #050;
     font-size: 20px;
-    font-familys: Palatino;
+    font-family: Palatino;
 }
 
 .pseudocode li li {
@@ -93,7 +96,7 @@ code {
 }
 
 .MathJax, .MathJax_Preview {
-    color: #a00;
+    color: #800;
 }
 
 
