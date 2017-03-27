@@ -52,7 +52,7 @@ logo: "img/logo-Chalmers-GU.png"
   - space complexity: \\( O(bm) \\)
   - incomplete: might fall into an infinite loop, doesn't return optimal solution
 -  
-- Breadth-first search (DBS)
+- Breadth-first search (BFS)
   - implement the frontier as a Queue
   - space complexity: \\( O(b^m) \\)
   - complete: always finds a solution, if there is one
