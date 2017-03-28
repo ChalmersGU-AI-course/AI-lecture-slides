@@ -687,7 +687,8 @@ The \\(n\\) queens problem can be encoded as
 
     - C solves the problem in 100% of the cases, but slowly? 
 
-- Summary statistics, such as mean run time, median run time, and mode run time don't make much sense. 
+- Summary statistics, such as mean run time or median run time  
+  don't make much sense. 
 
 ----------
 
