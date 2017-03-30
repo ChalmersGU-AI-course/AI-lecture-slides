@@ -36,7 +36,7 @@ logo: "img/logo-Chalmers-GU.png"
   - **while** *frontier* is not empty:
     - **select** and **remove** *node* from *frontier*
     - **if** *node*.state is a *goalState* **then return** *node*
-    - **for** *child* **in** ExpandChildNodes(*node*, *graph*):
+    - **for each** *child* **in** ExpandChildNodes(*node*, *graph*):
       - add *child* to *frontier*
   - **return** failure
 {: .pseudocode}
@@ -134,7 +134,7 @@ logo: "img/logo-Chalmers-GU.png"
     - **select** and **remove** *node* from *frontier*
     - **if** *node*.state is a *goalState* **then return** *node*
     - add *node* to *exploredSet*
-    - **for** *child* **in** ExpandChildNodes(*node*, *graph*):
+    - **for each** *child* **in** ExpandChildNodes(*node*, *graph*):
       - **if** *child* is not in *frontier* or *exploredSet*:
         - add *child* to *frontier*
   - **return** failure
@@ -346,7 +346,7 @@ Depth bound =
 ### Iterative-deepening search
 
 - **function** IDSearch(*graph*, *initialState*, *goalState*)
-  - **for** *limit* in 0, 1, 2, ...:
+  - **for** *limit* **in** 0, 1, 2, ...:
     - *result* := DepthLimitedSearch([*initialState*], *limit*)
     - **if** *result* ≠ cutoff **then** **return** *result*
 -  
@@ -355,7 +355,7 @@ Depth bound =
   - **else if** *limit* = 0 **then return** cutoff
   - **else**:
     - *failureType* := failure
-    - **for** every *neighbor* \\(n\\) of \\(n\_{k}\\):
+    - **for each** *neighbor* \\(n\\) of \\(n\_{k}\\):
       - *result* := DepthLimitedSearch(\\([n\_{0},\dots,n\_{k},n]\\), *limit*--1)
       - **if** *result* is a path **then** **return** *result*
       - **else if** *result* = cutoff **then** *failureType* := cutoff
@@ -604,7 +604,7 @@ Simulated annealing is an implementation of random steps:
 
 - **function** SimulatedAnnealing(*problem*, *schedule*):
   - *current* := *problem*.initialState
-  - **for** *t* in 1, 2, ...:
+  - **for** *t* **in** 1, 2, ...:
     - *T* := *schedule*(*t*)
     - **if** *T* = 0 **then** **return** *current*
     - *next* := a randomly selected neighbor of *current*

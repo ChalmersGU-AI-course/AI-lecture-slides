@@ -233,7 +233,7 @@ the number 4 and applying some combination of the factorial, square root, and fl
     - **select** and **remove** *node* from *frontier*
     - **if** *node*.state is a *goalState* **then return** *node*
     - <span>add *node* to *exploredSet*</span>{:.fragment data-fragment-index="1"}
-    - **for** *child* **in** ExpandChildNodes(*node*, *graph*):
+    - **for each** *child* **in** ExpandChildNodes(*node*, *graph*):
       - add *child* to *frontier*
         <span>... **if** *child* is not in *frontier* or *exploredSet*</span>{:.fragment data-fragment-index="1"}
   - **return** failure
@@ -255,7 +255,7 @@ The nodes used while searching are not the same as the graph nodes:
 <div> </div>
 
 - **procedure** ExpandChildNodes(*parent*, *graph*):
-  - **for each** (*action*, *child*, *edgecost*) in *graph*.successors(*parent*.state):
+  - **for each** (*action*, *child*, *edgecost*) **in** *graph*.successors(*parent*.state):
     - **yield** new SearchNode(*child*,
       -             ...total cost so far...,
       -             ...estimated cost to goal...,
