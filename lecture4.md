@@ -257,7 +257,7 @@ Many problems can be represented in different ways as a CSP, e.g., the crossword
 ## Backtracking search
 {:.no_toc}
 
-## Improving backtracking efficiency
+## Heuristics: Improving backtracking efficiency
 {:.no_toc}
 
 ----
@@ -370,7 +370,7 @@ Many problems can be represented in different ways as a CSP, e.g., the crossword
 
 ------
 
-## Improving backtracking efficiency
+## Heuristics: Improving backtracking efficiency
 
 - The general-purpose algorithm gives rise to several questions:
 
