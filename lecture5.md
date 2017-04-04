@@ -26,6 +26,9 @@ Source: http://www.denizyuret.com/2010/12/research-focus.html
 
 # Natural language _Understanding_
 
+![](http://i.huffpost.com/gen/1403845/images/o-SPIKE-JONZE-HER-facebook.jpg)  
+http://i.huffpost.com/gen/1403845/images/o-SPIKE-JONZE-HER-facebook.jpg
+
 ---
 
 # Natural language _Processing_
@@ -78,13 +81,15 @@ Search
 
 _"the man saw a mountain"_
 
+# ↓
+
 ![](img/nlp/tree-1.png){:class="noborder"}
 
 ---
 
 # Context-free grammar (CFG)
 
-terminals, non-terminals & rules
+terminals, non-terminals, rules
 
 - S → NP VP
 - NP → Det N
@@ -98,7 +103,14 @@ terminals, non-terminals & rules
 
 ## 🙋‍♂️ Socrative question 🙋
 
-_Which sentences are correct w.r.t. the grammar?_
+![](http://www.triblocal.com/highland-park-highwood/files/2012/03/stock-photo-17181584-mountain-man.jpg)  
+http://www.triblocal.com/highland-park-highwood/files/2012/03/stock-photo-17181584-mountain-man.jpg
+
+---
+
+# Ambiguity
+
+extending the grammar with prepositions
 
 ---
 
@@ -118,17 +130,20 @@ input string → parse tree(s)
 
 # Overgeneration
 
-> "All grammars leak"  
+_"All grammars leak"_
 
 ---
 
-# CFG solutions to overgeneration
+# Solutions to overgeneration
+
+- In CFG
+- Other formalisms
 
 ---
 
 # Generative capacity
 
-## Chomsky hierarchy
+_Chomsky hierarchy_
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Chomsky-hierarchy.svg/714px-Chomsky-hierarchy.svg.png){:class="noborder"}
 
@@ -139,6 +154,24 @@ input string → parse tree(s)
 <!-- Buffalo -->
 ![](https://upload.wikimedia.org/wikipedia/commons/d/dd/Bison_fight_in_Grand_Teton_NP.jpg)
 
+---
+
+# Levels of ambiguity
+
+Lexical  
+Syntactic  
+Semantic
+
+---
+
+# Models for disambiguation
+
+Acoustic model  
+Language model  
+Mental model  
+World model
+
+---
 
 ## 🙋 Socrative question 🙋‍♂️
 
@@ -148,14 +181,10 @@ http://wmjasco.blogspot.se/2008/11/colorless-green-ideas-do-not-sleep.html
 
 ---
 
-# Syntax and Semantics
-
-...
-
----
-
 # That's all for today
 
-## Friday: _Interpretation_
+## Friday:
 
-# 😍
+_Semantics, Interpretation, NLP in Shrdlite_
+
+# 🤖💬😍
