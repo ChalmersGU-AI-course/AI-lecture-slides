@@ -40,7 +40,7 @@ logo: "img/logo-Chalmers-GU.png"
     - the *goal test* is a set of *constraints* specifying allowable combinations  
       of values for subsets of variables
 
-- Since CSP is more specific, it allows useful algorithms with more power than standard search algorithms 
+- {:.fragment} Since CSP is more specific, it allows useful algorithms with more power than standard search algorithms 
 
 -----
 
@@ -317,7 +317,7 @@ Many problems can be represented in different ways as a CSP, e.g., the crossword
 
     - this gives branching factor \\(b=d\\), so there are \\(d^{n}\\) leaves (instead of \\(n!d^{n}\\))
 
-- Depth-first search with single-variable assignments is called *backtracking search*:
+- {:.fragment} Depth-first search with single-variable assignments is called *backtracking search*:
 
     - backtracking search is the basic uninformed CSP algorithm
     - it can solve \\(n\\)-queens for \\(n\approx25\\)
