@@ -53,6 +53,13 @@ em > strong, strong > em {
     list-style: circle;
 }
 
+.reveal ul.list li {
+    list-style: square;
+}
+.reveal ol.list li {
+    list-style-type: decimal;
+}
+
 .reveal table.noborder th,
 .reveal table.noborder td {
   border-bottom: none;
@@ -103,6 +110,16 @@ code {
     color: #050;
     font-size: 90%;
     font-family: Palatino !important;
+}
+
+.reveal p.code {
+  text-align: left;
+  background-color: #f7fcff;
+  padding: 10px;
+}
+.code code {
+  white-space: pre;
+  font-family: monospace !important;
 }
 
 .MathJax, .MathJax_Preview {
@@ -181,4 +198,3 @@ code {
     bottom: 50px;
     right: 20px;
 }
-
