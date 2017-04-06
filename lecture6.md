@@ -6,50 +6,68 @@ when: "7 April, 2017"
 logo: "img/logo-Chalmers-GU.png"
 ---
 
-# Syntax and semantics
+# Last time...
+
+_"Mary saw the man with a telescope"_
+
+![](img/nlp/mary-saw-the-man-with-a-telescope-1.png){:.noborder}
+![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:.noborder}
+
+---
 
 _"Colourless green ideas sleep furiously"_
 
-![Colourless green ideas sleep furiously](img/nlp/colourless-green-ideas.jpg){:class="noborder"}
+![Colourless green ideas sleep furiously](img/nlp/colourless-green-ideas.jpg){:.noborder}
 
 <http://wmjasco.blogspot.se/2008/11/colorless-green-ideas-do-not-sleep.html>
 {: .tiny}
 
----
-
-# Why syntax trees?
-
-_"Mary saw the man with a telescope"_
-
-![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:class="noborder"}
+{:.fragment}
+✋ Is this sentence correct?
+<span style="background:lime;color:white;padding:3px 6px;">Yes</span> or
+<span style="background:magenta;color:white;padding:3px 6px;">No</span>
 
 ---
 
-# Semantic representations (1)
+# Why syntax?
 
-![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:class="noborder"}
-
-With(Saw(Mary, Man), Telescope)
+![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:.noborder}
 
 ---
 
-# Semantic representations (2)
+## Semantic representation
 
-![](img/nlp/mary-saw-the-man-with-a-telescope-1.png){:class="noborder"}
+Introducing logical terms
 
-Saw(Mary, With(Man, Telescope))
+- _Mary_ = `Mary`
+- _the man_ = `Man`
+- _Mary saw the man_ = `Saw(Mary, Man)`
+
+---
+
+### Semantic interpretation (1)
+
+![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:.noborder}
+
+`With(Saw(Mary, Man), Telescope)`
+
+---
+
+### Semantic interpretation (2)
+
+![](img/nlp/mary-saw-the-man-with-a-telescope-1.png){:.noborder}
+
+`Saw(Mary, With(Man, Telescope))`
 
 ---
 
 # Compositional semantics
 
-Logical terms
-
 - _Mary_ = `Mary`
 - _the man_ = `Man`
-- _saw the man_ = `λx · Saw(x, Man)`
-- _saw_ = `λy λx · Saw(x, y)`
-- _with_ = `λy λx · With(x, y)`
+- _Mary saw the man_ = `Saw(Mary, Man)`
+- {:.fragment} _saw_ = `λy λx · Saw(x, y)`
+- {:.fragment} _saw the man_ = `λx · Saw(x, Man)`
 
 ---
 
@@ -57,23 +75,32 @@ Logical terms
 
 _syntactic_ representation → _semantic_ representation
 
-parse tree → logical goal
+parse tree → logical term
 
 ---
 
-## Example from Shrdlite
-
-Utterance: _"move the white ball into the red box"_
-
-![](img/nlp/shrdlite-small.png){:class="noborder"}
+Utterance: _"move the white ball into the red box"_  
+![](img/nlp/shrdlite-small.png){:.noborder}  
+✋ Is this ambiguous?
+<span style="background:lime;color:white;padding:3px 6px;">Yes</span> or
+<span style="background:magenta;color:white;padding:3px 6px;">No</span>
 
 ---
 
-## Example from Shrdlite
+Goal: `inside(white_ball, red_box)`  
+![](img/nlp/shrdlite-small_white-ball-red-box-table.png){:.noborder}
 
-Goal: `inside(white_ball, red_box)`
+---
 
-![](img/nlp/shrdlite-small_white-ball-red-box-table.png){:class="noborder"}
+Utterance: _"move the ball into the red box"_  
+![](img/nlp/shrdlite-small.png){:.noborder}  
+✋ Is this ambiguous?
+<span style="background:lime;color:white;padding:3px 6px;">Yes</span> or
+<span style="background:magenta;color:white;padding:3px 6px;">No</span>
+
+Notes:
+
+The ambiguity is not syntactic!
 
 ---
 
@@ -91,13 +118,24 @@ Goal: `inside(white_ball, red_box)`
 
 `text input → parse trees`
 
-```function parse(input:string) : ShrdliteResult[]
+```function parse(input:string) : string | ShrdliteResult[]
+```
+{: .code}
+
+```interface ShrdliteResult {
+    input : string
+    parse : Command
+    interpretation? : DNFFormula
+    plan? : string[]
+}
 ```
 {: .code}
 
 ---
 
 # Grammar (simplified)
+
+From file `Grammar.ne`
 
 ```command   -->  "put"       entity  location
 entity    -->  quantifier  object
@@ -107,13 +145,30 @@ location  -->  relation    entity
 ```
 {: .code}
 
+Notes:
+
+- Recursion
+- Draw a tree top-down on the board
+
 ---
 
-# Example phrase
+_“put the white ball in a box on the floor”_  
+![](img/nlp/shrdlite-small.png){:.noborder}  
+✋ Is this ambiguous?
+<span style="background:lime;color:white;padding:3px 6px;">Yes</span> or
+<span style="background:magenta;color:white;padding:3px 6px;">No</span>  
 
-_“put the white ball in a box on the floor”_
+---
 
- ✋ Is this ambiguous?
+_“put the white ball in a box on the floor”_  
+![](img/nlp/shrdlite-small.png){:.noborder}  
+✋ Is the ambiguity
+<span style="background:lime;color:white;padding:3px 6px;">syntactic</span> or
+<span style="background:magenta;color:white;padding:3px 6px;">semantic</span>?
+
+Notes:
+
+It is both syntactically **and** semantically ambiguous
 
 ---
 
@@ -148,9 +203,18 @@ _"put the white ball in a box **that is** on the floor"_
 
 # Logical interpretations ("Goals")
 
-DNF = Disjunctive normal form
+```type DNFFormula = Conjunction[]
+type Conjunction = Literal[]
+```
+{: .code}
 
-`(l₁ ∧ l₂) ∨ (l₃)`
+DNF = Disjunctive Normal Form
+
+Example: `(x ∧ y) ∨ (z)`
+
+```DNFFormula([Conjunction([x, y]), Conjunction(z)])
+```
+{: .code}
 
 ---
 
@@ -174,8 +238,8 @@ Example: `ontop(a,b)`
 
 # Ambiguity
 
-Ok to return many goals if utterance is ambiguous
-but impossible ones should be removed
+- Ok to return many goals if utterance is ambiguous
+- but impossible ones should be removed
 
 
 ---
@@ -187,17 +251,17 @@ inside(LargeWhiteBall, LargeYellowBox)
 ---
 
 "put the white ball in a box on the floor"
-![](img/nlp/shrdlite-small.png){:class="noborder"}
+![](img/nlp/shrdlite-small.png){:.noborder}
 
 ---
 
 Yellow box is already on floor: 3 moves
-![](img/nlp/shrdlite-small_white-ball-yellow-box-floor.png){:class="noborder"}
+![](img/nlp/shrdlite-small_white-ball-yellow-box-floor.png){:.noborder}
 
 ---
 
 Red box can be placed on floor first: 2 moves
-![](img/nlp/shrdlite-small_white-ball-red-box-floor.png){:class="noborder"}
+![](img/nlp/shrdlite-small_white-ball-red-box-floor.png){:.noborder}
 
 ---
 
