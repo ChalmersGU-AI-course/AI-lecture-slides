@@ -22,6 +22,12 @@ em > strong, strong > em {
     font-size: 90%;
 }
 
+.reveal .tiny {
+    font-size: 60%;
+}
+
+
+
 .reveal h1 {
     font-size: 2em;
 }

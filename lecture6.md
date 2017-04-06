@@ -8,29 +8,35 @@ logo: "img/logo-Chalmers-GU.png"
 
 # Syntax and semantics
 
-"Colourless green ideas sleep furiously"
+_"Colourless green ideas sleep furiously"_
 
-![Colourless green ideas sleep furiously](img/nlp/colourless-green-ideas.jpg){:class="noborder"}  
-http://wmjasco.blogspot.se/2008/11/colorless-green-ideas-do-not-sleep.html
+![Colourless green ideas sleep furiously](img/nlp/colourless-green-ideas.jpg){:class="noborder"}
 
----
-
-#
-
-What good are syntax trees anyway?
-It all depends on the task.
+<http://wmjasco.blogspot.se/2008/11/colorless-green-ideas-do-not-sleep.html>
+{: .tiny}
 
 ---
 
-# syntactic  vs semantic representations
+# Why syntax trees?
 
-"Mary saw the man with a telescope"
+_"Mary saw the man with a telescope"_
 
-`(S (NP Mary) (VP (VP (V saw) (NP (Det the) (N man))) (PP (Prep with) (NP (Det a) (N telescope)))))`  
+![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:class="noborder"}
+
+---
+
+# Semantic representations (1)
+
+![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:class="noborder"}
+
 With(Saw(Mary, Man), Telescope)
 
+---
 
-`(S (NP Mary) (VP (V saw) (NP (NP (Det the) (N man)) (PP (Prep with) (NP (Det a) (N telescope))))))`  
+# Semantic representations (2)
+
+![](img/nlp/mary-saw-the-man-with-a-telescope-1.png){:class="noborder"}
+
 Saw(Mary, With(Man, Telescope))
 
 ---
@@ -49,22 +55,32 @@ Logical terms
 
 # Interpretation
 
-is about going from syntax tree to semantic tree
+_syntactic_ representation → _semantic_ representation
+
+parse tree → logical goal
 
 ---
 
-# Example from Shrdlite
+## Example from Shrdlite
 
-given phrase
-world
-intended goal (will need to talk about this datatype more later)
+Utterance: _"move the white ball into the red box"_
+
+![](img/nlp/shrdlite-small.png){:class="noborder"}
+
+---
+
+## Example from Shrdlite
+
+Goal: `inside(white_ball, red_box)`
+
+![](img/nlp/shrdlite-small_white-ball-red-box-table.png){:class="noborder"}
 
 ---
 
 # Shrdlite pipeline
 
-1. _Parsing_: `text input → parse tree`
-1. _Interpretation_: `parse tree → goals`
+1. _Parsing_: `text input → parse trees`
+1. _Interpretation_: `parse tree + world → goals`
 1. _Ambiguity resolution_: `many goals → one goal`
 1. _Planning_: `goal → robot movements`
 {: .list}
@@ -73,59 +89,37 @@ intended goal (will need to talk about this datatype more later)
 
 # Parsing
 
-`text input → parse tree`
+`text input → parse trees`
 
+```function parse(input:string) : ShrdliteResult[]
 ```
-function parse(input:string) : string | ShrdliteResult[]
+{: .code}
+
+---
+
+# Grammar (simplified)
+
+```command   -->  "put"       entity  location
+entity    -->  quantifier  object
+object    -->  size:?      color:?   form
+object    -->  object      location
+location  -->  relation    entity
 ```
 {: .code}
 
 ---
 
-# CFG grammar
+# Example phrase
 
-- CFG grammar (`Grammar.ne`)
-- Compiled to TypeScript file (`Grammar.ts`) using Nearley
+_“put the white ball in a box on the floor”_
 
-
----
-
-# Grammar
-
-```command   -->  "move"  entity  location
-entity    -->  quantifier[Number]  object[Number]
-location  -->  relation  entity
-```
-{: .code}
-
-- Functions VS types
-- Note recursion of entity
+ ✋ Is this ambiguous?
 
 ---
-
-# Parse trees
-
-“put the white ball in a box on the floor”
 
 ## Parse 1
 
-```
- MoveCommand(
-     Entity("the",
-         RelativeObject(
-             SimpleObject(null, "white", "ball"),
-             Location("inside",
-                 Entity("any",
-                     SimpleObject(null, null, form:"box"))))),
-     Location("ontop",
-         Entity("the",
-             SimpleObject(null, null, "floor"))))
-```
-{: .code}
-
----
-
-`(MoveCommand (Entity "the" (RelativeObject (SimpleObject "white" "ball") (Location "inside" (Entity "any" (SimpleObject "box"))))) (Location "ontop" (Entity "the" (SimpleObject "floor"))))`
+_"put the white ball **that is** in a box on the floor"_
 
 ![](img/nlp/put-the-white-ball-etc-parse-1.png){:class='noborder'}
 
@@ -133,23 +127,7 @@ location  -->  relation  entity
 
 ## Parse 2
 
-```
- MoveCommand(
-     Entity("the",
-         SimpleObject(null, "white", "ball")),
-     Location("inside",
-         Entity("any",
-             RelativeObject(
-                 SimpleObject(null, null, "box"),
-                 Location("ontop",
-                     Entity("the",
-                         SimpleObject(null, null, "floor")))))))
-```
-{: .code}
-
----
-
-`(MoveCommand (Entity "the" (SimpleObject "white" "ball")) (Location "inside" (Entity "any" (RelativeObject (SimpleObject "box") (Location "ontop" (Entity "the" (SimpleObject "floor")))))))`
+_"put the white ball in a box **that is** on the floor"_
 
 ![](img/nlp/put-the-white-ball-etc-parse-2.png){:class='noborder'}
 
@@ -157,7 +135,40 @@ location  -->  relation  entity
 
 # Interpretation
 
-simple example, explain types
+`parse tree + world → goals`
+
+```function interpretCommand(
+    cmd: Command,
+    state: WorldState
+  ): DNFFormula
+```
+{: .code}
+
+---
+
+# Logical interpretations ("Goals")
+
+DNF = Disjunctive normal form
+
+`(l₁ ∧ l₂) ∨ (l₃)`
+
+---
+
+# Literals
+
+```interface Literal {
+  relation : string;
+  args : string[];
+  polarity : boolean;
+}
+```
+{: .code}
+
+Example: `ontop(a,b)`
+
+```{ relation:"ontop", args:["a","b"], polarity:true }
+```
+{: .code}
 
 ---
 
@@ -181,26 +192,41 @@ inside(LargeWhiteBall, LargeYellowBox)
 ---
 
 Yellow box is already on floor: 3 moves
-![](img/nlp/shrdlite-small-ball-yellow-box.png){:class="noborder"}
+![](img/nlp/shrdlite-small_white-ball-yellow-box-floor.png){:class="noborder"}
 
 ---
 
 Red box can be placed on floor first: 2 moves
-![](img/nlp/shrdlite-small-ball-red-box.png){:class="noborder"}
+![](img/nlp/shrdlite-small_white-ball-red-box-floor.png){:class="noborder"}
 
 ---
 
 Interpretation:
 Two parse trees, although one can be eliminated because there is no white ball already in a box.
 
+---
 
-# Disjunctive and conjunctive goals
+# Spatial relations
+
+- x is **on top** of y if it is directly on top
+- x is **above** y if it is somewhere above
+- ...
+{: .list}
+
+---
+
+# Physical laws
+
+- Balls must be in boxes or on the floor, otherwise they roll away.
+- Small objects cannot support large objects.
+- ...
+{: .list}
 
 ---
 
 # Tips for interpreter in Shrdlite
 
-- Using instanceof
+- Using `instanceof` when traversing parse tree (`Command`)
 - Sub-functions based on grammar types
 - Recursion to handle nesting
 
@@ -211,6 +237,7 @@ Two parse trees, although one can be eliminated because there is no white ball a
 # Ambiguity resolution
 
 Options
+
 - Fail
 - Pick "first" or random
 - Use some rule of thumb,
@@ -221,5 +248,7 @@ e.g. prefer box already on floor
 
 # Planning
 
-Once you have a goal, translate it into a plan
-Using graph search algorithm
+`goal → robot movements`
+
+- Movements: _left, right, pick, drop_
+- Graph search
