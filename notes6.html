@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <style type="text/css">
+    /*pre { color:#c7254e; background-color:#f9f2f4; }*/
+    code { color:#333; background-color: #f5f5f5; }
+    .pl-c{color:#969896}
+    .pl-c1,.pl-s .pl-v{color:#0086b3}
+    .pl-e,.pl-en{color:#795da3}
+    .pl-s .pl-s1,.pl-smi{color:#333}
+    .pl-ent{color:#63a35c}
+    .pl-k{color:#a71d5d}
+    .pl-pds,.pl-s,.pl-s .pl-pse .pl-s1,.pl-sr,.pl-sr .pl-cce,.pl-sr .pl-sra,.pl-sr .pl-sre{color:#183691}
+    .pl-v{color:#ed6a43}
+    .pl-id{color:#b52a1d}
+    .pl-ii{background-color:#b52a1d;color:#f8f8f8}
+    .pl-sr .pl-cce{color:#63a35c;font-weight:bold}
+    .pl-ml{color:#693a17}
+    .pl-mh,.pl-mh .pl-en,.pl-ms{color:#1d3e81;font-weight:bold}
+    .pl-mq{color:#008080}
+    .pl-mi{color:#333;font-style:italic}
+    .pl-mb{color:#333;font-weight:bold}
+    .pl-md{background-color:#ffecec;color:#bd2c00}
+    .pl-mi1{background-color:#eaffea;color:#55a532}
+    .pl-mdr{color:#795da3;font-weight:bold}
+    .pl-mo{color:#1d3e81}
+  </style>
+</head>
+
+<body role="document">
+<div class="container">
+<h1>
+<a id="user-content-natural-language-processing--interpretation" class="anchor" href="#natural-language-processing--interpretation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Natural Language Processing &amp; Interpretation</h1>
+
+<p>TIN173/DIT410 Artificial Intelligence<br>
+John J. Camilleri<br>
+2017-04-07</p>
+
+<h1>
+<a id="user-content-syntax-and-semantics-different-levels-of-representation" class="anchor" href="#syntax-and-semantics-different-levels-of-representation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Syntax and semantics: Different levels of representation</h1>
+
+<blockquote>
+<p>Colourless green ideas sleep furiously</p>
+</blockquote>
+
+<ul>
+<li>Made famous by Noam Chomsky in <em>Syntactic Structures</em> (1957).</li>
+<li>This sentence is <strong>syntactically</strong> correct.</li>
+<li>It would be parseable using a PSG as seen previously.<br>
+<a href="colourless-green-ideas.png" target="_blank"><img src="img/nlp/colourless-green-ideas.png" alt="`(S (NP (A Colourless) (NP (A green) (NP (N ideas)))) (VP (V sleep) (Adv furiously)))`" style="max-width:100%;"></a>
+</li>
+<li>It is unclear if it <strong>means</strong> aynthing - <strong>semantically</strong> invalid
+
+<ul>
+<li>
+<em>colourless</em> and <em>green</em> are contradictory</li>
+<li>
+<em>ideas</em> don't <em>sleep</em>
+</li>
+<li>how can one <em>sleep furiously</em>?</li>
+</ul>
+</li>
+</ul>
+
+<h1>
+<a id="user-content-semantic-interpretation" class="anchor" href="#semantic-interpretation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Semantic interpretation</h1>
+
+<ul>
+<li>We are interested in the <strong>meaning</strong> of a phrase, more than it's <strong>structure</strong>.</li>
+<li>Semantic representation is more abstract</li>
+<li>You understand "move the ball to the left" without needing to understand linguistics</li>
+</ul>
+
+<p>Goal: <strong>Syntactic representation (parse tree) → Semantic representation (predicate)</strong></p>
+
+<h1>
+<a id="user-content-natural-language-example" class="anchor" href="#natural-language-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Natural language example</h1>
+
+<blockquote>
+<p>Mary saw the man with a telescope</p>
+</blockquote>
+
+<ul>
+<li>Syntactic representation:<br>
+<code>(S (NP Mary) (VP (V saw) (NP (NP (Det the) (N man)) (PP (Prep with) (NP (Det a) (N telescope))))))</code><br>
+<a href="mary-saw-the-man-with-a-telescope-1.png" target="_blank"><img src="img/nlp/mary-saw-the-man-with-a-telescope-1.png" alt="" style="max-width:100%;"></a>
+</li>
+<li>Semantic representation: <code>Saw(Mary, With(Man, Telescope))</code><br>
+<code>Saw</code>, <code>Mary</code>, <code>Man</code> etc. are not tokens but <strong>logical terms</strong>.</li>
+</ul>
+
+<p>Remember this is still ambiguous! Other interpretation:</p>
+
+<ul>
+<li>Syntactic: <code>(S (NP Mary) (VP (VP (V saw) (NP (Det the) (N man))) (PP (Prep with) (NP (Det a) (N telescope)))))</code><br>
+<a href="mary-saw-the-man-with-a-telescope-2.png" target="_blank"><img src="img/nlp/mary-saw-the-man-with-a-telescope-2.png" alt="" style="max-width:100%;"></a>
+</li>
+<li>Semantic: <code>With(Saw(Mary, Man), Telescope)</code>
+</li>
+</ul>
+
+<h2>
+<a id="user-content-compositional-semantics" class="anchor" href="#compositional-semantics" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Compositional semantics</h2>
+
+<ul>
+<li>We want semantics to be <strong>compositional</strong>: the meaning of a phrase is derived from the meaning of its sub-parts.</li>
+<li>Semantic interpretations:
+
+<ul>
+<li>
+<em>Mary</em> = <code>Mary</code>
+</li>
+<li>
+<em>the man</em> = <code>Man</code>
+</li>
+</ul>
+</li>
+<li>What about <em>saw the man</em>?<br>
+</li>
+<li>It's a predicate which takes an argument.</li>
+<li>Think of it as a lambda abstraction:</li>
+</ul>
+
+<pre><code>λx · Saw(x, Man)
+</code></pre>
+
+<h2>
+<a id="user-content-example-grammar" class="anchor" href="#example-grammar" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example grammar</h2>
+
+<pre><code>S(pred(obj))  → NP(obj) VP(pred)
+VP(pred(obj)) → V(pred) NP(obj)
+NP(obj) → Name(obj)
+NP(obj) → Det(The) N(obj)
+
+Name(Mary) → Mary
+N(Man)     → man
+Det(The)   → the
+V(λy λx · Saw(x, y)) → saw
+</code></pre>
+
+<blockquote>
+<p>Mary saw the man</p>
+</blockquote>
+
+<p><a href="mary-aug-pt.png" target="_blank"><img src="img/nlp/mary-aug-pt.png" alt='Augmented parse tree for "Mary saw the man"' style="max-width:100%;"></a></p>
+
+<p>So a semantic parse would give us: <code>Saw(Mary, Man)</code></p>
+
+<h2>
+<a id="user-content-quantifiers" class="anchor" href="#quantifiers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quantifiers</h2>
+
+<p>Actually I cheated!
+<em>"Mary sees the man"</em>
+really means something like <em>"There is a man and Mary sees him"</em>.</p>
+
+<p>We have <strong>quantification</strong></p>
+
+<ul>
+<li>So <em>"the man"</em> is really something like <code>∃x · Man(x)</code> or <code>∃x ∈ Men</code>
+</li>
+<li>then <em>"Mary sees the man"</em> is maybe <code>∃x · Man(x) ∧ Saw(Mary, x)</code>
+</li>
+</ul>
+
+<p>Of course modelling "real" English will require many more modifications.</p>
+
+<ul>
+<li>Time and tense: <em>Mary saw the man</em> vs. <em>Mary sees the man</em>
+</li>
+<li>Long-distance dependencies: <em>Mary saw the man she had a relationship with</em>
+</li>
+<li>Ambiguity: <em>Police help dog bite victim</em>
+</li>
+</ul>
+
+<h1>
+<a id="user-content-nlp-in-shrdlite" class="anchor" href="#nlp-in-shrdlite" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NLP in Shrdlite</h1>
+
+<h2>
+<a id="user-content-grammar" class="anchor" href="#grammar" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Grammar</h2>
+
+<p>Deeper description of how the Shrdlite grammar works:
+<a href="http://chalmersgu-ai-course.github.io/shrdlite.html#parsing">http://chalmersgu-ai-course.github.io/shrdlite.html#parsing</a></p>
+
+<ul>
+<li>Grammar file: <code>Grammar.ne</code> in EBNF format</li>
+<li>Compiled with the <strong>Nearley</strong> library to <code>Grammar.ts</code>
+</li>
+<li>Install Nearley: <code>npm install nearley --global</code>
+</li>
+<li>Recompile grammar: <code>make Grammar.ts</code>
+</li>
+</ul>
+
+<h2>
+<a id="user-content-about-the-grammar" class="anchor" href="#about-the-grammar" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>About the grammar</h2>
+
+<ul>
+<li>Note separation of SG/PL categories, e.g. objects and quantifiers</li>
+<li>Grammar is recursive in Entity category</li>
+<li>EBNF syntactic sugar gives some functionality which are compiled down into CFG,
+e.g. optional terms (<code>...:?</code>)</li>
+<li>The parts in <code>{% ... %}</code> define the corresponding TypeScript term which should be built
+when parsing with that rule.</li>
+<li>The categories in the grammar, e.g. <code>command</code> and <code>entity</code> correspond to --- but are not identical to ---
+the types defined in <code>Types.ts</code>, e.g. <code>Command</code> and <code>Entity</code>.</li>
+</ul>
+
+<h2>
+<a id="user-content-parse-function" class="anchor" href="#parse-function" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Parse function</h2>
+
+<div class="highlight highlight-source-ts"><pre><span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c"> * @param input: A string with the input from the user.</span>
+<span class="pl-c"> * @returns: A list of parse results, each containing an object of type 'Command'.</span>
+<span class="pl-c"> *           If there's a parsing error, it returns a string with a description of the error.</span>
+<span class="pl-c"> <span class="pl-c">*/</span></span>
+<span class="pl-k">function</span> parse(<span class="pl-v">input</span><span class="pl-k">:</span><span class="pl-c1">string</span>) <span class="pl-k">:</span> <span class="pl-c1">string</span> <span class="pl-k">|</span> <span class="pl-en">ShrdliteResult</span>[] {
+  <span class="pl-k">...</span>
+}
+
+<span class="pl-k">class</span> <span class="pl-en">ShrdliteResult</span> {
+    <span class="pl-k">constructor</span>(
+        <span class="pl-k">public</span> <span class="pl-v">input</span> <span class="pl-k">:</span> <span class="pl-c1">string</span>,
+        <span class="pl-k">public</span> <span class="pl-v">parse</span> <span class="pl-k">:</span> <span class="pl-en">Command</span>,
+        <span class="pl-k">public</span> <span class="pl-v">interpretation</span><span class="pl-k">?</span> <span class="pl-k">:</span> <span class="pl-en">DNFFormula</span>,
+        <span class="pl-k">public</span> <span class="pl-v">plan</span><span class="pl-k">?</span> <span class="pl-k">:</span> <span class="pl-c1">string</span>[],
+    ) {}
+}</pre></div>
+
+<p>This doesn't need to changed in order to complete the Shrdlite project
+(but can be modified when implementing extensions).</p>
+
+<h2>
+<a id="user-content-parse-examples" class="anchor" href="#parse-examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Parse examples</h2>
+
+<blockquote>
+<p>“put the white ball in a box on the floor”</p>
+</blockquote>
+
+<h3>
+<a id="user-content-parse-1" class="anchor" href="#parse-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Parse 1</h3>
+
+<p>"put the white ball <strong>that is</strong> in a box on the floor"</p>
+
+<pre lang="plain"><code> MoveCommand(
+     Entity("the",
+         RelativeObject(
+             SimpleObject(null, "white", "ball"),
+             Location("inside",
+                 Entity("any",
+                     SimpleObject(null, null, form:"box"))))),
+     Location("ontop",
+         Entity("the",
+             SimpleObject(null, null, "floor"))))
+</code></pre>
+
+<pre lang="plain"><code>(MoveCommand (Entity "the" (RelativeObject (SimpleObject "white" "ball") (Location "inside" (Entity "any" (SimpleObject "box"))))) (Location "ontop" (Entity "the" (SimpleObject "floor"))))
+</code></pre>
+
+<p><a href="put-the-white-ball-etc-parse-1.png" target="_blank"><img src="img/nlp/put-the-white-ball-etc-parse-1.png" alt="" style="max-width:100%;"></a></p>
+
+<h3>
+<a id="user-content-parse-2" class="anchor" href="#parse-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Parse 2</h3>
+
+<p>"put the white ball in a box <strong>that is</strong> on the floor"</p>
+
+<pre lang="plain"><code> MoveCommand(
+     Entity("the",
+         SimpleObject(null, "white", "ball")),
+     Location("inside",
+         Entity("any",
+             RelativeObject(
+                 SimpleObject(null, null, "box"),
+                 Location("ontop",
+                     Entity("the",
+                         SimpleObject(null, null, "floor")))))))
+</code></pre>
+
+<pre lang="plain"><code>(MoveCommand (Entity "the" (SimpleObject "white" "ball")) (Location "inside" (Entity "any" (RelativeObject (SimpleObject "box") (Location "ontop" (Entity "the" (SimpleObject "floor")))))))
+</code></pre>
+
+<p><a href="put-the-white-ball-etc-parse-2.png" target="_blank"><img src="img/nlp/put-the-white-ball-etc-parse-2.png" alt="" style="max-width:100%;"></a></p>
+
+<h2>
+<a id="user-content-interpretation" class="anchor" href="#interpretation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Interpretation</h2>
+
+<p>The function you need to imeplement is <code>interpretCommand</code>:</p>
+
+<div class="highlight highlight-source-ts"><pre><span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c"> * @param cmd: An object of type 'Command'.</span>
+<span class="pl-c"> * @param state: The current state of the world.</span>
+<span class="pl-c"> * @returns: A DNFFormula representing the interpretation of the user's command.</span>
+<span class="pl-c"> *           If there's an interpretation error, it returns a string with a description of the error.</span>
+<span class="pl-c"> <span class="pl-c">*/</span></span>
+<span class="pl-k">function</span> interpretCommand(<span class="pl-v">cmd</span><span class="pl-k">:</span> <span class="pl-en">Command</span>, <span class="pl-v">state</span><span class="pl-k">:</span> <span class="pl-en">WorldState</span>)<span class="pl-k">:</span> <span class="pl-c1">string</span> <span class="pl-k">|</span> <span class="pl-en">DNFFormula</span>;
+
+<span class="pl-k">type</span> <span class="pl-en">DNFFormula</span> <span class="pl-k">=</span> <span class="pl-en">Conjunction</span>[];
+<span class="pl-k">type</span> <span class="pl-en">Conjunction</span> <span class="pl-k">=</span> <span class="pl-en">Literal</span>[];
+
+<span class="pl-k">interface</span> <span class="pl-en">Literal</span> {
+  relation <span class="pl-k">:</span> <span class="pl-c1">string</span>
+  args <span class="pl-k">:</span> <span class="pl-c1">string</span>[]
+  polarity <span class="pl-k">:</span> <span class="pl-c1">boolean</span>
+}</pre></div>
+
+<p>(Actual implementation may look slightly different, but conceptually equivalent).</p>
+
+<h4>
+<a id="user-content-examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h4>
+
+<table class="table">
+<thead>
+<tr>
+<th align="left">Literal</th>
+<th align="left">JS object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><em>ontop(a,b)</em></td>
+<td align="left"><code>{relation:"ontop", args:["a","b"], polarity:true}</code></td>
+</tr>
+<tr>
+<td align="left"><em>holding(q)</em></td>
+<td align="left"><code>{relation:"holding", args:["q"], polarity:true}</code></td>
+</tr>
+<tr>
+<td align="left"><em>¬leftof(c,d)</em></td>
+<td align="left"><code>{relation:"leftof", args:["c","d"], polarity:false}</code></td>
+</tr>
+<tr>
+<td align="left"><em>p</em></td>
+<td align="left"><code>{relation:"p", args:[], polarity:true}</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="user-content-about-interpreter-test-cases" class="anchor" href="#about-interpreter-test-cases" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>About interpreter test cases</h2>
+
+<p>In <code>InterpreterTestCases.ts</code>, note that the <code>interpretations</code> field of each test case
+is a list of lists.</p>
+
+<ul>
+<li>The inner list corresponds to the disjunction of terms in the DNF formula</li>
+<li>The outer list corresponds to the number of parses.
+e.g., line 221:</li>
+</ul>
+
+<div class="highlight highlight-source-ts"><pre><span class="pl-smi">testCases</span>.<span class="pl-c1">push</span>({
+    world: <span class="pl-s"><span class="pl-pds">"</span>small<span class="pl-pds">"</span></span>,
+    utterance: <span class="pl-s"><span class="pl-pds">"</span>put a white ball in a box on the floor<span class="pl-pds">"</span></span>,
+    interpretations: [[<span class="pl-s"><span class="pl-pds">"</span>inside(LargeWhiteBall,LargeYellowBox)<span class="pl-pds">"</span></span>]]
+});
+
+<span class="pl-smi">testCases</span>.<span class="pl-c1">push</span>({
+    world: <span class="pl-s"><span class="pl-pds">"</span>small<span class="pl-pds">"</span></span>,
+    utterance: <span class="pl-s"><span class="pl-pds">"</span>put a black ball in a box on the floor<span class="pl-pds">"</span></span>,
+    interpretations: [[<span class="pl-s"><span class="pl-pds">"</span>inside(SmallBlackBall,LargeYellowBox)<span class="pl-pds">"</span></span>], [<span class="pl-s"><span class="pl-pds">"</span>ontop(SmallBlackBall,floor)<span class="pl-pds">"</span></span>]]
+});</pre></div>
+
+<ul>
+<li>Both utterances are ambiguous in the syntactic senses, but in the first case one alternative is ruled out
+because it is impossible (there is no white ball in a box).</li>
+<li>In the second case, both alternatives remain and thus</li>
+</ul>
+
+<h2>
+<a id="user-content-ambiguity-resolution" class="anchor" href="#ambiguity-resolution" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ambiguity resolution</h2>
+
+<p>Note that the <code>interpret</code> function will return a list of interpretations (inside <code>ShrdliteResult</code> objects)
+and thus you may still have ambiguity after the interpretation phase.</p>
+
+<h2>
+<a id="user-content-planning" class="anchor" href="#planning" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Planning</h2>
+
+<p>Once you have a single goal, use graph search to find a sequence of robot movements
+that will take you to a state where that goal is satisfied.</p>
+</div> <!-- container -->
+</body>
+</html>

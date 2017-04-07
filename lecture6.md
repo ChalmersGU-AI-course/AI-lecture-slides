@@ -6,12 +6,23 @@ when: "7 April, 2017"
 logo: "img/logo-Chalmers-GU.png"
 ---
 
+![](img/nlp/morpheus.jpg){:.noborder}
+<https://img.memesuper.com/7ad355dacca363617cdfcff7defc07ed_-of-morpheus-offering-the-morpheus-pill-meme_520-412.jpeg>
+{:.tiny}
+---
+
 # Last time...
 
 _"Mary saw the man with a telescope"_
 
 ![](img/nlp/mary-saw-the-man-with-a-telescope-1.png){:.noborder}
 ![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:.noborder}
+
+Notes:
+
+- Phrase structure
+- Grammars
+- Parsing
 
 ---
 
@@ -23,7 +34,7 @@ _"Colourless green ideas sleep furiously"_
 {: .tiny}
 
 {:.fragment}
-✋ Is this sentence correct?
+✋ Is this sentence valid?
 <span style="background:lime;color:white;padding:3px 6px;">Yes</span> or
 <span style="background:magenta;color:white;padding:3px 6px;">No</span>
 
@@ -32,6 +43,11 @@ _"Colourless green ideas sleep furiously"_
 # Why syntax?
 
 ![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:.noborder}
+
+Notes:
+
+- We've talked a lot about trees, but what do we do with them?
+- The trees themselves are not the goals
 
 ---
 
@@ -47,7 +63,8 @@ Introducing logical terms
 
 ### Semantic interpretation (1)
 
-![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:.noborder}
+![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:.noborder}  
+↓
 
 `With(Saw(Mary, Man), Telescope)`
 
@@ -55,7 +72,8 @@ Introducing logical terms
 
 ### Semantic interpretation (2)
 
-![](img/nlp/mary-saw-the-man-with-a-telescope-1.png){:.noborder}
+![](img/nlp/mary-saw-the-man-with-a-telescope-1.png){:.noborder}  
+↓
 
 `Saw(Mary, With(Man, Telescope))`
 
@@ -68,6 +86,10 @@ Introducing logical terms
 - _Mary saw the man_ = `Saw(Mary, Man)`
 - {:.fragment} _saw_ = `λy λx · Saw(x, y)`
 - {:.fragment} _saw the man_ = `λx · Saw(x, Man)`
+
+Notes:
+
+- Draw on board
 
 ---
 
@@ -176,7 +198,12 @@ It is both syntactically **and** semantically ambiguous
 
 _"put the white ball **that is** in a box on the floor"_
 
-![](img/nlp/put-the-white-ball-etc-parse-1.png){:class='noborder'}
+![](img/nlp/put-the-white-ball-etc-parse-1.png){:.noborder}
+
+
+Notes:
+
+- Show optional "that is" in grammar.
 
 ---
 
@@ -184,7 +211,7 @@ _"put the white ball **that is** in a box on the floor"_
 
 _"put the white ball in a box **that is** on the floor"_
 
-![](img/nlp/put-the-white-ball-etc-parse-2.png){:class='noborder'}
+![](img/nlp/put-the-white-ball-etc-parse-2.png){:.noborder}
 
 ---
 
@@ -236,46 +263,52 @@ Example: `ontop(a,b)`
 
 ---
 
-# Ambiguity
-
-- Ok to return many goals if utterance is ambiguous
-- but impossible ones should be removed
-
-
----
-
-# Interpretations (goals)
-
-inside(LargeWhiteBall, LargeYellowBox)
-
----
-
-"put the white ball in a box on the floor"
-![](img/nlp/shrdlite-small.png){:.noborder}
-
----
-
-Yellow box is already on floor: 3 moves
-![](img/nlp/shrdlite-small_white-ball-yellow-box-floor.png){:.noborder}
-
----
-
-Red box can be placed on floor first: 2 moves
-![](img/nlp/shrdlite-small_white-ball-red-box-floor.png){:.noborder}
-
----
-
-Interpretation:
-Two parse trees, although one can be eliminated because there is no white ball already in a box.
-
----
-
 # Spatial relations
 
 - x is **on top** of y if it is directly on top
 - x is **above** y if it is somewhere above
 - ...
 {: .list}
+
+---
+
+# Ambiguity
+
+- DNF inherently captures ambiguity
+- **But** impossible interperetations should be removed
+
+---
+
+_"put the white ball **that is** in a box on the floor"_  
+![](img/nlp/shrdlite-small.png){:.noborder}  
+There is no <strike>spoon</strike> _white ball in a box_.
+
+Notes:
+
+- Thus we eliminate the syntactic ambiguity and end up with just one parse tree to interpret.
+
+---
+
+_"put the white ball in a box on the floor"_
+![](img/nlp/shrdlite-small.png){:.noborder}
+
+---
+
+`inside(WhiteBall, YellowBox)`  
+Yellow box is already on floor: 3 moves
+![](img/nlp/shrdlite-small_white-ball-yellow-box-floor.png){:.noborder}
+
+---
+
+`inside(WhiteBall, RedBox) ∧ on(RedBox, floor)`  
+Red box can be placed on floor first: 2 moves
+![](img/nlp/shrdlite-small_white-ball-red-box-floor.png){:.noborder}
+
+---
+
+# Final interpretation
+
+`inside(WhiteBall, YellowBox) ∨ (inside(WhiteBall, RedBox) ∧ on(RedBox, floor))`
 
 ---
 
@@ -288,25 +321,92 @@ Two parse trees, although one can be eliminated because there is no white ball a
 
 ---
 
+# Interpreter test cases
+
+- Each test case contains a _list of interpretations_
+- Each interpretation is already a list (a disunction of conjunctions)
+
+```{
+  world: "small",
+  utterance: "take a blue object",
+  interpretations: [["holding(BlueTable)","holding(BlueBox)"]]
+}
+```
+{:.code}
+
+```{
+  world: "small",
+  utterance: "put a black ball in a box on the floor",
+  interpretations: [["inside(BlackBall,YellowBox)"],
+                    ["ontop(BlackBall,floor)"]]
+}
+```
+{:.code}
+
+---
+
+## Conjunction
+
+```{
+  world: "small",
+  utterance: "put all balls on the floor",
+  interpretations: [["ontop(WhiteBall,floor) & ontop(BlackBall,floor)"]]
+}
+```
+{:.code}
+
+---
+
+## No valid interpretations
+
+```{
+  world: "small",
+  utterance: "put a ball on a table",
+  interpretations: []
+}
+```
+{:.code}
+
+Breaks the laws of nature!
+
+---
+
+## Some interpretations are missing
+
+```{
+  world: "small",
+  utterance: "put a ball in a box on the floor",
+  interpretations: [["COME UP WITH YOUR OWN INTERPRETATION"]]
+}
+```
+{:.code}
+
+---
+
 # Tips for interpreter in Shrdlite
 
-- Using `instanceof` when traversing parse tree (`Command`)
 - Sub-functions based on grammar types
-- Recursion to handle nesting
+- Use `instanceof` when traversing parse tree (`Command`)
+- Use recursion to handle nesting  
+  _"put a box in a box on a table on the floor"_
+{:.list}
 
-"put a box in a box on a table on the floor"
+Notes:
+
+- Show that `Command` can be various sub-types
 
 ---
 
 # Ambiguity resolution
 
-Options
+Handling multiple interpretations
 
 - Fail
-- Pick "first" or random
-- Use some rule of thumb,
-e.g. prefer box already on floor
-- Ask the user for clarification (useful extension)
+- Pick "first"
+- Use some rules of thumb  
+  _e.g. prefer box already on floor_
+- Ask the user for clarification (extension)
+{:.list}
 
 ---
 
@@ -315,4 +415,17 @@ e.g. prefer box already on floor
 `goal → robot movements`
 
 - Movements: _left, right, pick, drop_
-- Graph search
+- Use graph search
+- Given a disjunction of goals, should find the easiest to satisfy
+{:.list}
+
+---
+
+## Audience participation meta-question
+
+✋ Do you prefer
+<span style="background:lime;color:white;padding:3px 6px;">Socrative</span> or
+<span style="background:magenta;color:white;padding:3px 6px;">post-it notes</span>?
+
+_Thank you for returning your post-it notes! 🦄_
+{: style="margin-top:50px"}
