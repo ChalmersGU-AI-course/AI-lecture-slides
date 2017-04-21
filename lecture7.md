@@ -293,7 +293,7 @@ so it is not guaranteed to find the best or shortest plan:
       - *Example*: Automatic trucks in a warehouse
 
     - **Competetive**: When one agent wins all other agents lose
-      - A common special case is when \\(\sum\_{a}u\_{a}(o)=0\\) for any outcome o.  
+      - A common special case is when \\(\sum\_{a}u\_{a}(o)=0\\) for any outcome \\(o\\).  
         This is called a zero-sum game.
       - *Example*: Most board games
 
@@ -319,8 +319,8 @@ so it is not guaranteed to find the best or shortest plan:
     - States are connected if there is a legal move/ply.  
       (a ply is a move by one player, i.e., one layer in the game tree)
 
-    - Utility function (payoff function).  
-      Terminal nodes have utility values +x (player 1 wins), -x (player 2 wins) and 0 (draw).
+    - Utility function (payoff function). Terminal nodes have utility values  
+      \\({+}x\\) (player 1 wins), \\({-}x\\) (player 2 wins) and \\(0\\) (draw).
 
 --------
 
@@ -434,7 +434,7 @@ Minimax can also be used on multiplayer games
 *  
 *  
 * α-β pruning keeps track of the possible range
-  of values for every node it visits;
+  of values for every node it visits;  
   the parent range is updated when the child has been visited.
 
 -----
@@ -484,7 +484,7 @@ Minimax can also be used on multiplayer games
     
     * With a "perfect ordering", the time complexity becomes \\(O(b^{m/2})\\)
         * this doubles the solvable search depth
-        * however, \\(35^{40}\\) (for chess) or \\(250^{80}\\) (for go) is still impossible…
+        * however, \\(35^{80/2}\\) (for chess) or \\(250^{160/2}\\) (for go) is still impossible…
 
 ----
 
@@ -502,7 +502,7 @@ Minimax can also be used on multiplayer games
     
     * Much work goes into finding good evaluation functions. 
     
-    * There is a trade-off between the amount of computation required 
+    * There is a trade-off between the amount of computation required  
       to compute the evaluation function and the size of the search space  
       that can be explored in any given time. 
 
@@ -510,6 +510,7 @@ Minimax can also be used on multiplayer games
 
 ## Imperfect decisions (R&N 5.4--5.4.2)
 
+* Note: this will be presented Tuesday 25th April instead!
 *  
     * H-minimax algorithm
     * Evaluation function, cutoff test
@@ -550,10 +551,11 @@ Minimax can also be used on multiplayer games
     * This relies on a strong assumption: all features are *independent of each other*
         * which is usually not true, so the best programs for chess  
           (and other games) also use nonlinear feature combinations
-    
+    *   
     * The weights can be calculated using machine learning algorithms,  
       but a human still has to come up with the features.
-        * using recent advances in deep machine learning, the computer can learn the features too
+        * using recent advances in deep machine learning,  
+          the computer can learn the features too
 
 
 -----
@@ -620,6 +622,7 @@ A naive weighted sum of features will not see the difference between these two s
 
 ## Stochastic games (R&N 5.5)
 
+* Note: this will be presented Tuesday 25th April instead!
 *  
     * chance nodes
     * expected value
