@@ -175,7 +175,7 @@ Many problems can be represented in different ways as a CSP, e.g., the crossword
 
 - *Constraint graph*: every variable is a node, every binary constraint is an arc
 
-![](img/australia-csp.png){:height="300px" style="margin-top:-50px" .noborder}
+![](img/australia-csp.png){:height="250px" style="margin-top:-20px;margin-bottom:-20px" .noborder}
 
 - {:.fragment} CSP algorithms can use the graph structure to speed up search,  
   e.g., Tasmania is an independent subproblem.
