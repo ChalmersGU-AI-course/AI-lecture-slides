@@ -18,25 +18,25 @@ logo: "img/logo-Chalmers-GU.png"
 
 ## Classical search (R&N 3.1--3.6)
 
-- Generic search algorithm, tree search, graph search, 
-  depth-first search, breadth-first search, uniform cost search,
-  iterative deepending, bidirectional search, 
-  greedy best-first search, A* search, 
+- Generic search algorithm, tree search, graph search, depth-first search,  
+  breadth-first search, uniform cost search, iterative deepending,  
+  bidirectional search, greedy best-first search, A* search,  
   heuristics, admissibility, consistency, dominating heuristics, ...
 
 <div> </div>
 
 ## Non-classical search (R&N 4.1, 4.3--4.4)
 
-- Hill climbing, random moves, random restarts, beam search,
-  nondeterministic actions, contingency plan, and-or search trees,
+- Hill climbing, random moves, random restarts, beam search,  
+  nondeterministic actions, contingency plan, and-or search trees,  
   partial observations, belief states, sensor-less problems, ...
 
 <div> </div>
 
 ## Adversarial search (R&N 5.1--5.3)
 
-- Cooperative, competetive, zero-sum games, game trees, minimax, α-β pruning, ...
+- Cooperative, competetive, zero-sum games, game trees,  
+  minimax, α-β pruning, ...
 
 -----
 
@@ -495,7 +495,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
     - *Path consistency*: triples of variables, binary constraints (PC-2 algorithm)
 
-    - *\\(k\\)-consistency*: \\(k\\) variables, \\(k\\)-ary constraints (\\(O(k)\\) algorithms)
+    - *\\(k\\)-consistency*: \\(k\\) variables, \\(k\\)-ary constraints (algorithms exponential in \\(k\\))
 
     - Consistency for global constraints: 
         - special-purpose algorithms for different constraints, e.g.:
@@ -571,7 +571,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 ![](img/8queens-min-conflicts.png){:width="600px"}
 
-- {:.fragment} The runtime of min-conflicts on the *n-queens problem* is *independent of problem size*!
+- {:.fragment} The runtime of min-conflicts on *n-queens* is *independent of problem size*!
     - it solves even the *million*-queens problem ≈50 steps
 
 - {:.fragment} Why is *n*-queens easy for local search?
