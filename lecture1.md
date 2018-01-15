@@ -1,8 +1,8 @@
 ---
 title: "Russell & Norvig, Chapters 1–2: Introduction to AI"
-description: "DIT410/TIN174, Artificial Intelligence"
+description: "DIT411/TIN175, Artificial Intelligence"
 author: "Peter Ljunglöf"
-when: "21 March, 2017"
+when: "16 January, 2018"
 logo: "img/logo-Chalmers-GU.png"
 ---
 
@@ -52,12 +52,14 @@ logo: "img/logo-Chalmers-GU.png"
 ### Weak AI
 
 - Weak AI is a category that is flexible
-  - as soon as we understand how an AI-program works,
+
+  - as soon as we understand how an AI-program works,  
     it appears less "intelligent".
 
-- And as soon as a part of AI is successful, it becomes an own research area!
-  - E.g., large parts of advanced search, parts of language understanding,
-    parts of machine learning and probabilistic learning etc.
+- And as soon as AI is successful, it becomes an own research area!
+
+  - e.g., search algorithms, natural language processing,  
+    optimization, theorem proving, machine learning etc.
 
 - And AI is left with the remaining hard-to-solve problems! 
 
@@ -86,11 +88,11 @@ logo: "img/logo-Chalmers-GU.png"
 
 # A brief history of AI (R&N 1.3)
 
-## Notable AI moments, 1940--2016
+## Notable AI moments, 1940--2018
 
 ----
 
-### Notable AI moments (1940--1975)
+### Notable AI moments (1940--1970)
 
 | 1943 | McCulloch & Pitts: Boolean circuit model of brain
 | 1950 | Alan Turing's "Computing Machinery and Intelligence"
@@ -100,26 +102,48 @@ logo: "img/logo-Chalmers-GU.png"
 | 1965 | Robinson's complete algorithm for logical reasoning
 | 1966 | Joseph Weizenbaum creates Eliza
 | 1969 | Minsky & Papert show limitations of the perceptron <br/> Neural network research almost disappears
-| 1971 | Terry Winograd's Shrdlu dialogue system
-| 1972 | Alain Colmerauer invents Prolog programming language
 {:.smaller}
 
 ----
 
-### Notable AI moments (1975--2016)
+### Notable AI moments (1970--2000)
 
+| 1971 | Terry Winograd's Shrdlu dialogue system
+| 1972 | Alain Colmerauer invents Prolog programming language
 | 1976 | MYCIN, an expert system for disease diagnosis
 | 1980s | Era of expert systems
 | 1990s | Neural networks, probability theory, AI agents
 | 1993 | RoboCup initiative to build soccer-playing robots
 | 1997 | IBM Deep Blue beats the World Chess Champion
+{:.smaller}
+
+----
+
+### Notable AI moments (2000--2018)
+
 | 2003 | Very large datasets: genomic sequences
 | 2007 | Very large datasets: WAC (web as corpus)
 | 2011 | IBM Watson wins Jeopardy
 | 2012 | US state of Nevada permits driverless cars
-| 2014 | "Deep learning": recommendation systems, image tagging, <br/> board games, speech translation, pattern recognition
-| 2016 | Google AlphaGo beats the world's 2nd best Go player, Lee Se-dol
+| 2010s | Deep learning takes over: recommendation systems, image analysis, <br/> board games, machine translation, pattern recognition
+| 2017 | Google AlphaGo beats the world's best Go player, Ke Jie <br/> AlphaZero learns boardgames by itself and beats the best programs
+| 2018 | Volvo will test-drive 100 driverless cars in Gothenburg
 {:.smaller}
+
+----
+
+## "The three waves of AI"
+
+
+- "To summarize, we see at DARPA that there have been three waves of AI, 
+    - the first of which was handcrafted knowledge. It’s still hot, it’s still relevant, it’s still important. 
+    - The second wave, which is now very much in the mainstream for things like face recognition, is about statistical learning where we build systems that get trained on data. 
+    - But those two waves by themselves are not going to be sufficient. We see the need to bring them together. And so we’re seeing the advent of a third wave of AI technology built around the concept of contextual adaption."
+
+- (by John Launchbury, March 2017: [Youtube video](https://www.darpa.mil/about-us/darpa-perspective-on-ai), [written article](https://machinelearning.technicacuriosa.com/2017/03/19/a-darpa-perspective-on-artificial-intelligence/))
+
+- {:.larger .fragment} ***In this course, we focus on first wave AI!***
+
 
 -----
 
@@ -132,8 +156,8 @@ logo: "img/logo-Chalmers-GU.png"
 ### People and literature
 
 | **Course website** | <http://chalmersgu-ai-course.github.io/>
-| **Teachers** | Peter Ljunglöf, John J. Camilleri, Jonatan Kilhamn, Inari Listenmaa, Claes Strannegård
-| **Student representatives** | Caterina Curta (N2COS), Claudia Castillo (MPALG), Ibrahim Fayaz (MPALG), Johan Ek (MPCAS), Tarun Nandakumar (MPCAS), Yan Wang (MPALG) *(updated 22nd March)*
+| **Teachers** | Peter Ljunglöf, Divya Grover, Herbert Lange, <br/>Inari Listenmaa, Claes Strannegård
+| **Student**<br/>**representatives**<br/>(randomly assigned) | Rasmus Andersson (MPIDE), Joel Sanderöd Roxell (MPSOF), <br/>Naichen Wang (MPALG), Widjaja Damarputra (MPALG), <br/>Lisanu Tebikew Yallew (MPCSN), <br/>Philip Tibom (GU), Johanna Torbjörnsson (GU)
 | **Course book** | Russell & Norvig (2002/10/14) <br/> Read it online at Chalmers library:  <http://goo.gl/6EMRZr>
 | ***<br/>Note for GU students:***{:.fragment} | ***<br/>Don't forget to register, today!***{:.fragment}
 
@@ -179,80 +203,85 @@ logo: "img/logo-Chalmers-GU.png"
 
 ### Deadlines for course moments
 
-- Group work: Form a group
-
-  - Form a group (24 March), and sign a group contract (29 March)
-
-- Group work: Write an essay
-
-  - Write a 6-page essay about AI (12 May) + review two essays (19 May)
-  - Revise your essay according to the reviews you got (2 June)
-
-- Group work: Shrdlite programming project
-
-  - Intermediate labs: A* planner (5–6 April) + interpreter (26–27 April)
-  - Complete the final project (26 May)
-
-- Written and oral examination
-
-  - *Peer-corrected* exam (2 May) + normal re-exams (8 June, 21 August)
-  - Oral review of the project (29–31 May)
-  - Individual self- and peer evaluation (28 May)
+- {:.smaller} Group work: 
+  - Form a group (19 Jan)
+-  
+- {:.smaller} Group work: Shrdlite programming project
+  - Submissions: A* search (31 Jan) + interpreter (7 Feb) + planner (28 Feb)
+  - Complete the final project (13 Mar)
+-  
+- {:.smaller} Group work: Write an essay
+  - Write a 6-page essay about AI (27 Feb) 
+  - (Individually) review one essay each (6 Mar)
+  - Revise your essay according to the reviews you got (16 Mar)
+-  
+- {:.smaller} Written and oral examination
+  - *Peer-corrected* exam (13 Feb) + normal re-exams (5 Jun, 24 Aug)
+  - Oral review of the project (14--16 Mar)
+  - Individual self- and peer evaluation (16 Mar)
 
 -----
 
 ### Recurring course moments
 
 - Lectures
-
-  - Tuesday and Friday, 10:00–11:45, during weeks 12–14, 16–17
-
+  - Tuesday and Friday, 10:00–11:45, during weeks 3--6
+-  
 - Obligatory group supervision
-
-  - Wednesdays and Thursdays (mostly) during weeks 13–14, 16–21
-    <!-- You book a fixed supervision slot on Doodle -->
+  - Wednesdays and Thursdays (mostly) during weeks 4--10
   - Supervision is compulsory for all group members!
-
+-  
 - Drop-in supervision
-
-  - Mondays during weeks 13–14, 17–21
-
+  - Wednesday and Thursday week 3 (this week!)
+  - Mondays and Tuesdays (mostly) during weeks 4--10
+-  
 - Practice sessions
-
-  - Tuesday and Friday, 8:00–9:45, weeks 16–17
+  - Tuesday and Friday, 8:00–9:45, weeks 5--6
 
 ----
 
 ### Grading
 
-- Higher grade than pass/3/G only depends on the group work!
-  - For higher grades you can collect up to 10 bonus points:
-    - The essay can give 0–3 points
-    - Your reviews can give 0–1 points
-    - Shrdlite can give 0–6 points (every extension gives 1–3 points)
-    - Your individual bonus points can be more or less than your group's 
+- All 3 subcourses are graded (U/345 resp. U/G/VG), and the final grade is:
 
-<div> </div>
+    - **GU**: To get final grade VG, you need a VG grade on at least two subcourses.
 
-|----
-|  | Grade | Bonus points
-|---|:-:|:-:
-| **Chalmers** | 3 <br/> 4 <br/> 5 | 0--3 <br/> 4--6 <br/> 7--10 
-|  **GU** | G <br/> VG  | 0--5 <br/> 6--10 
+    - **Chalmers**: The final grade is the average of the subcourse grades,  
+      weighted by the size of the subcourse, rounded like this:
 
+    | Weighted average | Final grade |
+    |:----------------:|:-----------:|
+    |      < 3.65      |      3      |
+    |    3.65--4.50    |      4      |
+    |      > 4.50      |      5      |
+
+- Note that the final grades on all subcourses are individual!
+    - This means that you can get a higher or lower grade than what your other group members will get, depending on your personal contributions to the group work. 
+
+----
+
+### The lectures
+
+- There are 8 lectures:
+
+    | **Tue 16 Jan** | Introduction
+    | **Fri 19 Jan** | Search I, Classic and heuristic search
+    | **Tue 23 Jan** | Search II, Heuristic search
+    | **Fri 26 Jan** | NLP, Natural language interpretation
+    | **Tue 30 Jan** | CSP I, Backtracking, consistency and heuristics
+    | **Fri 2 Feb**  | Search III, Non-classical and adversarial search
+    | **Tue 6 Feb**  | CSP II, Local search and problem structure
+    | **Fri 9 Feb**  | Repetition
+
+- Followed by the written exam, **Tue 13 Feb**
 
 -----
 
 ### The written examination
 
-- The exam is 2nd May (in the middle of the course)
+- The exam is 13th February (in the middle of the course)
 
   - *Why?* So that you can focus on Shrdlite and the essay in the end
-
-- {:.fragment} The exam is only pass/fail
-
-  - *Why?* This course is mainly a project course  
-    (5.0 hec group work, 2.5 hec written exam)
 
 - {:.fragment} The exam is peer-corrected
 
@@ -270,13 +299,14 @@ logo: "img/logo-Chalmers-GU.png"
 - Your project group will write a 6-page essay about the historical,  
   ethical and/or philosophical aspects of an AI topic.
 
-- {:.fragment} After submitting your essay, you will get two other essays to read and review.
+- {:.fragment} After submitting your essay, each one of you will get another essay to review.
+    - the reviewing should be done individually!
 
-- {:.fragment} You will also get reviews on your essay, which you update and submit  
-  a final version.
+- {:.fragment} Your group will get 4--5 reviews on your essay.  
+  You update it and submit a final version.
 
-- {:.fragment} *Claes Strannegård* is responsible for the essay. He will organise  
-  supervision sessions for all of you, regarding the essay. 
+- {:.fragment} *Claes Strannegård* is responsible for the essay.  
+  He will organise supervision sessions for all of you, regarding the essay. 
 
 ----
 
@@ -292,12 +322,13 @@ logo: "img/logo-Chalmers-GU.png"
 
 - {:.fragment} Every group will get a personal supervisor, which you meet once every week.
 
-- {:.fragment} There are two intermediate labs, which you submit by showing them to  
+- {:.fragment} There are three intermediate labs, which you submit by showing them to  
   your supervisor.
 
 - {:.fragment} *Note*: the Shrdlite webpage is quite long, and not everything makes sense  
   when you start the project. Make sure to visit the webpage regularly when you  
   are developing your project --- there is a lot of important information there.
+
 
 ----
 
@@ -326,7 +357,7 @@ logo: "img/logo-Chalmers-GU.png"
 - A simple agent function is:
   - If the current square is dirty, then suck;  
     otherwise, move to the other square.
-- How do we know if this is a good agent function?
+- {:.fragment} How do we know if this is a good agent function?
   - What is the best function? --- Is there one?
   - Who decides this? 
 
@@ -334,16 +365,16 @@ logo: "img/logo-Chalmers-GU.png"
 
 ### Rationality
 
-- Fixed performance measure evaluates the environment sequence
+- A *performance measure* is an objective criterion for success:
   - one point per square cleaned up in time \\(T\\)?
   - one point per clean square per time step, minus one per move?
   - penalize for \\(>k\\) dirty squares?
 -  
-- A rational agent chooses any action that
+- {:.fragment} A *rational agent* chooses any action that
   - maximizes the expected value of the performance measure 
-  - given the percept sequence to date
+  - given the history of percepts, and builtin knowledge
 -  
-- Rationality and success
+- {:.fragment} Rationality and success
   - Rational ≠ omniscient --- percepts may not supply all relevant information
   - Rational ≠ clairvoyant --- action outcomes may not be as expected
   - Hence, rational ≠ successful
@@ -352,21 +383,20 @@ logo: "img/logo-Chalmers-GU.png"
 
 ### PEAS 
 
-- To design a rational agent,  
-  we must specify the task environment,  
+- To design a rational agent, we must specify the *task environment*,  
   which consists of the following four things:
 
 - *P*erformance measure
-  :  
+  : the agent's criterion for success
 
 - *E*nvironment
-  :  
+  : the outside world interacting with the agent
 
 - *A*ctuators
-  :  
+  : how the agent controls its actions
 
 - *S*ensors
-  :  
+  : how the agent percieves the outside world
 
 ----
 
@@ -414,7 +444,7 @@ The task environment for an autonomous car:
 | Observable?    | *fully*{:.fragment data-fragment-index="1"} | *partially*{:.fragment data-fragment-index="2"} | *partially*{:.fragment data-fragment-index="3"}  | *fully*{:.fragment data-fragment-index="4"}
 | Deterministic? | *determ.*{:.fragment data-fragment-index="1"} | *stochastic*{:.fragment data-fragment-index="2"} | *stochastic*{:.fragment data-fragment-index="3"} | *determ.*{:.fragment data-fragment-index="4"}
 | Episodic?      | *sequential*{:.fragment data-fragment-index="1"} | *sequential*{:.fragment data-fragment-index="2"} | *sequential*{:.fragment data-fragment-index="3"} | *episodic*{:.fragment data-fragment-index="4"}
-| Static?        | *semi*{:.fragment data-fragment-index="1"} | *static*{:.fragment data-fragment-index="2"} | *dynamic*{:.fragment data-fragment-index="3"}    | *static*{:.fragment data-fragment-index="4"}
+| Static?        | *semidyn.*{:.fragment data-fragment-index="1"} | *static*{:.fragment data-fragment-index="2"} | *dynamic*{:.fragment data-fragment-index="3"}    | *static*{:.fragment data-fragment-index="4"}
 | Discrete?      | *discrete*{:.fragment data-fragment-index="1"} | *discrete*{:.fragment data-fragment-index="2"} | *continuous*{:.fragment data-fragment-index="3"} | *disc./cont.*{:.fragment data-fragment-index="4"}
 | N:o agents | *multiple (compet.)*{:.fragment data-fragment-index="1"} | *multiple (compet.)*{:.fragment data-fragment-index="2"} | *multiple (cooper.)*{:.fragment data-fragment-index="3"} | *single*{:.fragment data-fragment-index="4"}
 
@@ -506,7 +536,7 @@ The task environment for an autonomous car:
 
 ------
 
-### Turing's objections to AI [1–3]
+### Turing's (discussion of) objections to AI [1–3]
 
 - {:.fragment} **(1) The Theological Objection**
 
@@ -525,7 +555,7 @@ The task environment for an autonomous car:
 
 ----
 
-### Turing's objections to AI [4–5]
+### Turing's (discussion of) objections to AI [4–5]
 
 - {:.fragment} **(4) The Argument from Consciousness**
 
@@ -545,7 +575,7 @@ The task environment for an autonomous car:
 
 ---
 
-### Turing's objections to AI [6–8]
+### Turing's (discussion of) objections to AI [6–8]
 
 - {:.fragment} **(6) Lady Lovelace's Objection**
 
@@ -569,11 +599,11 @@ The task environment for an autonomous car:
 
 - {:.fragment}  **(9) The Argument from Extrasensory Perception**
 
-    - this was the strongest argument according to Turing…
+    - "Let us play the imitation game, using as witnesses a man who is good as a telepathic receiver, and a digital computer. The interrogator can ask such questions as 'What suit does the card in my right hand belong to?' The man by telepathy or clairvoyance gives the right answer 130 times out of 400 cards. The machine can only guess at random, and perhaps gets 104 right, so the interrogator makes the right identification."
 
-    - "the statistical evidence [...] is overwhelming"
+    - (this was the strongest argument according to Turing…  
+      "the statistical evidence [...] is overwhelming")
 
-    - "Let us play the imitation game, using as witnesses a man who is good as a telepathic receiver, and a digital computer. The interrogator can ask such questions as 'What suit does the card in my right hand belong to?' The man by telepathy or clairvoyance gives the right answer 130 times out of 400 cards. The machine can only guess at random, and perhaps gets 104 right, so the interrogator makes the right identification."
 
 -----
 
@@ -628,15 +658,13 @@ The task environment for an autonomous car:
 - What are the possible risks of using AI technology?
 
   - AI might be used towards undesirable ends 
-
     - e.g., surveillance by speech recognition, detection of "terrorist phrases"
-
+-  
   - AI might result in a loss of accountability 
-
     - what's the legal status of a self-driving car? 
-
     - or a medical expert system? 
-
+    - or autonomous military attack drones?
+-  
   - AI might mean the end of the human race
-
-    - what if the new superintelligent race won’t obey Asimov’s robot laws?
+    - can a military AI start a neuclear war? (accidentally or not)
+    - if we get superintelligent robots, will they care about humans?

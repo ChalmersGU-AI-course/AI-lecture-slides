@@ -59,7 +59,7 @@ usualy have components using state-space search.
 ### Directed Graphs
 
 - A *graph* consists of a set \\(N\\) of *nodes* and a set \\(A\\) of ordered pairs of nodes,  
-  called *arcs*. 
+  called *arcs* or *edges*.
 
   - Node \\(n\_2\\) is a *neighbor* of \\(n\_1\\)
     if there is an arc from \\(n\_1\\) to \\(n\_2\\).  
@@ -81,7 +81,7 @@ usualy have components using state-space search.
 
 We want to drive from Arad to Bucharest in Romania
 
-![Romania](img/romania-distances.png){:height="400px"}
+![Romania](img/romania-distances.png){:height="400px" .noborder}
 
 ----
 
@@ -91,8 +91,8 @@ Grid game: Rob needs to collect coins
 \\( C\_{1}, C\_{2}, C\_{3}, C\_{4} \\),  
 without running out of fuel, and end up at location (1,1):
 
-![](img/GameSearchSpace00.png){:height="300px" .fragment data-fragment-index="1" .nospace-fragment .fade-out}
-![](img/GameSearchSpace01.png){:height="300px" .fragment data-fragment-index="1" .nospace-fragment}
+![](img/GameSearchSpace00a.png){:height="300px" .noborder .fragment data-fragment-index="1" .nospace-fragment .fade-out}
+![](img/GameSearchSpace01a.png){:height="300px" .noborder .fragment data-fragment-index="1" .nospace-fragment}
 
 What is a good representation of the *search states* and the *goal*?
 
@@ -100,8 +100,8 @@ What is a good representation of the *search states* and the *goal*?
 
 ### Example: Vacuum-cleaning agent
 
-![](img/vacuum2-environment.png){:height="300px" .fragment data-fragment-index="1" .nospace-fragment .fade-out}
-![](img/vacuum2-state-space.png){:height="300px" .fragment data-fragment-index="1" .nospace-fragment}
+![](img/vacuum2-environment.png){:height="300px" .fragment .noborder data-fragment-index="1" .nospace-fragment .fade-out}
+![](img/vacuum2-state-space.png){:height="300px" .fragment .noborder data-fragment-index="1" .nospace-fragment}
 
 | **States**        | *[room A dirty?, room B dirty?, robot location]*{:.fragment data-fragment-index="1"}
 | **Initial state** | *any state*{:                                     .fragment data-fragment-index="1"} 
@@ -115,7 +115,7 @@ What is a good representation of the *search states* and the *goal*?
 
 ### Example: The 8-puzzle 
 
-![](img/8-puzzle.png){:height="250px"}
+![](img/8-puzzle.png){:height="250px" .noborder}
 
 | **States**        | *a 3 x 3 matrix of integers*{:                 .fragment data-fragment-index="1"}
 | **Initial state** | *any state*{:                                  .fragment data-fragment-index="1"}
@@ -129,7 +129,7 @@ What is a good representation of the *search states* and the *goal*?
 
 ### Example: The 8-queens problem
 
-![](img/8queens-v1.png){:height="250px"}
+![](img/8queens-v1.png){:height="250px" .noborder}
 
 | **States**        | *any arrangement of 0 to 8 queens on the board*{:.fragment data-fragment-index="1"}
 | **Initial state** | *no queens on the board*{:                       .fragment data-fragment-index="1"}
@@ -148,7 +148,7 @@ possible paths to explore!
 
 ### Example: The 8-queens problem (alternative)
 
-![](img/8queens-v2.png){:height="250px"}
+![](img/8queens-v2.png){:height="250px" .noborder}
 
 | **States**        | *one queen per column in leftmost columns, none attacked*{:.fragment data-fragment-index="1"}
 | **Initial state** | *no queens on the board*{:.fragment data-fragment-index="1"}
@@ -170,7 +170,7 @@ the number 4 and applying some combination of the factorial, square root, and fl
 
 \\[ \left\lfloor \sqrt{\sqrt{\sqrt{\sqrt{\sqrt{(4!)!}}}}}\right\rfloor = 5 \\]
 
-| **States** | <span>*positive numbers* \\( (1, 2, 2.5, 3, \sqrt{2}, 1.23\cdot 10^{456}, \sqrt{\sqrt{2}}, \ldots) \\)</span>{:.fragment data-fragment-index="1"}
+| **States** | <span>*algebraic numbers* \\( (1, 2.5, 9, \sqrt{2}, 1.23\cdot 10^{456}, \sqrt{\sqrt{2}}, \ldots) \\)</span>{:.fragment data-fragment-index="1"}
 | **Initial state** | *4*{:.fragment data-fragment-index="1"}
 | **Actions** | *apply factorial, square root, or floor operation*{:.fragment data-fragment-index="1"}
 | **Goal test** | *any positive integer (e.g., 5)*{:.fragment data-fragment-index="1"}
@@ -209,48 +209,91 @@ the number 4 and applying some combination of the factorial, square root, and fl
 
 ----
 
-### Illustration of searching in a graph
+### Illustration of generic search
 
-![](img/searchspc.png){:height="500px"}
- 
+![](img/searchspc-tree.png){:height="400px" .noborder}
+
 ----
 
 ### A generic tree search algorithm
-{:.fragment data-fragment-index="1" .nospace-fragment .fade-out}
-
-### Turning tree search into graph search
-{:.fragment data-fragment-index="1" .nospace-fragment}
 
 - *Tree search*:  Don't check if nodes are visited multiple times
-- {:.fragment data-fragment-index="1"} *Graph search*:  Keep track of visited nodes
 
 <div> </div>
 
 - **function** Search(*graph*, *initialState*, *goalState*):
   - initialise *frontier* using the *initialState*
-  - <span>initialise *exploredSet* to the empty set</span>{:.fragment data-fragment-index="1"}
+  -  
   - **while** *frontier* is not empty:
     - **select** and **remove** *node* from *frontier*
     - **if** *node*.state is a *goalState* **then return** *node*
-    - <span>add *node* to *exploredSet*</span>{:.fragment data-fragment-index="1"}
+    -  
     - **for each** *child* **in** ExpandChildNodes(*node*, *graph*):
       - add *child* to *frontier*
-        <span>... **if** *child* is not in *frontier* or *exploredSet*</span>{:.fragment data-fragment-index="1"}
+        <span>**if** *child* is not in *frontier* or *exploredSet*</span>{:.invisible}
   - **return** failure
 {: .pseudocode}
-  
+
+----
+
+### Turning tree search into graph search
+
+- *Graph search*:  Keep track of visited nodes
+
+<div> </div>
+
+- **function** Search(*graph*, *initialState*, *goalState*):
+  - initialise *frontier* using the *initialState*
+  - <span>initialise *exploredSet* to the empty set</span>{:.highlight}
+  - **while** *frontier* is not empty:
+    - **select** and **remove** *node* from *frontier*
+    - **if** *node*.state is a *goalState* **then return** *node*
+    - <span>add *node* to *exploredSet*</span>{:.highlight}
+    - **for each** *child* **in** ExpandChildNodes(*node*, *graph*):
+      - add *child* to *frontier*
+        <span>**if** *child* is not in *frontier* or *exploredSet*</span>{:.highlight}
+  - **return** failure
+{: .pseudocode}
+
+----
+
+### Using tree search on a graph
+
+![](img/searchspc-tree.png){:height="400px" .fragment .noborder data-fragment-index="1" .nospace-fragment .fade-out}
+![](img/searchspc-graph.png){:height="400px" .fragment .noborder data-fragment-index="1" .nospace-fragment}
+
+- 
+    - {:.fragment style="color:green"} explored nodes might be revisited
+    - {:.fragment style="color:blue"} frontier nodes might be duplicated 
+
+----
+
+### Tree search vs. graph search
+
+- *Tree search*
+
+    - **Pro**: uses less memory
+    - **Con**: might visit the same node several times
+
+- *Graph search*
+
+    - **Pro**: only visits nodes at most once
+    - **Con**: uses more memory
+
+- **Note**: The pseudocode in these slides (and the course book)  
+  is not the only possible! E.g., Wikipedia uses a different variant.
+
 -------
 
 ### Graph nodes vs. search nodes 
 
-The nodes used while searching are not the same as the graph nodes:
-
+- ***Search nodes are not the same as graph nodes!***
 - Search nodes should contain more information:
   - the corresponding graph node (called state in R&N)
   - the total path cost from the start node
   - the estimated (heuristic) cost to the goal 
   - enough information to be able to calculate the final path
-{: .smaller}
+{: .smallers}
   
 <div> </div>
 
@@ -278,7 +321,7 @@ The nodes used while searching are not the same as the graph nodes:
 
 Which shaded goal will a depth-first search find first?
 
-![](img/sgraph_bb_template.png){:height="450px"}
+![](img/sgraph_bb_template.png){:height="400px" .noborder}
 
 ----
 
@@ -286,7 +329,7 @@ Which shaded goal will a depth-first search find first?
 
 Which shaded goal will a breadth-first search find first?
 
-![](img/sgraph_bb_template.png){:height="450px"}
+![](img/sgraph_bb_template.png){:height="400px" .noborder}
 
 ------------
 
@@ -306,7 +349,7 @@ Which shaded goal will a breadth-first search find first?
 
 ### Illustrative graph: Depth-first search
 
-![](img/sgraph_de.png){:height="500px"}
+![](img/sgraph_de.png){:height="400px" .noborder}
 
 ---- 
 
@@ -340,7 +383,7 @@ Which shaded goal will a breadth-first search find first?
 
 ### Illustrative graph: breadth-first search
 
-![](img/sgraph_br.png){:height="500px"} 
+![](img/sgraph_br.png){:height="400px" .noborder} 
 
 ----
 
@@ -387,7 +430,6 @@ Which shaded goal will a breadth-first search find first?
 ### Heuristic search
 
 - Previous methods don't use the goal to select a path to explore.
-
 - ***Main idea***: don't ignore the goal when selecting paths. 
 
     - Often there is extra knowledge that can guide the search: ***heuristics***.
@@ -400,7 +442,8 @@ Which shaded goal will a breadth-first search find first?
     - \\(h(n)\\) is an *underestimate* if there is no path from \\(n\\) to a goal  
       with cost less than \\(h(n)\\). 
 
-    - An *admissible heuristic* is a nonnegative heuristic function that is an underestimate of the actual cost of a path to a goal. 
+    - An *admissible heuristic* is a nonnegative underestimating heuristic function:  
+      \\( 0 \leq h(n) \leq cost(n,goal) \\) 
     
 ----
 
@@ -413,7 +456,8 @@ Which shaded goal will a breadth-first search find first?
       \\(h(n)\\) can be the straight-line distance (SLD) from n to the closest goal. 
 
     - If the nodes are locations and cost is time, we can use the distance to  
-      a goal divided by the maximum speed, \\(h(n)=d(n)/v\_{\max}\\). 
+      a goal divided by the maximum speed, \\(h(n)=d(n)/v\_{\max}\\)  
+      (or the average speed, \\(h(n)=d(n)/v\_{\textrm{avg}}\\), which makes it non-admissible).
 
     - If the goal is to collect all of the coins and not run out of fuel, we can  
       use an estimate of how many steps it will take to collect the coins  
@@ -426,7 +470,7 @@ Which shaded goal will a breadth-first search find first?
 ### Example heuristic: Romania distances
 {:.no_toc}
 
-![](img/romania2.png){:height="450px"} 
+![](img/romania2.png){:height="450px" .noborder} 
 
 ----
 
@@ -443,10 +487,13 @@ Which shaded goal will a breadth-first search find first?
 
 ### Greedy search example: Romania
 
-![Romania](img/greedy-progress01c.png){:height="300px" .fragment data-fragment-index="1" .nospace-fragment .fade-out}
-![Romania](img/greedy-progress02c.png){:height="300px" .fragment data-fragment-index="1" .nospace-fragment .current-visible}
-![Romania](img/greedy-progress03c.png){:height="300px" .fragment data-fragment-index="2" .nospace-fragment .current-visible}
-![Romania](img/greedy-progress04c.png){:height="300px" .fragment data-fragment-index="3" .nospace-fragment}
+![Romania](img/greedy-progress01c.png){:height="300px" .noborder .fragment data-fragment-index="1" .nospace-fragment .fade-out}
+![Romania](img/greedy-progress02a.png){:height="300px" .noborder .fragment data-fragment-index="1" .nospace-fragment .current-visible}
+![Romania](img/greedy-progress02c.png){:height="300px" .noborder .fragment data-fragment-index="2" .nospace-fragment .current-visible}
+![Romania](img/greedy-progress03a.png){:height="300px" .noborder .fragment data-fragment-index="3" .nospace-fragment .current-visible}
+![Romania](img/greedy-progress03c.png){:height="300px" .noborder .fragment data-fragment-index="4" .nospace-fragment .current-visible}
+![Romania](img/greedy-progress04a.png){:height="300px" .noborder .fragment data-fragment-index="5" .nospace-fragment .current-visible}
+![Romania](img/greedy-progress04c.png){:height="300px" .noborder .fragment data-fragment-index="6" .nospace-fragment}
 
 ***This is not the shortest path!***
 {:.fragment}
@@ -458,13 +505,13 @@ Which shaded goal will a breadth-first search find first?
 - Greedy search returns the path: *Arad--Sibiu--Fagaras--Bucharest* (450km)
 - The optimal path is: *Arad--Sibiu--Rimnicu--Pitesti--Bucharest* (418km)
 
-![](img/romania-distances.png){:height="400px"} 
+![](img/romania-distances.png){:height="400px" .noborder} 
 
 ---
 
 ### Best-first search and infinite loops
 
-![](img/sgraph_bestc.png){:height="400px"}
+![](img/sgraph_bestc.png){:height="400px" .noborder}
 
 ***Best-first search might fall into an infinite loop!***
 
@@ -533,14 +580,22 @@ Which shaded goal will a breadth-first search find first?
 
 ### A* search example: Romania
 
-![Romania](img/astar-progress01c.png){:height="300px" .fragment data-fragment-index="1" .nospace-fragment .fade-out}
-![Romania](img/astar-progress02c.png){:height="300px" .fragment data-fragment-index="1" .nospace-fragment .current-visible}
-![Romania](img/astar-progress03c.png){:height="300px" .fragment data-fragment-index="2" .nospace-fragment .current-visible}
-![Romania](img/astar-progress04c.png){:height="300px" .fragment data-fragment-index="3" .nospace-fragment .current-visible}
-![Romania](img/astar-progress05c.png){:height="300px" .fragment data-fragment-index="4" .nospace-fragment .current-visible}
-![Romania](img/astar-progress06c.png){:height="300px" .fragment data-fragment-index="5" .nospace-fragment}
+![Romania](img/astar-progress01c.png){:height="300px" .noborder .fragment data-fragment-index="1" .nospace-fragment .fade-out}
+![Romania](img/astar-progress02a.png){:height="300px" .noborder .fragment data-fragment-index="1" .nospace-fragment .current-visible}
+![Romania](img/astar-progress02c.png){:height="300px" .noborder .fragment data-fragment-index="2" .nospace-fragment .current-visible}
+![Romania](img/astar-progress03a.png){:height="300px" .noborder .fragment data-fragment-index="3" .nospace-fragment .current-visible}
+![Romania](img/astar-progress03c.png){:height="300px" .noborder .fragment data-fragment-index="4" .nospace-fragment .current-visible}
+![Romania](img/astar-progress04a.png){:height="300px" .noborder .fragment data-fragment-index="5" .nospace-fragment .current-visible}
+![Romania](img/astar-progress04c.png){:height="300px" .noborder .fragment data-fragment-index="6" .nospace-fragment .current-visible}
+![Romania](img/astar-progress05a.png){:height="300px" .noborder .fragment data-fragment-index="7" .nospace-fragment .current-visible}
+![Romania](img/astar-progress05c.png){:height="300px" .noborder .fragment data-fragment-index="8" .nospace-fragment .current-visible}
+![Romania](img/astar-progress06a.png){:height="300px" .noborder .fragment data-fragment-index="9" .nospace-fragment .current-visible}
+![Romania](img/astar-progress06c.png){:height="300px" .noborder .fragment data-fragment-index="10" .nospace-fragment}
 
 ***A\* guarantees that this is the shortest path!***
+{:.fragment}
+
+**Note that we didn't select the first occurrence of Bucharest**
 {:.fragment}
 
 ----
@@ -549,7 +604,7 @@ Which shaded goal will a breadth-first search find first?
 
 - The optimal path is: *Arad--Sibiu--Rimnicu--Pitesti--Bucharest* (418km)
 
-![](img/romania-distances.png){:height="450px"} 
+![](img/romania-distances.png){:height="450px" .noborder} 
 
 ----
 
@@ -581,34 +636,30 @@ Which shaded goal will a breadth-first search find first?
 
 ----
 
-### A* finds an optimal solution first
+### Why is A* optimal?
 
-- The first path that A* finds to a goal is an optimal path, because:
 
-    - The \\(f\\)-value for any node on an optimal solution path  
-      is less than or equal to the \\(f\\)-value of an optimal solution.  
-      This is because \\(h\\) is an underestimate of the actual cost
+- The \\(f\\) values in A* are nondecreasing, therefore:
 
-    - Thus, the \\(f\\)-value of a node on an optimal solution path  
-      is less than the \\(f\\)-value for any non-optimal solution. 
+    **first** | A* expands all nodes with \\( f(n) < C \\)
+    **then**  | A* expands all nodes with \\( f(n) = C \\)
+    **finally**  | A* expands all nodes with \\( f(n) > C \\)
+    {:.noborder}
 
-    - Thus, a non-optimal solution can never be chosen while  
-      a node exists on the frontier that leads to an optimal solution.  
-      Because an element with minimum \\(f\\)-value is chosen at each step
+- A* will not expand any nodes with \\( f(n) > C\* \\),  
+  where \\(C\*\\) is the cost of an optimal solution.
 
-    - So, before it can select a non-optimal solution, it will have to pick  
-      all of the nodes on an optimal path, including each of the optimal solutions.
-
+- (***Note***: all this assumes that the heuristics is admissible)
 
 ----
 
-### Illustration: Why is A* admissible?
+### Illustration: Why is A* optimal?
 
-- A* gradually adds “\\(f\\)-contours” of nodes (cf. BFS adds layers).
+- A* gradually adds “\\(f\\)-contours” of nodes (cf. BFS adds layers)
 
-- Contour \\(i\\) has all nodes with \\(f=f\_{i}\\), where \\(f\_{i}<f\_{i+1}\\).
+- Contour \\(i\\) has all nodes with \\(f=f\_{i}\\), where \\(f\_{i}<f\_{i+1}\\)
 
-![](img/f-circles.png){:height="350px"}
+![](img/f-circles.png){:height="300px" .noborder}
 
 ----
 
@@ -617,7 +668,7 @@ Which shaded goal will a breadth-first search find first?
 - \\(h\_{1}(n)\\) = number of misplaced tiles
 - \\(h\_{2}(n)\\) = total Manhattan distance  
   (i.e., no. of squares from desired location of each tile)  
-  ![](img/8-puzzle.png){:height="200px"}
+  ![](img/8-puzzle.png){:height="200px" .noborder}
 - \\(h\_{1}(StartState)\\)  =  *8*{:.fragment}
 - \\(h\_{2}(StartState)\\)  =  *3+1+2+2+2+3+3+2 = 18*{:.fragment}
 
@@ -657,77 +708,6 @@ Which shaded goal will a breadth-first search find first?
 
 ----
 
-### Graph-search = Multiple-path pruning
-
-![](img/mult_path.png){:height="150px"}
-
-- Graph search keeps track of visited nodes, so we don't visit the same node twice.
-
-  - Suppose that the first time we visit a node is not via the most optimal path
-
-          \\(\Rightarrow\\)   then graph search will return a suboptimal path
-
-  - Under which circumstances can we guarantee that A* graph search is optimal?
-
-----
-
-### When is A* graph search optimal?
-
-![](img/consistent-graph.png){:height="150px"}
-
-- Suppose path \\(p\\) to \\(n\\) was selected,
-  but there is a shorter path \\(p'\\) to \\(n\\).
-
-- {: .fragment} Suppose path \\(p'\\) ends at node \\(n'\\).
-
-- {: .fragment}
-  \\(p\\) was selected before \\(p'\\), which means that:
-    \\(cost(p)+h(n)\leq cost(p')+h(n')\\). 
-
-- {: .fragment}
-  Suppose \\(cost(n',n)\\) is the actual cost of a path from \\(n'\\) to \\(n\\).  
-  The path to \\(n\\) via \\(p'\\) is shorter than \\(p\\), i.e.:
-    \\(cost(p')+cost(n',n)<cost(p)\\).
-
-- {: .fragment}
-  Combining the two:
-    \\(cost(n',n)<cost(p)-cost(p')\leq h(n')-h(n)\\)
-
-- {: .fragment} So, the problem won't occur if   \\(\|h(n')-h(n)\|\leq cost(n',n)\\).
-
-----
-
-### Consistency, or monotonicity
-
-- A heuristic function \\(h\\) is **consistent** (or monotone) if  
-  \\( \|h(m)-h(n)\| \leq cost(m,n) \\)
-    for every arc \\((m,n)\\).  
-
-    - (This is a form of triangle inequality)
-
-    - If \\(h\\) is consistent, then A* graph search will always finds  
-      the shortest path to a goal. 
-
-    - This is a strengthening of admissibility. 
-
-----
-
-### Summary of optimality of A*
-
-- A* *tree search* is optimal if:
-
-    - the heuristic function \\(h(n)\\) is **admissible**
-    - i.e., \\(h(n)\\) is nonnegative and an underestimate of the actual cost
-    - i.e., \\( h(n) \leq cost(n,goal) \\), for all nodes \\(n\\)
-
-- A* *graph search* is optimal if:
-
-    - the heuristic function \\(h(n)\\) is **consistent**
-    - i.e., \\( \|h(m)-h(n)\| \leq cost(m,n) \\), for all arcs \\((m,n)\\)
-
-
-----
-
 ### Summary of tree search strategies 
 
 |Search<br/>strategy| Frontier selection    | Halts if solution? | Halts if no solution? | Space usage
@@ -748,10 +728,12 @@ Which shaded goal will a breadth-first search find first?
 
 ### Example demo
 
-Here is an example demo of several different search algorithms, including A*.  
-Furthermore you can play with different heuristics:
+- Here is an example demo of several different search algorithms,  
+  including A*. And you can play with different heuristics:
 
-<http://qiao.github.io/PathFinding.js/visual/>
+    - <http://qiao.github.io/PathFinding.js/visual/>
 
-Note that this demo is tailor-made for planar grids,  
-which is a special case of all possible search graphs.
+- Note that this demo is tailor-made for planar grids,  
+  which is a special case of all possible search graphs.
+
+    - (e.g., the Shrdlite graph will not be a planar grid)
