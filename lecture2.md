@@ -1,8 +1,8 @@
 ---
 title: "Chapter 3: Classical search algorithms"
-description: "DIT410/TIN174, Artificial Intelligence"
+description: "DIT411/TIN175, Artificial Intelligence"
 author: "Peter Ljunglöf"
-when: "24 March, 2017"
+when: "19 January, 2018"
 logo: "img/logo-Chalmers-GU.png"
 ---
 
