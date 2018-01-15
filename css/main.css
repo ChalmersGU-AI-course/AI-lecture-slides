@@ -7,6 +7,14 @@ em {
     color: #800;
 }
 
+.invisible {
+    visibility: hidden !important;
+}
+
+.highlight {
+    background-color: yellow !important;
+}
+
 strong {
 }
 
@@ -20,6 +28,10 @@ em > strong, strong > em {
 
 .smaller, .smaller tr, .smaller td, .smaller li, .smaller p, .smaller dd, .smaller dt {
     font-size: 90%;
+}
+
+.larger, .larger tr, .larger td, .larger li, .larger p, .larger dd, .larger dt {
+    font-size: 120%;
 }
 
 .reveal .tiny {
