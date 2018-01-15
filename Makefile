@@ -10,7 +10,7 @@ PDFFILES = $(wildcard $(IMAGEDIR)/*.pdf)
 help:
 	@echo "make img"
 
-img: $(PDFFILES:%.pdf=%.png)
+# img: $(PDFFILES:%.pdf=%.png)
 
 %.png: %.pdf
 	sips -s format png $< --out $@
