@@ -90,6 +90,8 @@ logo: "img/logo-Chalmers-GU.png"
 
 ## Notable AI moments, 1940--2018
 
+## "The three waves of AI"
+
 ----
 
 ### Notable AI moments (1940--1970)
@@ -132,7 +134,7 @@ logo: "img/logo-Chalmers-GU.png"
 
 ----
 
-## "The three waves of AI"
+### "The three waves of AI"
 
 
 - "To summarize, we see at DARPA that there have been three waves of AI, 
