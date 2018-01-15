@@ -331,6 +331,26 @@ logo: "img/logo-Chalmers-GU.png"
   when you start the project. Make sure to visit the webpage regularly when you  
   are developing your project --- there is a lot of important information there.
 
+----
+
+## Changes since last year
+{:.no_toc}
+
+- Changes to the course structure and grading
+    - The previous big project subcourse is now divided into two subcourses.
+    - The grading calculation has been simplified.
+    - The written exam is graded (i.e., the final grade depends on all subcourses).
+-  
+- Changes to the theoretical content
+    - I have dropped some advanced content.
+-  
+- Changes to the Shrdlite project
+    - The template code is improved, and the interpreter has a better skeleton.
+    - There is a third intermediate submission, the planner.
+-  
+- Changes to the essay
+    - The main essay work will be in the week directly after the written examination.
+    - The essay reviews are now individual (i.e., every essay will get more reviews).
 
 ----
 
