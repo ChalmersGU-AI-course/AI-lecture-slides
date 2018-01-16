@@ -138,11 +138,11 @@ logo: "img/logo-Chalmers-GU.png"
 
 
 - "To summarize, we see at DARPA that there have been three waves of AI, 
-    - the first of which was handcrafted knowledge. It’s still hot, it’s still relevant, it’s still important. 
-    - The second wave, which is now very much in the mainstream for things like face recognition, is about statistical learning where we build systems that get trained on data. 
-    - But those two waves by themselves are not going to be sufficient. We see the need to bring them together. And so we’re seeing the advent of a third wave of AI technology built around the concept of contextual adaption."
+    - {:.fragment} the first of which was handcrafted knowledge. It’s still hot, it’s still relevant, it’s still important. 
+    - {:.fragment} The second wave, which is now very much in the mainstream for things like face recognition, is about statistical learning where we build systems that get trained on data. 
+    - {:.fragment} But those two waves by themselves are not going to be sufficient. We see the need to bring them together. And so we’re seeing the advent of a third wave of AI technology built around the concept of contextual adaption."
 
-- (by John Launchbury, March 2017: [Youtube video](https://www.darpa.mil/about-us/darpa-perspective-on-ai), [written article](https://machinelearning.technicacuriosa.com/2017/03/19/a-darpa-perspective-on-artificial-intelligence/))
+- {:.fragment} (by John Launchbury, March 2017: [Youtube video](https://www.darpa.mil/about-us/darpa-perspective-on-ai), [written article](https://machinelearning.technicacuriosa.com/2017/03/19/a-darpa-perspective-on-artificial-intelligence/))
 
 - {:.larger .fragment} ***In this course, we focus on first wave AI!***
 
@@ -159,9 +159,28 @@ logo: "img/logo-Chalmers-GU.png"
 
 | **Course website** | <http://chalmersgu-ai-course.github.io/>
 | **Teachers** | Peter Ljunglöf, Divya Grover, Herbert Lange, <br/>Inari Listenmaa, Claes Strannegård
-| **Student**<br/>**representatives**<br/>(randomly assigned) | Rasmus Andersson (MPIDE), Joel Sanderöd Roxell (MPSOF), <br/>Naichen Wang (MPALG), Widjaja Damarputra (MPALG), <br/>Lisanu Tebikew Yallew (MPCSN), <br/>Philip Tibom (GU), Johanna Torbjörnsson (GU)
+| **Student**<br/>**representatives**<br/>(randomly assigned) | Rasmus Andersson (MPIDE), Joel Sanderöd Roxell (MPSOF), <br/>Naichen Wang (MPALG), Ryan Damarputra Widjaja (MPALG), <br/>Lisanu Tebikew Yallew (MPCSN), <br/>Philip Tibom (GU), Johanna Torbjörnsson (GU)
 | **Course book** | Russell & Norvig (2002/10/14) <br/> Read it online at Chalmers library:  <http://goo.gl/6EMRZr>
-| ***<br/>Note for GU students:***{:.fragment} | ***<br/>Don't forget to register, today!***{:.fragment}
+
+----
+
+### Register and form groups
+
+- {:.fragment} **For GU students:**
+    - {:.fragment} ***Don't forget to register, today!***
+-  
+- {:.fragment} **For those who haven't answered the questionnaire:**
+    - {:.fragment} ***Talk to me in the pause!***
+-  
+- {:.fragment} **Form a group:**
+    - {:.fragment} Tomorrow I will send out a suggestion based on your preferences
+    - {:.fragment} If you're not satisfied, come to the ***drop-in supervision tomorrow or Thursday***
+-  
+- {:.fragment} **Meet your group:**
+    - {:.fragment} Make sure to have a first meeting this week
+    - {:.fragment} Decide how you will work together, how often you will meet,
+      learn about your backgrounds, how much time you can spend on the course, etc...
+
 
 ----
 
@@ -249,7 +268,7 @@ logo: "img/logo-Chalmers-GU.png"
     - **GU**: To get final grade VG, you need a VG grade on at least two subcourses.
 
     - **Chalmers**: The final grade is the average of the subcourse grades,  
-      weighted by the size of the subcourse, rounded like this:
+      weighted by the size of the subcourse (3.5hp, 2.5hp, 1.5hp), rounded like this:
 
     | Weighted average | Final grade |
     |:----------------:|:-----------:|
