@@ -159,7 +159,7 @@ logo: "img/logo-Chalmers-GU.png"
 
 | **Course website** | <http://chalmersgu-ai-course.github.io/>
 | **Teachers** | Peter Ljunglöf, Divya Grover, Herbert Lange, <br/>Inari Listenmaa, Claes Strannegård
-| **Student**<br/>**representatives**<br/>(randomly assigned) | Rasmus Andersson (MPIDE), Joel Sanderöd Roxell (MPSOF), <br/>Naichen Wang (MPALG), Ryan Damarputra Widjaja (MPALG), <br/>Lisanu Tebikew Yallew (MPCSN), <br/>Philip Tibom (GU), Johanna Torbjörnsson (GU)
+| **Student**<br/>**representatives** | (see the course website)
 | **Course book** | Russell & Norvig (2002/10/14) <br/> Read it online at Chalmers library:  <http://goo.gl/6EMRZr>
 
 ----
