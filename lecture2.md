@@ -6,6 +6,23 @@ when: "19 January, 2018"
 logo: "img/logo-Chalmers-GU.png"
 ---
 
+## Deadline for forming groups
+{:.no_toc}
+
+- Today is the deadline for forming groups.
+
+    - if you have any problems, please talk to me in the break
+    - e.g., if you cannot contact one of your group members
+    - or if you don't have a group yet
+
+- Don't forget to create a Github team and clone the Shrdlite repository
+
+    - then email me with information about your group
+
+- Today we will decide your exact supervision time and your supervisor
+
+----
+
 ## Table of contents
 {:.no_toc}
 
@@ -107,7 +124,6 @@ What is a good representation of the *search states* and the *goal*?
 | **Initial state** | *any state*{:                                     .fragment data-fragment-index="1"} 
 | **Actions**       | *left, right, suck, do-nothing*{:                 .fragment data-fragment-index="1"}
 | **Goal test**     | *[false, false, –]*{:                             .fragment data-fragment-index="1"}
-| **Path cost**     | *1 per action (0 for do-nothing)*{:               .fragment data-fragment-index="1"}
 {: .smaller}
 
 ----
@@ -121,7 +137,6 @@ What is a good representation of the *search states* and the *goal*?
 | **Initial state** | *any state*{:                                  .fragment data-fragment-index="1"}
 | **Actions**       | *move the blank space: left, right, up, down*{:.fragment data-fragment-index="1"}
 | **Goal test**     | *equal to the goal state*{:                    .fragment data-fragment-index="1"}
-| **Path cost**     | *1 action (0 for do-nothing)*{:                .fragment data-fragment-index="1"}
 {: .smaller}
 
 ----
@@ -135,7 +150,6 @@ What is a good representation of the *search states* and the *goal*?
 | **Initial state** | *no queens on the board*{:                       .fragment data-fragment-index="1"}
 | **Actions**       | *add a queen to any empty square*{:              .fragment data-fragment-index="1"}
 | **Goal test**     | *8 queens on the board, none attacked*{:         .fragment data-fragment-index="1"}
-| **Path cost**     | *1 per move*{:                                   .fragment data-fragment-index="1"}
 {: .smaller}
 
 This gives us
@@ -154,7 +168,6 @@ possible paths to explore!
 | **Initial state** | *no queens on the board*{:.fragment data-fragment-index="1"}
 | **Actions**       | *add a queen to a square in the leftmost empty column, make sure that no queen is attacked*{:.fragment data-fragment-index="1"}
 | **Goal test**     | *8 queens on the board, none attacked*{:.fragment data-fragment-index="1"}
-| **Path cost**     | *1 per move*{:.fragment data-fragment-index="1"}
 {: .smaller}
 
 Using this formulation, we have only 2,057 paths!
@@ -173,8 +186,7 @@ the number 4 and applying some combination of the factorial, square root, and fl
 | **States** | <span>*algebraic numbers* \\( (1, 2.5, 9, \sqrt{2}, 1.23\cdot 10^{456}, \sqrt{\sqrt{2}}, \ldots) \\)</span>{:.fragment data-fragment-index="1"}
 | **Initial state** | *4*{:.fragment data-fragment-index="1"}
 | **Actions** | *apply factorial, square root, or floor operation*{:.fragment data-fragment-index="1"}
-| **Goal test** | *any positive integer (e.g., 5)*{:.fragment data-fragment-index="1"}
-| **Path cost** | *1 per move*{:.fragment data-fragment-index="1"}
+| **Goal test** | *a given positive integer (e.g., 5)*{:.fragment data-fragment-index="1"}
 {: .smaller}
 
 ----
@@ -187,7 +199,6 @@ the number 4 and applying some combination of the factorial, square root, and fl
 | **States**        | *real-valued coordinates of robot joint angles parts of the object to be assembled*{:.fragment data-fragment-index="1"}
 | **Actions**       | *continuous motions of robot joints*{:.fragment data-fragment-index="1"}
 | **Goal test**     | *complete assembly of the object*{:.fragment data-fragment-index="1"}
-| **Path cost**     | *time to execute*{:.fragment data-fragment-index="1"}
 {: .smaller}
 
 ----
@@ -236,6 +247,17 @@ the number 4 and applying some combination of the factorial, square root, and fl
 
 ----
 
+### Using tree search on a graph
+
+![](img/searchspc-tree.png){:height="400px" .fragment .noborder data-fragment-index="1" .nospace-fragment .fade-out}
+![](img/searchspc-graph.png){:height="400px" .fragment .noborder data-fragment-index="1" .nospace-fragment}
+
+- 
+    - {:.fragment style="color:green"} explored nodes might be revisited
+    - {:.fragment style="color:blue"} frontier nodes might be duplicated 
+
+----
+
 ### Turning tree search into graph search
 
 - *Graph search*:  Keep track of visited nodes
@@ -254,17 +276,6 @@ the number 4 and applying some combination of the factorial, square root, and fl
         <span>**if** *child* is not in *frontier* or *exploredSet*</span>{:.highlight}
   - **return** failure
 {: .pseudocode}
-
-----
-
-### Using tree search on a graph
-
-![](img/searchspc-tree.png){:height="400px" .fragment .noborder data-fragment-index="1" .nospace-fragment .fade-out}
-![](img/searchspc-graph.png){:height="400px" .fragment .noborder data-fragment-index="1" .nospace-fragment}
-
-- 
-    - {:.fragment style="color:green"} explored nodes might be revisited
-    - {:.fragment style="color:blue"} frontier nodes might be duplicated 
 
 ----
 
@@ -409,7 +420,7 @@ Which shaded goal will a breadth-first search find first?
     \\[ cost(n\_{0},\dots,n\_{k}) = \sum\_{i=1}^{k}\left\|(n\_{i-1},n\_{i})\right\| \\]
     An *optimal solution* is one with minimum cost. <br/><br/>
 
-- {:.fragment} **Uniform-cost search**:
+- {:.fragment} **Uniform-cost search (aka Lowest-cost-first search)**:
   - Uniform-cost search selects a path on the frontier with the lowest cost. 
   - The frontier is a *priority queue* ordered by path cost. 
   - It finds a least-cost path to a goal node --- i.e., uniform-cost search is optimal
@@ -443,7 +454,7 @@ Which shaded goal will a breadth-first search find first?
       with cost less than \\(h(n)\\). 
 
     - An *admissible heuristic* is a nonnegative underestimating heuristic function:  
-      \\( 0 \leq h(n) \leq cost(n,goal) \\) 
+      \\( 0 \leq h(n) \leq cost(\textit{best path from n to goal}) \\) 
     
 ----
 
@@ -459,11 +470,14 @@ Which shaded goal will a breadth-first search find first?
       a goal divided by the maximum speed, \\(h(n)=d(n)/v\_{\max}\\)  
       (or the average speed, \\(h(n)=d(n)/v\_{\textrm{avg}}\\), which makes it non-admissible).
 
+    - If the graph is a 2D grid maze, then we can use the Manhattan distance.
+
     - If the goal is to collect all of the coins and not run out of fuel, we can  
       use an estimate of how many steps it will take to collect the coins  
       and return to goal position, without caring about the fuel consumption.
 
-    - A heuristic function can be found by solving a simpler (less constrained) version of the problem. 
+- A heuristic function can be found by solving a simpler (less constrained)  
+  version of the problem. 
 
 ----
 
@@ -554,7 +568,7 @@ Which shaded goal will a breadth-first search find first?
 
 ### A* search
 
-- A* is a mix of lowest-cost-first and best-first search.
+- A* is a mix of uniform-cost search and best-first search.
 
 - It treats the frontier as a priority queue ordered by \\(f(p)\\).
 
@@ -595,8 +609,10 @@ Which shaded goal will a breadth-first search find first?
 ***A\* guarantees that this is the shortest path!***
 {:.fragment}
 
-**Note that we didn't select the first occurrence of Bucharest**
+**Note that we didn't stop when we *added* Bucharest to the frontier.**  
+**Instead, we stopped when we *removed* Bucharest from the frontier!**
 {:.fragment}
+
 
 ----
 
@@ -634,12 +650,14 @@ Which shaded goal will a breadth-first search find first?
     - \\(h(n)\\) is nonnegative and an underestimate of  
       the cost of the shortest path from \\(n\\) to a goal node. 
 
+- These requirements ensure that \\(f\\) keeps increasing.
+
 ----
 
 ### Why is A* optimal?
 
 
-- The \\(f\\) values in A* are nondecreasing, therefore:
+- The \\(f\\) values in A* are increasing, therefore:
 
     **first** | A* expands all nodes with \\( f(n) < C \\)
     **then**  | A* expands all nodes with \\( f(n) = C \\)
@@ -715,7 +733,7 @@ Which shaded goal will a breadth-first search find first?
 | Depth first       | Last node added       | *No*{:.fragment data-fragment-index="1"}  | *No*{:.fragment data-fragment-index="2"} | *Linear*{:.fragment data-fragment-index="3"}
 | Breadth first     | First node added      | *Yes*{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
 | Best first        | Global min \\(h(p)\\) | *No*{:.fragment data-fragment-index="1"}  | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
-| Lowest cost first | Minimal \\(cost(p)\\) | *Yes*{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
+| Uniform cost      | Minimal \\(cost(p)\\) | *Yes*{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
 | A*                | Minimal \\(f(p)\\)    | *Yes*{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
 
 <div> </div>
