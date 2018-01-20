@@ -412,7 +412,7 @@ Which shaded goal will a breadth-first search find first?
 
 ----
 
-## Uniform-cost search
+### Uniform-cost search
 
 - **Weighted graphs**:
   - Sometimes there are *costs* associated with arcs.  
@@ -464,7 +464,7 @@ Which shaded goal will a breadth-first search find first?
 - Here are some example heuristic functions:
 
     - If the nodes are points on a Euclidean plane and the cost is the distance,  
-      \\(h(n)\\) can be the straight-line distance (SLD) from n to the closest goal. 
+      \\(h(n)\\) can be the straight-line distance (SLD) from \\(n\\) to the closest goal. 
 
     - If the nodes are locations and cost is time, we can use the distance to  
       a goal divided by the maximum speed, \\(h(n)=d(n)/v\_{\max}\\)  
@@ -732,9 +732,9 @@ Which shaded goal will a breadth-first search find first?
 |:------------------|:----------------------|:---:|:--:|:--:
 | Depth first       | Last node added       | *No*{:.fragment data-fragment-index="1"}  | *No*{:.fragment data-fragment-index="2"} | *Linear*{:.fragment data-fragment-index="3"}
 | Breadth first     | First node added      | *Yes*{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
-| Best first        | Global min \\(h(p)\\) | *No*{:.fragment data-fragment-index="1"}  | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
+| Best first        | Minimal \\(h(p)\\)    | *No*{:.fragment data-fragment-index="1"}  | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
 | Uniform cost      | Minimal \\(cost(p)\\) | *Yes*{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
-| A*                | Minimal \\(f(p)\\)    | *Yes*{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
+| A*                | \\(f(n)=g(n)+h(n)\\)  | *Yes*{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
 
 <div> </div>
 
