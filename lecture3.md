@@ -1,8 +1,8 @@
 ---
 title: "Chapters 3–4: More search algorithms"
-description: "DIT410/TIN174, Artificial Intelligence"
+description: "DIT411/TIN175, Artificial Intelligence"
 author: "Peter Ljunglöf"
-when: "28 March, 2017"
+when: "23 January, 2018"
 logo: "img/logo-Chalmers-GU.png"
 ---
 
@@ -20,7 +20,7 @@ logo: "img/logo-Chalmers-GU.png"
 
 ## A* search (3.5.2)
 
-## Admissible and consistent heuristics (3.6--3.6.2)
+## Admissible/consistent heuristics (3.6--3.6.2)
 
 
 ----------
@@ -118,25 +118,26 @@ logo: "img/logo-Chalmers-GU.png"
 <!--     - So, before it can select a non-optimal solution, it will have to pick   -->
 <!--       all of the nodes on an optimal path, including each of the optimal solutions. -->
 
+
 --------------
 
 ### The generic graph search algorithm
 
 - *Tree search*:  Don't check if nodes are visited multiple times
-- *Graph search*:  Keep track of visited nodes
+- {:.highlight .fragment data-fragment-index="1"} *Graph search*:  Keep track of visited nodes
 
 <div> </div>
 
 - **function** Search(*graph*, *initialState*, *goalState*):
   - initialise *frontier* using the *initialState*
-  - initialise *exploredSet* to the empty set
+  - <span>initialise *exploredSet* to the empty set</span>{:.highlight .fragment data-fragment-index="1"}
   - **while** *frontier* is not empty:
     - **select** and **remove** *node* from *frontier*
     - **if** *node*.state is a *goalState* **then return** *node*
-    - add *node* to *exploredSet*
+    - <span>add *node* to *exploredSet*</span>{:.highlight .fragment data-fragment-index="1"}
     - **for each** *child* **in** ExpandChildNodes(*node*, *graph*):
-      - **if** *child* is not in *frontier* or *exploredSet*:
-        - add *child* to *frontier*
+      - add *child* to *frontier*
+        <span>**if** *child* is not in *frontier* or *exploredSet*</span>{:.highlight .fragment data-fragment-index="1"}
   - **return** failure
 {: .pseudocode}
 
@@ -158,17 +159,16 @@ logo: "img/logo-Chalmers-GU.png"
 
 ### When is A* graph search optimal?
 
-- If \\(h\\) is *consistent*, then A* graph search is optimal:
-
-  - {:.fragment} Consistency is defined as: \\(h(n') \leq cost(n', n) + h(n)\\) for all arcs \\((n', n)\\)
-
+- If  \\( \|h(n')-h(n)\| \leq cost(n',n) \\)  for every arc  \\((n',n)\\),  
+  then A* graph search is optimal:
+-  
   - {:.fragment} **Lemma**: the \\(f\\) values along any path \\([...,n',n,...]\\) are nondecreasing:
      - **Proof**: \\(g(n) = g(n') + cost(n', n)\\), therefore:
      - \\(f(n) = g(n) + h(n) = g(n') + cost(n', n) + h(n) \geq g(n') + h(n')\\);
      - therefore: \\(f(n) \geq f(n')\\), i.e., \\(f\\) is nondecreasing
-
+-  
   - {:.fragment} **Theorem**: whenever A* expands a node \\(n\\), the optimal path to \\(n\\) has been found
-     - ![](img/consistent-graph.png){:height="140px" style="float:right"}
+     - ![](img/consistent-graph.png){:height="140px" style="float:right" .noborder}
        **Proof**: Assume this is not true;
      - then there must be some \\(n'\\) still on the frontier, which is on the optimal path to \\(n\\);
      - but \\(f(n') \leq f(n)\\);
@@ -176,17 +176,18 @@ logo: "img/logo-Chalmers-GU.png"
 
 ----
 
-### State-space contours
+### Consistency, or monotonicity
 
-- The \\(f\\) values in A* are nondecreasing, therefore:
+- A heuristic function \\(h\\) is **consistent** (or monotone) if  
+  \\( \|h(m)-h(n)\| \leq cost(m,n) \\)
+    for every arc \\((m,n)\\)
 
-    **first** | A* expands all nodes with \\( f(n) < C \\)
-    **then**  | A* expands all nodes with \\( f(n) = C \\)
-    **finally**  | A* expands all nodes with \\( f(n) > C \\)
-    {:.noborder}
+    - (This is a form of triangle inequality)
 
-- A* will not expand any nodes with \\( f(n) > C\* \\),  
-  where \\(C\*\\) is the cost of an optimal solution.
+    - If \\(h\\) is consistent, then A* graph search will always finds  
+      the shortest path to a goal.
+
+    - This is a stronger requirement than admissibility.
 
 ----
 
@@ -216,7 +217,27 @@ logo: "img/logo-Chalmers-GU.png"
 | Uniform cost | Minimal \\(g(n)\\) | *Optimal*{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
 | A*                | \\(f(n)=g(n)+h(n)\\)    | *Optimal\**{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
 
+*<span class="invisible">\*\*On finite graphs with cycles, not infinite graphs.</span>*  
 *\*Provided that \\(h(n)\\) is admissible.*{:.fragment data-fragment-index="1"} 
+
+- **Halts if**: If there is a path to a goal, it can find one, even on infinite graphs.
+- **Halts if no**: Even if there is no solution, it will halt on a finite graph (with cycles).
+- **Space**: Space complexity as a function of the length of the current path.
+
+----
+
+### Summary of <span>graph search</span>{:.highlight} strategies 
+
+|Search<br/>strategy| Frontier<br/>selection | Halts if solution? | Halts if no solution? | Space usage
+|:------------------|:-----------------------|:---:|:--:|:--:
+| Depth first       | Last node added        | *(Yes)\*\**{:.highlight} | *Yes*{:.highlight} | *Exp*{:.highlight}
+| Breadth first     | First node added       | *Yes*    | *Yes*{:.highlight} | *Exp*
+| Greedy best first | Minimal \\(h(n)\\)     | *No*     | *Yes*{:.highlight} | *Exp*
+| Uniform cost      | Minimal \\(g(n)\\)     | *Optimal* | *Yes*{:.highlight} | *Exp*
+| A*                | \\(f(n)=g(n)+h(n)\\)   | *Optimal\** | *Yes*{:.highlight} | *Exp*
+
+*\*\*On finite graphs with cycles, not infinite graphs.*  
+*\*Provided that \\(h(n)\\) is <span class="highlight">consistent</span>.*
 
 - **Halts if**: If there is a path to a goal, it can find one, even on infinite graphs.
 - **Halts if no**: Even if there is no solution, it will halt on a finite graph (with cycles).
@@ -271,11 +292,11 @@ logo: "img/logo-Chalmers-GU.png"
 
 ### Non-admissible (non-consistent) A* search
 
-- A* search with admissible (consistent) heuristics is optimal
+- A* tree (graph) search with admissible (consistent) heuristics is optimal.
 
-- But what happens if the heuristics is non-admissible?
+- But what happens if the heuristics is non-admissible (non-consistent)?
 
-    - {:.fragment} i.e., what if \\(h(n) > c(n,goal)\\), for some \\(n\\)?
+    - {:.fragment data-fragment-index="1"} i.e., what if \\(h(n) > c(n,goal)\\), for some \\(n\\)?\*
     - {:.fragment} the solution is not guaranteed to be optimal...
     - {:.fragment} ...but it will find *some* solution!
 
@@ -284,9 +305,13 @@ logo: "img/logo-Chalmers-GU.png"
     - {:.fragment} sometimes it's easier to come up with a heuristics that is almost admissible
     - {:.fragment} and, often, the search terminates faster!
 
+-  
+
+- {:.fragment data-fragment-index="2"} \* for graph search, \\( \|h(m)-h(n)\| > cost(m,n) \\), for some \\((m,n)\\)
+
 ------
 
-### Example demo
+### Example demo (again)
 
 Here is an example demo of several different search algorithms, including A*.  
 Furthermore you can play with different heuristics:
@@ -345,12 +370,14 @@ Depth bound =
 
 ### Iterative-deepening search
 
-- **function** IDSearch(*graph*, *initialState*, *goalState*)
+- **function** IDSearch(*graph*, *initialState*, *goalState*):
+  - // *returns a solution path, or* 'failure'
   - **for** *limit* **in** 0, 1, 2, ...:
     - *result* := DepthLimitedSearch([*initialState*], *limit*)
     - **if** *result* ≠ cutoff **then** **return** *result*
 -  
 - **function** DepthLimitedSearch(\\([n\_{0},\dots,n\_{k}]\\), *limit*):
+  - // *returns a solution path, or* 'failure' *or* 'cutoff'
   - **if** \\(n\_{k}\\) is a *goalState* **then** **return** path \\([n\_{0},\dots,n\_{k}]\\)
   - **else if** *limit* = 0 **then return** cutoff
   - **else**:
@@ -369,10 +396,10 @@ Depth bound =
 Complexity with solution at depth \\(k\\) and branching factor \\(b\\): 
 
 |--------
-| level | breadth-first | iterative deepening | # nodes
+| level | # nodes | BFS node visits | ID node visits
 |:---------:|:-------:|:---------:|:--------:|
-| \\(1\\) <br/> \\(2\\) <br/> \\(\vdots\\) <br/> \\(k-1\\) <br/> \\(k\\) | \\(1\\) <br/> \\(1\\) <br/> \\(\vdots\\) <br/> \\(1\\) <br/> \\(1\\) | \\(k\\) <br/> \\(k-1\\) <br/> \\(\vdots\\) <br/> \\(2\\) <br/> \\(1\\) | \\(b\\) <br/> \\(b^{2}\\) <br/> \\(\vdots\\) <br/> \\(b^{k-1}\\) <br/> \\(b^{k}\\)
-| **total** | \\({}\geq b^{k}\\) | \\({}\leq b^{k}\left(\frac{b}{b-1}\right)^{2}\\)
+| \\(1\\) <br/> \\(2\\) <br/> \\(3\\) <br/> \\(\vdots\\) <br/> \\(k\\)  | \\(b\\) <br/> \\(b^{2}\\) <br/> \\(b^{3}\\) <br/> \\(\vdots\\) <br/> \\(b^{k}\\) | \\(1\cdot b^{1}\\) <br/> \\(1\cdot b^{2}\\) <br/> \\(1\cdot b^{3}\\) <br/> \\(\vdots\\) <br/> \\(1\cdot b^{k}\\) | \\(\,\,\,\,\,\,\,\,k\,\,\cdot b^{1}\\) <br/> \\((k{-}1)\cdot b^{2}\\) <br/> \\((k{-}2)\cdot b^{3}\\) <br/> \\(\,\,\,\,\,\,\,\,\vdots\\) <br/> \\(\,\,\,\,\,\,\,\,1\,\,\cdot b^{k}\\) 
+| **total** | | \\({}\geq b^{k}\\) | \\({}\leq b^{k}\left(\frac{b}{b-1}\right)^{2}\\)
 {:.smaller}
 
 Numerical comparison for \\(k=5\\) and \\(b=10\\): 
@@ -385,19 +412,23 @@ but this doesn't have a big effect compared to BFS!
 
 ------
 
-## Bidirectional search (3.4.6)
+## Bidirectional search (3.4.6)  
+
+*(will not be in the written examination, but could be used in Shrdlite)*
 
 ### Direction of search
 
 - The definition of searching is symmetric: find path from start nodes to goal node or from goal node to start nodes. 
 
-- *Forward branching factor*: number of arcs going out from a node. 
+    - *Forward branching factor*: number of arcs going out from a node. 
 
-- *Backward branching factor*: number of arcs going into a node. 
+    - *Backward branching factor*: number of arcs going into a node. 
 
-- Search complexity is \\(O(b^{n})\\). Therefore, we should use forward search if forward branching factor is less than backward branching factor, and vice versa. 
+- Search complexity is \\(O(b^{n})\\).
 
-- Note: when a graph is dynamically constructed, the backwards graph may not be available. 
+    - Therefore, we should use forward search if forward branching factor is less than backward branching factor, and vice versa. 
+
+    - Note: if a graph is dynamically constructed, the backwards graph may not be available. 
 
 -----
 
@@ -405,7 +436,7 @@ but this doesn't have a big effect compared to BFS!
 
 - *Idea:* search backward from the goal and forward from the start simultaneously.
 
-    - This can result in an exponential saving, because \\(2b^{k/2}\ll b^{k}\\).
+    - This can result in an exponential saving, because  \\(2b^{k/2}\ll b^{k}\\).
 
     - The main problem is making sure the frontiers meet.
 
@@ -421,6 +452,7 @@ but this doesn't have a big effect compared to BFS!
 
 -----
 
+<!--
 ### Dynamic programming
 
 - *Idea:* for statically stored graphs,
@@ -435,24 +467,26 @@ but this doesn't have a big effect compared to BFS!
   a forward heuristic search.
 
 --------
+-->
 
 ## Memory-bounded A* (3.5.3)
 
-- The biggest problem with A* is the space usage.  
-  Can we make an iterative deepening version?
+*(will not be in the written examination, but could be used in Shrdlite)*
 
-    - IDA*: use the \\(f\\) value as the cutoff cost
+- A big problem with A* is space usage --- is there an iterative deepening version?
+
+    - {:.fragment} IDA*: use the \\(f\\) value as the cutoff cost
       - the cutoff is the smalles \\(f\\) value that exceeded the previous cutoff
       - often useful for problems with unit step costs
       - **problem**: with real-valued costs, it risks regenerating too many nodes
 
-    - RBFS: recursive best-first search
+    - {:.fragment} RBFS: recursive best-first search
       - similar to DFS, but continues along a path until \\(f(n) > limit\\)
       - \\(limit\\) is the \\(f\\) value of the best *alternative path* from an ancestor
       - if \\(f(n) > limit\\), recursion unwinds to alternative path
       - **problem**: regenerates too many nodes
 
-    - SMA\* and MA\*: (simplified) memory-bounded A\*
+    - {:.fragment} SMA\* and MA\*: (simplified) memory-bounded A\*
       - uses all available memory
       - when memory is full, it drops the worst leaf node from the frontier
       
@@ -461,11 +495,11 @@ but this doesn't have a big effect compared to BFS!
 
 # Local search (R&N 4.1)
 
-## Hill climbing (4.1.1--4.1.2)
-{:.no_toc}
+## Hill climbing (4.1.1)
 
-## Population-based methods (4.1.3--4.1.4)
-{:.no_toc}
+## More local search (4.1.2--4.1.4)
+
+## Evaluating randomized algorithms
 
 --------
 
@@ -487,7 +521,7 @@ but this doesn't have a big effect compared to BFS!
 - {:.fragment} The goal would be to find an optimal configuration
   - e.g., for 8-queens, where no queen is threatened
 -  
-- {:.fragment} This takes constant space, and is suitable for online and offline search
+- {:.fragment} *Iterative improvement algorithms take constant space*
 
 -----
 
@@ -530,15 +564,16 @@ but this doesn't have a big effect compared to BFS!
   ![](img/tsp-sequence.png){:height="200px"} 
 
 
-- Variants of this approach get within 1% of optimal  
-  very quickly with thousands of cities
+- Variants of this approach can very quickly get  
+  within 1% of optimal solution for thousands of cities
 
 ----
 
-## Hill climbing search (4.1.1--4.1.2)
+## Hill climbing search (4.1.1)
+{:.no_toc}
 
-Also called gradient/steepest ascent/descent,  
-or greedy local search.
+Also called (gradient/steepest) (ascent/descent),  
+or greedy local search
 
 - **function** HillClimbing(*graph*, *initialState*):
   - *current* := *initialState*
@@ -562,14 +597,16 @@ Local maxima   ---   Ridges   ---   Plateaux
 
 ### Randomized algorithms
 
-- Consider two methods to find a minimum value: 
+- Consider two methods to find a minimum value:
+
   - Greedy ascent: start from some position,   
     keep moving upwards, and report maximum value found 
+
   - Pick values at random, and report maximum value found 
 
 - {:.fragment} Which do you expect to work better to find a global maximum? 
 
-- {:.fragment} Can a mix work better? 
+  - {:.fragment} Can a mix work better? 
 
 ------
 
@@ -598,7 +635,20 @@ Local maxima   ---   Ridges   ---   Plateaux
 
 ----
 
-### Simulated annealing
+## More local search
+{:.no_toc}
+
+*(these sections will not be in the written examination)*
+
+### Simulated annealing (4.1.2)
+
+### Beam search (4.1.3)
+
+### Genetic algorithms (4.1.4)
+
+-----
+
+### Simulated annealing (4.1.2)
 
 Simulated annealing is an implementation of random steps:
 
@@ -613,14 +663,13 @@ Simulated annealing is an implementation of random steps:
       - *current* := *next*
 {:.pseudocode}
 
-*T* is the "cooling temperature", which decreases slowly towards 0  
-The cooling speed is decided by the *schedule*
+- *T* is the "cooling temperature", which decreases slowly towards 0
+
+- The cooling speed is decided by the *schedule*
 
 ----
 
-## Population-based methods (4.1.3--4.1.4)
-
-### Local beam search
+### Local beam search (4.1.3)
 
 - *Idea:* maintain a population of \\(k\\) states in parallel, instead of one.
 
@@ -636,7 +685,7 @@ The cooling speed is decided by the *schedule*
 
 -----
 
-###  Stochastic beam search
+###  Stochastic beam search (4.1.3)
 
 - Similar to beam search, but it chooses the next \\(k\\) individuals *probabilistically*.
 
@@ -651,7 +700,7 @@ The cooling speed is decided by the *schedule*
 
 -------
 
-### Genetic algorithms
+### Genetic algorithms (4.1.4)
 
 - Similar to stochastic beam search,  
   but *pairs* of individuals are combined to create the offspring.  
@@ -666,10 +715,10 @@ The cooling speed is decided by the *schedule*
 
 -----
 
-### \\(n\\) queens encoded as a genetic algorithm
+### \\(n\\)-queens encoded as a genetic algorithm
 
-The \\(n\\) queens problem can be encoded as 
-\\(n\\) numbers \\(1\ldots n\\):
+- A solution to the \\(n\\)-queens problem can be encoded  
+  as a list of \\(n\\) numbers \\(1\ldots n\\):
 
 ![](img/genetic.png){:height="170px"} 
 
@@ -678,10 +727,14 @@ The \\(n\\) queens problem can be encoded as
 ----
 
 ## Evaluating randomized algorithms (not in R&N)
+{:.no_toc}
+
+*(will not be in the written examination)*
 
 - How can you compare three algorithms A, B and C, when 
 
-    - A solves the problem 30% of the time very quickly but doesn't halt for the other 70% of the cases 
+    - A solves the problem 30% of the time very quickly but doesn't halt  
+      for the other 70% of the cases 
 
     - B solves 60% of the cases reasonably quickly but doesn't solve the rest 
 
