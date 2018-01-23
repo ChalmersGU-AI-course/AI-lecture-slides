@@ -67,11 +67,13 @@ logo: "img/logo-Chalmers-GU.png"
 - Uniform-cost search (this is not a heuristic algorithm)
     - expand the node with the lowest path cost 
     - \\( f(n) = g(n) \\)
+      = cost from start node to \\(n\\)
     - complete and optimal
 -  
 - Greedy best-first search
     - expand the node which is closest to the goal (according to some heuristics)
     - \\( f(n) = h(n) \\)
+      = estimated cheapest cost from \\(n\\) to a goal
     - incomplete: might fall into an infinite loop, doesn't return optimal solution
 -  
 - A* search
@@ -164,7 +166,7 @@ logo: "img/logo-Chalmers-GU.png"
 -  
   - {:.fragment} **Lemma**: the \\(f\\) values along any path \\([...,n',n,...]\\) are nondecreasing:
      - **Proof**: \\(g(n) = g(n') + cost(n', n)\\), therefore:
-     - \\(f(n) = g(n) + h(n) = g(n') + cost(n', n) + h(n) \geq g(n') + h(n')\\);
+     - \\(f(n) = g(n) + h(n) = g(n') + cost(n', n) + h(n) \geq g(n') + h(n')\\)
      - therefore: \\(f(n) \geq f(n')\\), i.e., \\(f\\) is nondecreasing
 -  
   - {:.fragment} **Theorem**: whenever A* expands a node \\(n\\), the optimal path to \\(n\\) has been found
@@ -597,7 +599,7 @@ Local maxima   ---   Ridges   ---   Plateaux
 
 ### Randomized algorithms
 
-- Consider two methods to find a minimum value:
+- Consider two methods to find a maximum value:
 
   - Greedy ascent: start from some position,   
     keep moving upwards, and report maximum value found 
