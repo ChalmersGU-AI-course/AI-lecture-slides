@@ -138,6 +138,7 @@ code {
 .code code {
   white-space: pre;
   font-family: monospace !important;
+  font-size: 80%;
 }
 
 .MathJax, .MathJax_Preview {
