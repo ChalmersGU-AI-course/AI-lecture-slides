@@ -292,7 +292,7 @@ The Nearley CFG formalism lets you specify how the parse results should look lik
     - statistical approaces:
         - e.g., named entitiy recognition, sentiment analysis, relation extraction
     - logical approaches:
-        - e.g., predicate logic, lambda calculus
+        - e.g., predicate logic, lambda calculus, modal logic
         
 
 ---
