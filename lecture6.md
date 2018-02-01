@@ -1,431 +1,539 @@
 ---
-title: "Natural Language Interpretation"
-description: "DIT410/TIN174, Artificial Intelligence"
-author: "John J. Camilleri"
-when: "7 April, 2017"
+title: "Chapters 4–5: Non-classical and adversarial search"
+description: "DIT411/TIN175, Artificial Intelligence"
+author: "Peter Ljunglöf"
+when: "2 February, 2018"
 logo: "img/logo-Chalmers-GU.png"
 ---
 
-![](img/nlp/morpheus.jpg){:.noborder}
-<https://img.memesuper.com/7ad355dacca363617cdfcff7defc07ed_-of-morpheus-offering-the-morpheus-pill-meme_520-412.jpeg>
-{:.tiny}
----
+## Table of contents
+{:.no_toc}
 
-# Last time...
+* TOC
+{:toc}
 
-_"Mary saw the man with a telescope"_
+----
 
-![](img/nlp/mary-saw-the-man-with-a-telescope-1.png){:.noborder}
-![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:.noborder}
+# Repetition
 
-Notes:
+## Uninformed search (R&N 3.4)
 
-- Phrase structure
-- Grammars
-- Parsing
+- Search problems, graphs, states, arcs, goal test, 
+  generic search algorithm, tree search, graph search, 
+  depth-first search, breadth-first search, uniform cost search,
+  iterative deepending, bidirectional search, ...
 
----
+<div> </div>
 
-_"Colourless green ideas sleep furiously"_
+## Heuristic search (R&N 3.5--3.6)
 
-![Colourless green ideas sleep furiously](img/nlp/colourless-green-ideas.jpg){:.noborder}
+- Greedy best-first search, A* search, 
+  heuristics, admissibility, consistency, dominating heuristics, ...
 
-<http://wmjasco.blogspot.se/2008/11/colorless-green-ideas-do-not-sleep.html>
-{: .tiny}
+<div> </div>
 
-{:.fragment}
-✋ Is this sentence valid?
-<span style="background:lime;color:white;padding:3px 6px;">Yes</span> or
-<span style="background:magenta;color:white;padding:3px 6px;">No</span>
+## Local search (R&N 4.1)
 
----
+- Hill climbing / gradient descent, random moves, random restarts, beam search, simulated annealing, ...
 
-# Why syntax?
+--------
 
-![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:.noborder}
+# Non-classical search
 
-Notes:
+## Nondeterministic search (R&N 4.3)
 
-- We've talked a lot about trees, but what do we do with them?
-- The trees themselves are not the goals
+## Partial observations (R&N 4.4)
+{:.no_toc}
 
----
+----------
 
-## Semantic representation
+### Nondeterministic search (R&N 4.3)
 
-Introducing logical terms
+* 
+    * Contingency plan / strategy
+    * ***And-or*** search trees (not in the written exam)
 
-- _Mary_ = `Mary`
-- _the man_ = `Man`
-- _Mary saw the man_ = `Saw(Mary, Man)`
+-----
 
----
+### An erratic vacuum cleaner
 
-### Semantic interpretation (1)
+![](img/vacuum2-states.png){:height="250px" .noborder}
 
-![](img/nlp/mary-saw-the-man-with-a-telescope-2.png){:.noborder}  
-↓
+- The eight possible states of the vacuum world; states 7 and 8 are goal states.
 
-`With(Saw(Mary, Man), Telescope)`
+- There are three actions: *Left, Right, Suck*. <br/>
+  Assume that the *Suck* action works as follows:
+    - if the square is dirty, it is cleaned but sometimes also the adjacent square is
+    - if the square is clean, the vacuum cleaner sometimes deposists dirt
 
----
+-----
 
-### Semantic interpretation (2)
+### Nondeterministic outcomes, contingency plans
 
-![](img/nlp/mary-saw-the-man-with-a-telescope-1.png){:.noborder}  
-↓
+- Assume that the *Suck* action is nondeterministic:
+    - if the square is dirty, it is cleaned but sometimes also the adjacent square is
+    - if the square is clean, the vacuum cleaner sometimes deposists dirt
+-  
+- {:.fragment} Now we need a more general *result* function:
+    - instead of returning a single state, it returns a set of possible outcome states
+    - e.g., \\(\textsf{Results}(\textsf{Suck}, 1) = \\{5, 7\\}\\) and  \\(\textsf{Results}(\textsf{Suck}, 5) = \\{1, 5\\}\\)
+-  
+- {:.fragment} We also need to generalise the notion of a *solution*:
+    - instead of a single sequence (path) from the start to the goal,  
+      we need a *strategy* (or a *contingency plan*)
+    - i.e., we need **if-then-else** constructs
+    - this is a possible solution from state 1:
+        - [*Suck*, `if` *State*=5 `then` [*Right*, *Suck*] `else` []]
 
-`Saw(Mary, With(Man, Telescope))`
+-----
 
----
+### How to find contingency plans
 
-# Compositional semantics
+*(will not be in the written examination)*
 
-- _Mary_ = `Mary`
-- _the man_ = `Man`
-- _Mary saw the man_ = `Saw(Mary, Man)`
-- {:.fragment} _saw_ = `λy λx · Saw(x, y)`
-- {:.fragment} _saw the man_ = `λx · Saw(x, Man)`
+* We need a new kind of nodes in the search tree: 
+    * ***and** nodes*:  
+      these are used whenever an action is nondeterministic
+    * normal nodes are called ***or** nodes*:  
+      they are used when we have several possible actions in a state
+*  
+* A solution for an ***and-or*** search problem is a subtree that:
+    * has a goal node at every leaf
+    * specifies exactly one action at each of its ***or** node*
+    * includes every branch at each of its ***and** node*
 
-Notes:
+------
 
-- Draw on board
+### A solution to the erratic vacuum cleaner
 
----
+*(will not be in the written examination)*
 
-# Interpretation
+![](img/erratic-vacuum-and-or-plan.png){:height="380px" .noborder}
 
-_syntactic_ representation → _semantic_ representation
+The solution subtree is shown in bold, and corresponds to the plan:  
+[*Suck*, `if` *State*=5 `then` [*Right*, *Suck*] `else` []]
 
-parse tree → logical term
+------
 
----
+### An algorithm for finding a contingency plan
 
-Utterance: _"move the white ball into the red box"_  
-![](img/nlp/shrdlite-small.png){:.noborder}  
-✋ Is this ambiguous?
-<span style="background:lime;color:white;padding:3px 6px;">Yes</span> or
-<span style="background:magenta;color:white;padding:3px 6px;">No</span>
+*(will not be in the written examination)*
 
----
+This algorithm does a depth-first search in the *and-or* tree,  
+so it is not guaranteed to find the best or shortest plan:
 
-Goal: `inside(white_ball, red_box)`  
-![](img/nlp/shrdlite-small_white-ball-red-box-table.png){:.noborder}
+* **function** AndOrGraphSearch(*problem*):
+    * **return** OrSearch(*problem*.InitialState, *problem*, [])
+*  
+* **function** OrSearch(*state*, *problem*, *path*):
+    * **if** *problem*.GoalTest(*state*) **then return** []
+    * **if** *state* is on *path* **then return** failure
+    * **for each** *action* in *problem*.Actions(*state*):
+        * *plan* := AndSearch(*problem*.Results(*state*, *action*), *problem*, [*state*] ++ *path*)
+        * **if** *plan* ≠ failure **then return** [*action*] ++ *plan*
+    * **return** failure
+*  
+* **function** AndSearch(*states*, *problem*, *path*):
+    * **for each** \\(s\_i\\) in *states*:
+        * \\(plan\_i\\) := OrSearch(\\(s\_i\\), *problem*, *path*)
+        * **if** \\(plan\_i\\) = failure **then return** failure
+    * **return** [`if` \\(s\_1\\) `then` \\(plan\_1\\) `else if` \\(s\_2\\) `then` \\(plan\_2\\) `else` ... `if` \\(s\_n\\) `then` \\(plan\_n\\)]
+{:.pseudocode}
 
----
+------
 
-Utterance: _"move the ball into the red box"_  
-![](img/nlp/shrdlite-small.png){:.noborder}  
-✋ Is this ambiguous?
-<span style="background:lime;color:white;padding:3px 6px;">Yes</span> or
-<span style="background:magenta;color:white;padding:3px 6px;">No</span>
+### While loops in contingency plans
 
-Notes:
+*(will not be in the written examination)*
 
-The ambiguity is not syntactic!
+![](img/slippery-vacuum-loop-plan.png){:height="300px" .noborder}
 
----
+* If the search graph contains cycles, **if-then-else** is not enough in a contingency plan:
+    * we need **while** loops instead
+*  
+* In the slippery vacuum world above, the cleaner don't always move when told:
+    * the solution above translates to [*Suck*, `while` *State*=5 `do` *Right*, *Suck*]
 
-# Shrdlite pipeline
+------
 
-1. _Parsing_: `text input → parse trees`
-1. _Interpretation_: `parse tree + world → goals`
-1. _Ambiguity resolution_: `many goals → one goal`
-1. _Planning_: `goal → robot movements`
-{: .list}
+## Partial observations (R&N 4.4)
 
----
+* 
+    * Belief states: goal test, transitions, ...
+    * Sensor-less (conformant) problems
+    * Partially observable problems
 
-# Parsing
+-------
 
-`text input → parse trees`
+### Observability vs determinism
 
-```function parse(input:string) : string | ShrdliteResult[]
-```
-{: .code}
+* A problem is *nondeterministic* if there are several possible outcomes of an action
+    * deterministic --- nondeterministic (chance)
+*  
+* {:.fragment} It is *partially observable* if the agent cannot tell exactly which state it is in
+    * fully observable (perfect info.) --- partially observable (imperfect info.)
+*  
+* {:.fragment} A problem can be either nondeterministic, or partially observable, or both:
 
-```interface ShrdliteResult {
-    input : string
-    parse : Command
-    interpretation? : DNFFormula
-    plan? : string[]
-}
-```
-{: .code}
+![](img/game-types.png){:height="200px" .noborder .fragment}
 
----
+--------
 
-# Grammar (simplified)
+### Belief states
 
-From file `Grammar.ne`
+* Instead of searching in a graph of states, we use *belief states*
+    * A belief state is a *set of states*
+*  
+* {:.fragment} In a sensor-less (or conformant) problem, the agent has *no information at all*
+    * The initial belief state is the set of all problem states
+        * e.g., for the vacuum world the initial state is {1,2,3,4,5,6,7,8}
+*  
+* {:.fragment} The goal test has to check that *all* members in the belief state is a goal
+    * e.g., for the vacuum world, the following are goal states: {7}, {8}, and {7,8}
+*  
+* {:.fragment} The result of performing an action is the *union* of all possible results
+    * i.e., \\(\textsf{Predict}(b,a) = \\{\textsf{Result}(s,a)\\)  for each  \\(s\in b\\}\\)
+    * {:.fragment} if the problem is also nondeterministic:
+        * \\(\textsf{Predict}(b,a) = \bigcup\\{\textsf{Results}(s,a)\\)  for each  \\(s\in b\\}\\)
 
-```command   -->  "put"       entity  location
-entity    -->  quantifier  object
-object    -->  size:?      color:?   form
-object    -->  object      location
-location  -->  relation    entity
-```
-{: .code}
+--------
 
-Notes:
+### Predicting belief states in the vacuum world
 
-- Recursion
-- Draw a tree top-down on the board
+![](img/vacuum-prediction.png){:height="300px" .noborder}
 
----
+* {:.fragment} (a) Predicting the next belief state for the sensorless vacuum world  
+  with a deterministic action, *Right*.
 
-_“put the white ball in a box on the floor”_  
-![](img/nlp/shrdlite-small.png){:.noborder}  
-✋ Is this ambiguous?
-<span style="background:lime;color:white;padding:3px 6px;">Yes</span> or
-<span style="background:magenta;color:white;padding:3px 6px;">No</span>  
+* {:.fragment} (b) Prediction for the same belief state and action in the nondeterministic  
+  slippery version of the sensorless vacuum world.
 
----
+--------
 
-_“put the white ball in a box on the floor”_  
-![](img/nlp/shrdlite-small.png){:.noborder}  
-✋ Is the ambiguity
-<span style="background:lime;color:white;padding:3px 6px;">syntactic</span> or
-<span style="background:magenta;color:white;padding:3px 6px;">semantic</span>?
+### The deterministic sensorless vacuum world
 
-Notes:
+![](img/vacuum2-sets.png){:height="500px" .noborder}
 
-It is both syntactically **and** semantically ambiguous
 
----
+-----
 
-## Parse 1
+### Partial observations: state transitions
 
-_"put the white ball **that is** in a box on the floor"_
+* With partial observations, we can think of belief state transitions in three stages:
+    * **Prediction**, the same as for sensorless problems:
+        * \\(b' = \textsf{Predict}(b,a) = \\{\textsf{Result}(s,a)\\)  for each  \\(s\in b\\}\\)
+    * **Observation prediction**, determines the percepts that can be observed:
+        * \\(\textsf{PossiblePercepts}(b') = \\{\textsf{Percept}(s)\\)  for each \\(s\in b'\\}\\)
+    * **Update**, filters the predicted states according to the percepts:
+        * \\(\textsf{Update}(b',o) = \\{s\\)  for each \\(s\in b'\\)  such that  \\(o = \textsf{Percept}(s)\\}\\)
+*   
+* Belief state transitions:
+    * \\(\textsf{Results}(b,a) = \\{\textsf{Update}(b',o)\\)  for each  \\(o\in\textsf{PossiblePercepts}(b')\\}\\)  
+      where   \\(b' = \textsf{Predict}(b,a)\\)
 
-![](img/nlp/put-the-white-ball-etc-parse-1.png){:.noborder}
+--------
 
+### Transitions in partially observable vacuum worlds
 
-Notes:
+* The percepts return the current position and the dirtyness of that square.
+* ![](img/vacuum-prediction-update-b.png){:height="500px" .noborder style="float:left"}
+*  
+*  
+* {:.fragment} The deterministic world:  
+  *Right* always succeeds.
+*  
+*  
+*  
+*  
+*  
+*  
+* {:.fragment} The slippery world:  
+  *Right* sometimes fails.
 
-- Show optional "that is" in grammar.
+--------
 
----
+### Example: Robot Localisation 
 
-## Parse 2
+![](img/localization-figures-a.png){:height="300px" .noborder}
 
-_"put the white ball in a box **that is** on the floor"_
+* The percepts return whether there is a wall in each of the directions.
 
-![](img/nlp/put-the-white-ball-etc-parse-2.png){:.noborder}
+* {:.fragment} ***Top***: Possible initial positions of the robot, after the first observation.
+    * **E<sub>1</sub>** = North, South, West
 
----
+* {:.fragment} ***Bottom***: After moving right and observing, there's only one possible position left.
+    * **E<sub>1</sub>** = North, South, West;   **Right**;   **E<sub>2</sub>** = North, South
 
-# Interpretation
+-------
 
-`parse tree + world → goals`
 
-```function interpretCommand(
-    cmd: Command,
-    state: WorldState
-  ): DNFFormula
-```
-{: .code}
+# Adversarial search
 
----
+## Types of games (R&N 5.1)
+{:.no_toc}
 
-# Logical interpretations ("Goals")
+## Minimax search (R&N 5.2--5.3)
+{:.no_toc}
 
-```type DNFFormula = Conjunction[]
-type Conjunction = Literal[]
-```
-{: .code}
+## Imperfect decisions (R&N 5.4--5.4.2)
+{:.no_toc}
 
-DNF = Disjunctive Normal Form
+## Stochastic games (R&N 5.5)
+{:.no_toc}
 
-Example: `(x ∧ y) ∨ (z)`
+-----
 
-```DNFFormula([Conjunction([x, y]), Conjunction(z)])
-```
-{: .code}
+## Types of games (R&N 5.1)
 
----
+*  
+    * cooperative, competetive, zero-sum games
+    * game trees, ply/plies, utility functions
 
-# Literals
+----
 
-```interface Literal {
-  relation : string;
-  args : string[];
-  polarity : boolean;
-}
-```
-{: .code}
+### Multiple agents
 
-Example: `ontop(a,b)`
+* Let's consider problems with multiple agents, where: 
 
-```{ relation:"ontop", args:["a","b"], polarity:true }
-```
-{: .code}
+    - the agents select actions autonomously
+    
+    - each agent has its own information state
+        - they can have different information (even conflicting)
+    
+    - the outcome depends on the actions of all agents
+    
+    - each agent has its own utility function (that depends on the total outcome)
 
----
+----
 
-# Spatial relations
+### Types of agents
 
-- x is **on top** of y if it is directly on top
-- x is **above** y if it is somewhere above
-- ...
-{: .list}
+- There are two extremes of multiagent systems: 
 
----
+    - **Cooperative**: The agents share the same utility function
+      - *Example*: Automatic trucks in a warehouse
 
-# Ambiguity
+    - **Competetive**: When one agent wins all other agents lose
+      - A common special case is when \\(\sum\_{a}u\_{a}(o)=0\\) for any outcome \\(o\\). <br/>
+        This is called a zero-sum game.
+      - *Example*: Most board games
 
-- DNF inherently captures ambiguity
-- **But** impossible interperetations should be removed
+- {:.fragment} Many multiagent systems are between these two extremes.
 
----
+  - *Example*: Long-distance bike races are usually both cooperative <br/>
+    (bikers form clusters where they take turns in leading a group), <br/>
+    and competetive (only one of them can win in the end).
 
-_"put the white ball **that is** in a box on the floor"_  
-![](img/nlp/shrdlite-small.png){:.noborder}  
-There is no <strike>spoon</strike> _white ball in a box_.
+-----
 
-Notes:
+### Games as search problems
 
-- Thus we eliminate the syntactic ambiguity and end up with just one parse tree to interpret.
+- The main difference to chapters 3--4:  
+  now we have more than one agent that have different goals. 
 
----
+    - All possible game sequences are represented in a game tree. 
 
-_"put the white ball in a box on the floor"_
-![](img/nlp/shrdlite-small.png){:.noborder}
+    - The nodes are states of the game, e.g. board positions in chess. 
 
----
+    - Initial state (root) and terminal nodes (leaves). 
 
-`inside(WhiteBall, YellowBox)`  
-Yellow box is already on floor: 3 moves
-![](img/nlp/shrdlite-small_white-ball-yellow-box-floor.png){:.noborder}
+    - States are connected if there is a legal move/ply.  
+      (a ply is a move by one player, i.e., one layer in the game tree)
 
----
+    - Utility function (payoff function). Terminal nodes have utility values  
+      \\({+}x\\) (player 1 wins), \\({-}x\\) (player 2 wins) and \\(0\\) (draw).
 
-`inside(WhiteBall, RedBox) ∧ on(RedBox, floor)`  
-Red box can be placed on floor first: 2 moves
-![](img/nlp/shrdlite-small_white-ball-red-box-floor.png){:.noborder}
+--------
 
----
+### Types of games (again)
 
-# Final interpretation
+![](img/game-types.png){:height="200px" .noborder}
 
-`inside(WhiteBall, YellowBox) ∨ (inside(WhiteBall, RedBox) ∧ on(RedBox, floor))`
+----
 
----
+### Perfect information games: Zero-sum games
 
-# Physical laws
+* Perfect information games are solvable in a manner similar to <br/>
+  fully observable single-agent systems, e.g., using forward search.
 
-- Balls must be in boxes or on the floor, otherwise they roll away.
-- Small objects cannot support large objects.
-- ...
-{: .list}
+* {:.fragment} If two agents compete, so that a positive reward for one is a negative reward <br/>
+  for the other agent, we have a two-agent *zero-sum game*. 
 
----
+* {:.fragment} The value of a game zero-sum game can be characterized by a single number that one agent is trying to maximize and the other agent is trying to minimize. 
 
-# Interpreter test cases
+* {:.fragment} This leads to a *minimax strategy*:
+    * A node is either a MAX node (if it is controlled by the maximising agent),
+    * or is a MIN node (if it is controlled by the minimising agent).
 
-- Each test case contains a _list of interpretations_
-- Each interpretation is already a list (a disunction of conjunctions)
+----
 
-```{
-  world: "small",
-  utterance: "take a blue object",
-  interpretations: [["holding(BlueTable)","holding(BlueBox)"]]
-}
-```
-{:.code}
+## Minimax search (R&N 5.2--5.3)
 
-```{
-  world: "small",
-  utterance: "put a black ball in a box on the floor",
-  interpretations: [["inside(BlackBall,YellowBox)"],
-                    ["ontop(BlackBall,floor)"]]
-}
-```
-{:.code}
+* 
+    * Minimax algorithm
+    * α-β pruning
 
----
+-----
 
-## Conjunction
+### Minimax search for zero-sum games
 
-```{
-  world: "small",
-  utterance: "put all balls on the floor",
-  interpretations: [["ontop(WhiteBall,floor) & ontop(BlackBall,floor)"]]
-}
-```
-{:.code}
+* Given two players called MAX and MIN:
+    * MAX wants to maximise the utility value,
+    * MIN wants to minimise the same value.
+* {:.fragment} \\(\Rightarrow\\) MAX should choose the alternative that maximises, assuming MIN minimises.
+*  
+* {:.fragment} Minimax gives perfect play for deterministic, perfect-information games:
 
----
+<div> </div>
 
-## No valid interpretations
+* **function** Minimax(*state*):
+    * **if** TerminalTest(*state*) **then return** Utility(*state*)
+    * *A* := Actions(*state*)
+    * **if** *state* is a MAX node **then return** \\(\max\_{a\in A}\\) Minimax(Result(*state*, *a*))
+    * **if** *state* is a MIN node **then return** \\(\min\_{a\in A}\\) Minimax(Result(*state*, *a*))
+{:.pseudocode .fragment}
 
-```{
-  world: "small",
-  utterance: "put a ball on a table",
-  interpretations: []
-}
-```
-{:.code}
+-----
 
-Breaks the laws of nature!
+### Minimax search: tic-tac-toe
 
----
+![](img/tictactoe.png){:height="450px" .noborder}
 
-## Some interpretations are missing
+----
 
-```{
-  world: "small",
-  utterance: "put a ball in a box on the floor",
-  interpretations: [["COME UP WITH YOUR OWN INTERPRETATION"]]
-}
-```
-{:.code}
+### Minimax example
 
----
+The Minimax algorithm gives perfect play for deterministic, perfect-information games.
 
-# Tips for interpreter in Shrdlite
+![](img/minimax.png){:height="350px" .noborder}
 
-- Sub-functions based on grammar types
-- Use `instanceof` when traversing parse tree (`Command`)
-- Use recursion to handle nesting  
-  _"put a box in a box on a table on the floor"_
-{:.list}
+-----
 
-Notes:
+### Can Minimax be wrong?
 
-- Show that `Command` can be various sub-types
+- Minimax gives perfect play, but is that always the best strategy?
 
----
+![](img/minimax-error.png){:height="350px" .noborder}
 
-# Ambiguity resolution
+- {:.fragment} Perfect play assumes that the opponent is also a perfect player!
 
-Handling multiple interpretations
+-----
 
-- Fail
-- Pick "first"
-- Use some rules of thumb  
-  _e.g. prefer box already on floor_
-- Ask the user for clarification (extension)
-{:.list}
+### 3-player minimax
 
----
+*(will not be in the written examination)*
 
-# Planning
+Minimax can also be used on multiplayer games 
 
-`goal → robot movements`
+![](img/minimax3.png){:height="300px" .noborder}
 
-- Movements: _left, right, pick, drop_
-- Use graph search
-- Given a disjunction of goals, should find the easiest to satisfy
-{:.list}
+-----
 
----
+### \\(\alpha{-}\beta\,\\) pruning
 
-## Audience participation meta-question
+![](img/minimax.png){:height="200px" .noborder}
 
-✋ Do you prefer
-<span style="background:lime;color:white;padding:3px 6px;">Socrative</span> or
-<span style="background:magenta;color:white;padding:3px 6px;">post-it notes</span>?
+| Minimax(*root*) | = | \\( \max(\min(3,12,8), \min(2,x,y), \min(14,5,2)) \\) |
+| | = | \\( \max(3, \min(2,x,y), 2) \\) |
+| | = | \\( \max(3, z, 2) \\)   where  \\(z = \min(2,x,y) \leq 2\\)|
+| | = | \\( 3 \\)
+{:.noborder .fragment}
 
-_Thank you for returning your post-it notes! 🦄_
-{: style="margin-top:50px"}
+* {:.fragment} I.e., we don't need to know the values of \\(x\\) and \\(y\\)!
+
+----
+
+### \\(\alpha{-}\beta\,\\) pruning, general idea
+
+* ![](img/alpha-beta-general.png){:.noborder style="float:left;margin-right:50px"}
+*  
+* The general idea of α-β pruning is this: <br/>
+*   •  if \\(m\\) is better than \\(n\\) for Player, <br/>
+*      we don't want to pursue \\(n\\)
+*   •  so, once we know enough about \\(n\\) <br/>
+*      we can prune it
+*   •  sometimes it's enough to examine <br/> 
+*      just one of \\(n\\)'s descendants
+*  
+*  
+*  
+* α-β pruning keeps track of the possible range
+  of values for every node it visits;  
+  the parent range is updated when the child has been visited.
+
+-----
+
+
+### Minimax example, with \\(\alpha{-}\beta\\) pruning
+
+
+![](img/alpha-beta-progress-1.png){:height="350px" .noborder .fragment data-fragment-index="1" .nospace-fragment .fade-out}
+![](img/alpha-beta-progress-2.png){:height="350px" .noborder .fragment data-fragment-index="1" .nospace-fragment .current-visible}
+![](img/alpha-beta-progress-3.png){:height="350px" .noborder .fragment data-fragment-index="2" .nospace-fragment .current-visible}
+![](img/alpha-beta-progress-4.png){:height="350px" .noborder .fragment data-fragment-index="3" .nospace-fragment .current-visible}
+![](img/alpha-beta-progress-5.png){:height="350px" .noborder .fragment data-fragment-index="4" .nospace-fragment .current-visible}
+![](img/alpha-beta-progress-6.png){:height="350px" .noborder .fragment data-fragment-index="5" .nospace-fragment}
+
+-----
+
+### The \\(\alpha{-}\beta\\) algorithm
+
+* **function** AlphaBetaSearch(*state*):
+    * *v* := MaxValue(*state*, \\(-\infty\\), \\(+\infty\\)))
+    * **return** the *action* in Actions(*state*) that has value *v*
+*  
+* **function** MaxValue(*state*, *α*, *β*):
+    * **if** TerminalTest(*state*) **then return** Utility(*state*)
+    * *v* := \\(-\infty\\)
+    * **for each** *action* in Actions(*state*):
+        * *v* := max(*v*, MinValue(Result(*state*, *action*), *α*, *β*))
+        * **if** *v* ≥ *β* **then return** *v*
+        * *α* := max(*α*, *v*)
+    * **return** *v*
+*  
+* **function** MinValue(*state*, *α*, *β*):
+    * same as MaxValue but reverse the roles of *α/β* and *min/max* and \\(-\infty/{+}\infty\\)
+{:.pseudocode}
+
+----
+
+### How efficient is \\(\alpha{-}\beta\\) pruning?
+
+* The amount of pruning provided by the α-β algorithm depends on the ordering of the children of each node. 
+
+    * It works best if a highest-valued child of a MAX node is selected first and  
+      if a lowest-valued child of a MIN node is selected first. 
+    
+    * In real games, much of the effort is made to optimise the search order.
+    
+    * With a "perfect ordering", the time complexity becomes \\(O(b^{m/2})\\)
+        * this doubles the solvable search depth
+        * however, \\(35^{80/2}\\) (for chess) or \\(250^{160/2}\\) (for go) is still quite large…
+
+----
+
+### Minimax and real games
+
+* Most real games are too big to carry out minimax search, even with α-β pruning. 
+
+    * For these games, instead of stopping at leaf nodes,  
+      we have to use a cutoff test to decide when to stop.
+    
+    * The value returned at the node where the algorithm stops  
+      is an estimate of the value for this node. 
+    
+    * The function used to estimate the value is an evaluation function. 
+    
+    * Much work goes into finding good evaluation functions. 
+    
+    * There is a trade-off between the amount of computation required  
+      to compute the evaluation function and the size of the search space  
+      that can be explored in any given time. 
+
+-----
+
+## Imperfect decisions (R&N 5.4--5.4.2)
+
+## Stochastic games (R&N 5.5)
+
+*Note: these two sections will be presented Tuesday 6th February!*
