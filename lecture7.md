@@ -17,55 +17,48 @@ logo: "img/logo-Chalmers-GU.png"
 # Repetition of search
 
 ## Classical search (R&N 3.1--3.6)
+{: style="font-size:28px"}
 
 - Generic search algorithm, tree search, graph search, depth-first search,  
   breadth-first search, uniform cost search, iterative deepending,  
   bidirectional search, greedy best-first search, A* search,  
   heuristics, admissibility, consistency, dominating heuristics, ...
+{:.smaller}
 
 <div> </div>
 
 ## Non-classical search (R&N 4.1, 4.3--4.4)
+{: style="font-size:28px"}
 
 - Hill climbing, random moves, random restarts, beam search,  
   nondeterministic actions, contingency plan, and-or search trees,  
   partial observations, belief states, sensor-less problems, ...
+{:.smaller}
 
 <div> </div>
 
-## Adversarial search (R&N 5.1--5.3)
+## Adversarial search (R&N 5.1--5.4)
+{: style="font-size:28px"}
 
-- Cooperative, competetive, zero-sum games, game trees,  
-  minimax, α-β pruning, ...
+- Cooperative, competetive, zero-sum games, game trees, minimax,  
+  α-β pruning, H-minimax, evaluation function, cutoff test,  
+  features, weighted linear function, quiescence search, horizon effect, ...
+{:.smaller}
 
 -----
 
 # More games
 
-## Imperfect decisions (R&N 5.4--5.4.2)
-{:.no_toc}
-
 ## Stochastic games (R&N 5.5)
-{:.no_toc}
-
------
-
-## Imperfect decisions (R&N 5.4--5.4.2)
-
-*  
-    * H-minimax algorithm
-    * evaluation function, cutoff test
-    * features, weighted linear function
-    * quiescence search, horizon effect
 
 -----
 
 ### Repetition: Minimax search for zero-sum games
 
 * Given two players called MAX and MIN:
-    * MAX wants to maximize the utility value,
-    * MIN wants to minimize the same value.
-* \\(\Rightarrow\\) MAX should choose the alternative that maximizes assuming that MIN minimizes.
+    * MAX wants to maximise the utility value,
+    * MIN wants to minimise the same value.
+* \\(\Rightarrow\\) MAX should choose the alternative that maximises, assuming MIN minimises.
 
 <div> </div>
 
@@ -78,27 +71,7 @@ logo: "img/logo-Chalmers-GU.png"
 
 ----
 
-### Minimax and real games
-
-* Most real games are too big to carry out minimax search, even with α-β pruning. 
-
-    * For these games, instead of stopping at leaf nodes,  
-      we have to use a cutoff test to decide when to stop.
-    
-    * The value returned at the node where the algorithm stops  
-      is an estimate of the value for this node. 
-    
-    * The function used to estimate the value is an evaluation function. 
-    
-    * Much work goes into finding good evaluation functions. 
-    
-    * There is a trade-off between the amount of computation required  
-      to compute the evaluation function and the size of the search space  
-      that can be explored in any given time. 
-
-----
-
-### H-minimax algorithm
+### Repetition: H-minimax algorithm
 
 * The *Heuristic* Minimax algorithm is similar to normal Minimax
     * it replaces **TerminalTest** with **CutoffTest**, and **Utility** with **Eval**
@@ -115,76 +88,36 @@ logo: "img/logo-Chalmers-GU.png"
 
 -----
 
-### Chess positions: how to evaluate
+### Repetition: The \\(\alpha{-}\beta\\) algorithm
 
-![](img/chess-evaluation.png){:height="500px" .noborder}
+* **function** AlphaBetaSearch(*state*):
+    * *v* := MaxValue(*state*, \\(-\infty\\), \\(+\infty\\)))
+    * **return** the *action* in Actions(*state*) that has value *v*
+*  
+* **function** MaxValue(*state*, *α*, *β*):
+    * **if** TerminalTest(*state*) **then return** Utility(*state*)
+    * *v* := \\(-\infty\\)
+    * **for each** *action* in Actions(*state*):
+        * *v* := max(*v*, MinValue(Result(*state*, *action*), *α*, *β*))
+        * **if** *v* ≥ *β* **then return** *v*
+        * *α* := max(*α*, *v*)
+    * **return** *v*
+*  
+* **function** MinValue(*state*, *α*, *β*):
+    * same as MaxValue but reverse the roles of *α/β* and *min/max* and \\(-\infty/{+}\infty\\)
+{:.pseudocode}
+
+----
+
+## Stochastic games (R&N 5.5)
+{:.no_toc}
+
+*  
+    * chance nodes
+    * expected value
+    * expecti-minimax algorithm
 
 -----
-
-### Weighted linear evaluation functions
-
-* A very common evaluation function is to use a weighted sum of features:
-  \\[ Eval(s) = w\_1 f\_1(s) + w\_2 f\_2(s) + \cdots + w\_n f\_n(s) = \sum\_{i=1}^{n} w\_i f\_i(s) \\]
-
-* This relies on a strong assumption: all features are *independent of each other*
-    * which is usually not true, so the best programs for chess  
-      (and other games) also use nonlinear feature combinations
-*  
-* The weights can be calculated using machine learning algorithms,  
-  but a human still has to come up with the features.
-    * using recent advances in deep machine learning,  
-      the computer can learn the features too
-
-
------
-
-### Evaluation functions
-
-![](img/chess-evaluation3.png){:height="300px" .noborder}
-
-A naive weighted sum of features will not see the difference between these two states.
-
--------
-
-### Problems with cutoff tests
-
-* Too simplistic cutoff tests and evaluation functions can be problematic:
-    * e.g., if the cutoff is only based on the current depth 
-    * then it might cut off the search in unfortunate positions  
-      (such as (b) on the previous slide)
-*  
-* We want more sophisticated cutoff tests:
-    * only cut off search in *quiescent* positions 
-    * i.e., in positions that are "stable", unlikely to exhibit wild swings in value
-    * non-quiescent positions should be expanded further
-*  
-* Another problem is the *horizon effect*:
-    * if a bad position is unavoidable (e.g., loss of a piece), but the system can  
-      delay it from happening, it might push the bad position "over the horizon"
-    * in the end, the resulting delayed position might be even worse
-
-
-------
-
-### Deterministic games in practice
-
-* Chess: 
-    * IBM DeepBlue beats world champion Garry Kasparov, 1997. 
-    * Google AlphaZero beats best chess program Stockfish, December 2017.
-*  
-* Checkers/Othello/Reversi: 
-    * Logistello beats the world champion in Othello/Reversi, 1997. 
-    * Chinook plays checkers perfectly, 2007. It uses an endgame database  
-      defining perfect play for all 8-piece positions on the board,  
-      (a total of 443,748,401,247 positions).
-*  
-* Go:
-    * First Go programs to reach low dan-levels, 2009. 
-    * Google AlphaGo beats the world's best Go player, Ke Jie, May 2017.
-    * Google AlphaZero beats AlphaGo, December 2017.
-        * AlphaZero learns board game strategies by playing itself, it does not use a database of previous matches, opening books or endgame tables.
-
------------
 
 ### Games of imperfect information* Imperfect information games    * e.g., card games, where the opponent’s initial cards are unknown
 
@@ -194,15 +127,6 @@ A naive weighted sum of features will not see the difference between these two s
 
     * main idea: compute the minimax value of each action in each deal,  
       then choose the action with highest expected value over all deals
-----
-
-## Stochastic games (R&N 5.5)
-
-*  
-    * chance nodes
-    * expected value
-    * expecti-minimax algorithm
-
 -----
 
 ### Stochastic game example: Backgammon
@@ -243,7 +167,7 @@ A naive weighted sum of features will not see the difference between these two s
     * *A* := Actions(*state*)
     * **if** *state* is a MAX node **then return** \\(\max\_{a\in A}\\) ExpectiMinimax(Result(*state*, *a*))
     * **if** *state* is a MAX node **then return** \\(\min\_{a\in A}\\) ExpectiMinimax(Result(*state*, *a*))
-    * **if** *state* is a chance node **then return** \\(\sum\_{a\in A}P(a)\\) ExpectiMinimax(Result(*state*, *a*))
+    * **if** *state* is a chance node **then return** \\(\sum\_{a\in A}P(a)\\)·ExpectiMinimax(Result(*state*, *a*))
 {:.pseudocode}
 
 where \\(P(a)\\) is the probability that action *a* occurs.
@@ -498,7 +422,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 - {:.fragment} Do we need to restart AC from scratch? 
 
     - no, only some arcs risk becoming inconsistent after a new assignment
-    - restart AC with the queue \\(\\{(Y\_i,X) \| X\rightarrow Y\_i\\}\\),  
+    - restart AC with the queue \\(\\{(Y\_i,X) \;\|\; X\rightarrow Y\_i\\}\\),  
       i.e., only the arcs \\((Y\_i,X)\\) where \\(Y\_i\\) are the neighbors of \\(X\\)
     - this algorithm is called *Maintaining Arc Consistency* (MAC)
 
@@ -516,8 +440,8 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
     - *\\(k\\)-consistency*: \\(k\\) variables, \\(k\\)-ary constraints (algorithms exponential in \\(k\\))
 
-    - Consistency for global constraints: 
-        - special-purpose algorithms for different constraints, e.g.:
+    - Consistency for global constraints: <br/>
+      Special-purpose algorithms for different constraints, e.g.:
         - *Alldiff(\\(X\_1,\ldots,X\_m\\))* is inconsistent if \\(m > \|D\_1\cup\cdots\cup D\_m\|\\) 
         - *Atmost(\\(n,X\_1,\ldots,X\_m\\))* is inconsistent if \\(n < \sum_i \min(D\_i)\\)
 
@@ -526,7 +450,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 # More about CSP
 
-## Local search for CSPs (R&N 7.4)
+## Local search for CSP (R&N 7.4)
 {:.no_toc}
 
 ## Problem structure (R&N 7.5)
@@ -534,7 +458,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 ----
 
-## Local search for CSPs (R&N 7.4)
+## Local search for CSP (R&N 7.4)
 
 - Given an assignment of a value to each variable:
   - A conflict is an unsatisfied constraint. 
@@ -550,7 +474,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 ### Min conflicts algorithm
 
-- Heuristic function to be minimized: the number of conflicts. 
+- Heuristic function to be minimised: the number of conflicts. 
     - this is the *min-conflicts* heuristics
 - *Note*: this does not always work! 
     - it can get stuck in a *local minimum*
@@ -602,13 +526,13 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 - To choose a variable to change and a new value for it: 
 
-  - Find a variable-value pair that minimizes the number of conflicts.
+  - Find a variable-value pair that minimises the number of conflicts.
   - Select a variable that participates in the most conflicts.  
-    Select a value that minimizes the number of conflicts. 
+    Select a value that minimises the number of conflicts. 
   - Select a variable that appears in any conflict.  
-    Select a value that minimizes the number of conflicts. 
+    Select a value that minimises the number of conflicts. 
   - Select a variable at random.  
-    Select a value that minimizes the number of conflicts. 
+    Select a value that minimises the number of conflicts. 
   - Select a variable and value at random;  
     accept this change if it doesn't increase the number of conflicts. 
 
@@ -693,18 +617,18 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 ### Converting to tree-structured CSP
 
-- Most CSPs are *not* tree-structured, but sometimes we can reduce a problem to a tree
+- Most CSPs are *not* tree-structured, but sometimes we can reduce them to a tree
     - one approach is to assign values to some variables,  
       so that the remaining variables form a tree
 
-![](img/australia-csp.png){:height="200px" .noborder .fragment}
-![](img/australia-tree.png){:height="200px" .noborder .fragment style="margin-left:100px"}
+![](img/australia-csp.png){:height="200px" .noborder .fragment data-fragment-index="1" style="margin-bottom:-20px"}
+![](img/australia-tree.png){:height="200px" .noborder .fragment data-fragment-index="3" style="margin-left:100px;margin-bottom:-20px"}
 
-- {:.fragment} If we assign a colour to South Australia, then the remaining variables form a tree
-    - a (worse) alternative is to assign values to {*NT,Q,V*}
+- {:.fragment data-fragment-index="2"} If we assign a colour to South Australia, then the remaining variables form a tree
 
-- {:.fragment} Why is {*NT,Q,V*} a worse alternative?
-    - because then we have to try 3×3×3 different assignments,  
+- {:.fragment} A (worse) alternative is to assign values to {*NT,Q,V*}
+    - {:.fragment} Why is {*NT,Q,V*} a worse alternative?
+    - {:.fragment} Because then we have to try 3×3×3 different assignments,  
       and for each of them solve the remaining tree-CSP
 
 ----
