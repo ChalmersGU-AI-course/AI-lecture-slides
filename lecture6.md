@@ -254,15 +254,16 @@ so it is not guaranteed to find the best or shortest plan:
 
 ### Example: Robot Localisation 
 
-![](img/localization-figures-a.png){:height="300px" .noborder}
+The percepts return whether there is a wall in each of the directions.
 
-* The percepts return whether there is a wall in each of the directions.
+![](img/localization-figures-a1.png){:height="170px" .noborder .fragment style="margin-bottom:-20px"}
 
-* {:.fragment} ***Top***: Possible initial positions of the robot, after the first observation.
-    * **E<sub>1</sub>** = North, South, West
+* {:.fragment} Possible initial positions of the robot, after ***E<sub>1</sub>** = North, South, West*.
 
-* {:.fragment} ***Bottom***: After moving right and observing, there's only one possible position left.
-    * **E<sub>1</sub>** = North, South, West;   **Right**;   **E<sub>2</sub>** = North, South
+![](img/localization-figures-a2.png){:height="170px" .noborder .fragment style="margin-bottom:-20px"}
+
+* {:.fragment} After moving right and observing ***E<sub>2</sub>** = North, South*, <br/>
+  there's only one possible position left.
 
 -------
 
@@ -359,7 +360,7 @@ so it is not guaranteed to find the best or shortest plan:
 * {:.fragment} If two agents compete, so that a positive reward for one is a negative reward <br/>
   for the other agent, we have a two-agent *zero-sum game*. 
 
-* {:.fragment} The value of a game zero-sum game can be characterized by a single number that one agent is trying to maximize and the other agent is trying to minimize. 
+* {:.fragment} The value of a game zero-sum game can be characterised by a single number that one agent is trying to maximise and the other agent is trying to minimise. 
 
 * {:.fragment} This leads to a *minimax strategy*:
     * A node is either a MAX node (if it is controlled by the maximising agent),
@@ -434,9 +435,9 @@ Minimax can also be used on multiplayer games
 ![](img/minimax.png){:height="200px" .noborder}
 
 | Minimax(*root*) | = | \\( \max(\min(3,12,8), \min(2,x,y), \min(14,5,2)) \\) |
-| | = | \\( \max(3, \min(2,x,y), 2) \\) |
-| | = | \\( \max(3, z, 2) \\)   where  \\(z = \min(2,x,y) \leq 2\\)|
-| | = | \\( 3 \\)
+| | = | <span> \\( \max(3, \min(2,x,y), 2) \\) </span>{:.fragment} |
+| | = | <span> \\( \max(3, z, 2) \\)   where  \\(z = \min(2,x,y) \leq 2\\) </span>{:.fragment} |
+| | = | <span> \\( 3 \\) </span>{:.fragment} |
 {:.noborder .fragment}
 
 * {:.fragment} I.e., we don't need to know the values of \\(x\\) and \\(y\\)!
@@ -534,6 +535,102 @@ Minimax can also be used on multiplayer games
 
 ## Imperfect decisions (R&N 5.4--5.4.2)
 
+*  
+    * H-minimax algorithm
+    * evaluation function, cutoff test
+    * features, weighted linear function
+    * quiescence search, horizon effect
+
+----
+
+### H-minimax algorithm
+
+* The *Heuristic* Minimax algorithm is similar to normal Minimax
+    * it replaces **TerminalTest** with **CutoffTest**, and **Utility** with **Eval**
+    * the cutoff test needs to know the current search depth 
+
+<div> </div>
+
+* **function** H-Minimax(*state*, <span>*depth*</span>{:.highlight}):
+    * **if** <span>CutoffTest</span>{:.highlight}(*state*, <span>*depth*</span>{:.highlight}) **then return** <span>Eval</span>{:.highlight}(*state*)
+    * *A* := Actions(*state*)
+    * **if** *state* is a MAX node **then return** \\(\max\_{a\in A}\\) H-Minimax(Result(*state*, *a*), <span>*depth*+1</span>{:.highlight})
+    * **if** *state* is a MIN node **then return** \\(\min\_{a\in A}\\) H-Minimax(Result(*state*, *a*), <span>*depth*+1</span>{:.highlight})
+{:.pseudocode}
+
+-----
+
+### Chess positions: how to evaluate
+
+![](img/chess-evaluation.png){:height="500px" .noborder}
+
+-----
+
+### Weighted linear evaluation functions
+
+* A very common evaluation function is to use a weighted sum of features:
+  \\[ Eval(s) = w\_1 f\_1(s) + w\_2 f\_2(s) + \cdots + w\_n f\_n(s) = \sum\_{i=1}^{n} w\_i f\_i(s) \\]
+
+* This relies on a strong assumption: all features are *independent of each other*
+    * which is usually not true, so the best programs for chess  
+      (and other games) also use nonlinear feature combinations
+*  
+* The weights can be calculated using machine learning algorithms,  
+  but a human still has to come up with the features.
+    * using recent advances in deep machine learning,  
+      the computer can learn the features too
+
+
+-----
+
+### Evaluation functions
+
+![](img/chess-evaluation3.png){:height="300px" .noborder}
+
+A naive weighted sum of features will not see the difference between these two states.
+
+-------
+
+### Problems with cutoff tests
+
+* Too simplistic cutoff tests and evaluation functions can be problematic:
+    * e.g., if the cutoff is only based on the current depth 
+    * then it might cut off the search in unfortunate positions  
+      (such as (b) on the previous slide)
+*  
+* We want more sophisticated cutoff tests:
+    * only cut off search in *quiescent* positions 
+    * i.e., in positions that are "stable", unlikely to exhibit wild swings in value
+    * non-quiescent positions should be expanded further
+*  
+* Another problem is the *horizon effect*:
+    * if a bad position is unavoidable (e.g., loss of a piece), but the system can  
+      delay it from happening, it might push the bad position "over the horizon"
+    * in the end, the resulting delayed position might be even worse
+
+
+------
+
+### Deterministic games in practice
+
+* Chess: 
+    * IBM DeepBlue beats world champion Garry Kasparov, 1997. 
+    * Google AlphaZero beats best chess program Stockfish, December 2017.
+*  
+* Checkers/Othello/Reversi: 
+    * Logistello beats the world champion in Othello/Reversi, 1997. 
+    * Chinook plays checkers perfectly, 2007. It uses an endgame database  
+      defining perfect play for all 8-piece positions on the board,  
+      (a total of 443,748,401,247 positions).
+*  
+* Go:
+    * First Go programs to reach low dan-levels, 2009. 
+    * Google AlphaGo beats the world's best Go player, Ke Jie, May 2017.
+    * Google AlphaZero beats AlphaGo, December 2017.
+        * AlphaZero learns board game strategies by playing itself, it does not use a database of previous matches, opening books or endgame tables.
+
+-----
+
 ## Stochastic games (R&N 5.5)
 
-*Note: these two sections will be presented Tuesday 6th February!*
+*Note: this section will be presented Tuesday 6th February!*
