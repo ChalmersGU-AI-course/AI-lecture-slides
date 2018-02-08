@@ -386,6 +386,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 - **function** Revise(**inout** *csp*, *X*, *Y*):
   - delete every *x* from \\(D_X\\) such that
     there is no value *y* in \\(D\_Y\\) satisfying the constraint \\(C\_{XY}\\)
+  - **return** true **if** \\(D_X\\) was revised
 {:.pseudocode .fragment}
 
 -----
