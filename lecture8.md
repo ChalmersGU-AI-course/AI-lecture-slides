@@ -1,8 +1,8 @@
 ---
-title: "Chapter 6: Search part IV, and Constraint satisfaction problems, part II"
-description: "DIT410/TIN174, Artificial Intelligence"
+title: "Chapters 3, 4, 5, 7: Repetition"
+description: "DIT411/TIN175, Artificial Intelligence"
 author: "Peter Ljunglöf"
-when: "25 April, 2017"
+when: "9 February, 2018"
 logo: "img/logo-Chalmers-GU.png"
 ---
 
@@ -14,60 +14,659 @@ logo: "img/logo-Chalmers-GU.png"
 
 ----
 
-# Repetition of search
+# Search (R&N 3.1--3.6, 4.1, 4.3--4.4)
 
-## Classical search (R&N 3.1--3.6)
+## Uninformed search
 
-- Generic search algorithm, tree search, graph search, depth-first search,  
-  breadth-first search, uniform cost search, iterative deepending,  
-  bidirectional search, greedy best-first search, A* search,  
-  heuristics, admissibility, consistency, dominating heuristics, ...
-
-<div> </div>
-
-## Non-classical search (R&N 4.1, 4.3--4.4)
-
-- Hill climbing, random moves, random restarts, beam search,  
-  nondeterministic actions, contingency plan, and-or search trees,  
-  partial observations, belief states, sensor-less problems, ...
-
-<div> </div>
-
-## Adversarial search (R&N 5.1--5.3)
-
-- Cooperative, competetive, zero-sum games, game trees,  
-  minimax, α-β pruning, ...
-
------
-
-# More games
-
-## Imperfect decisions (R&N 5.4--5.4.2)
+## Cost-based search
 {:.no_toc}
 
-## Stochastic games (R&N 5.5)
+## Heuristics
+{:.no_toc}
+
+## Non-classical search
+{:.no_toc}
+
+---
+
+### Directed Graphs
+
+- A *graph* consists of a set \\(N\\) of *nodes* and a set \\(A\\) of ordered pairs of nodes,  
+  called *arcs* or *edges*.
+
+  - Node \\(n\_2\\) is a *neighbor* of \\(n\_1\\)
+    if there is an arc from \\(n\_1\\) to \\(n\_2\\).  
+    That is, if \\( (n\_1, n\_2) \in A \\). 
+
+  - A *path* is a sequence of nodes \\( (n\_0, n\_1, \ldots, n\_k) \\)
+    such that \\( (n\_{i-1}, n\_i) \in A \\). 
+
+  - The *length* of path \\( (n\_0, n\_1, \ldots, n\_k) \\) is \\(k\\). 
+
+  - A *solution* is a path from a start node to a goal node,  
+    given a set of *start nodes* and *goal nodes*. 
+
+  - (Russel & Norvig sometimes call the graph nodes *states*).
+
+----
+
+### How do we search in a graph?
+
+- *A generic search algorithm*:
+
+    - Given a graph, start nodes, and a goal description, incrementally  
+      explore paths from the start nodes. 
+
+    - Maintain a *frontier* of nodes that are to be explored. 
+
+    - As search proceeds, the frontier expands into the unexplored nodes  
+      until a goal node is encountered.
+
+    - The way in which the frontier is expanded defines the search strategy. 
+
+----
+
+### Illustration of searching in a graph
+
+![](img/searchspc.png){:height="500px"}
+ 
+----
+
+### The generic tree search algorithm
+
+- *Tree search*:  Don't check if nodes are visited multiple times
+
+<div> </div>
+
+- **function** Search(*graph*, *initialState*, *goalState*):
+  - initialise *frontier* using the *initialState*
+  -  
+  - **while** *frontier* is not empty:
+    - **select** and **remove** *node* from *frontier*
+    - **if** *node*.state is a *goalState* **then return** *node*
+    -  
+    - **for each** *child* **in** ExpandChildNodes(*node*, *graph*):
+      - add *child* to *frontier*
+        <span>**if** *child* is not in *frontier* or *exploredSet*</span>{:.invisible}
+  - **return** failure
+{: .pseudocode}
+
+----
+
+### Using tree search on a graph
+
+![](img/searchspc-tree.png){:height="400px" .fragment .noborder data-fragment-index="1" .nospace-fragment .fade-out}
+![](img/searchspc-graph.png){:height="400px" .fragment .noborder data-fragment-index="1" .nospace-fragment}
+
+- 
+    - {:.fragment style="color:green"} explored nodes might be revisited
+    - {:.fragment style="color:blue"} frontier nodes might be duplicated 
+
+----
+
+### Turning tree search into graph search
+
+- *Graph search*:  Keep track of visited nodes
+
+<div> </div>
+
+- **function** Search(*graph*, *initialState*, *goalState*):
+  - initialise *frontier* using the *initialState*
+  - <span>initialise *exploredSet* to the empty set</span>{:.highlight}
+  - **while** *frontier* is not empty:
+    - **select** and **remove** *node* from *frontier*
+    - **if** *node*.state is a *goalState* **then return** *node*
+    - <span>add *node* to *exploredSet*</span>{:.highlight}
+    - **for each** *child* **in** ExpandChildNodes(*node*, *graph*):
+      - add *child* to *frontier*
+        <span>**if** *child* is not in *frontier* or *exploredSet*</span>{:.highlight}
+  - **return** failure
+{: .pseudocode}
+
+----
+
+### Tree search vs. graph search
+
+- *Tree search*
+
+    - **Pro**: uses less memory
+    - **Con**: might visit the same node several times
+
+- *Graph search*
+
+    - **Pro**: only visits nodes at most once
+    - **Con**: uses more memory
+
+----------
+
+### Depth-first and breadth-first search
+
+#### These are the two basic search algorithms
+
+- Depth-first search (DFS)
+  - implement the frontier as a Stack
+  - space complexity: \\( O(bm) \\)
+  - incomplete: might fall into an infinite loop, doesn't return optimal solution
+-  
+- Breadth-first search (BFS)
+  - implement the frontier as a Queue
+  - space complexity: \\( O(b^m) \\)
+  - complete: always finds a solution, if there is one
+  - (when edge costs are constant, BFS is also optimal)
+
+----------
+
+### Iterative deepening
+
+- Problems with BFS and DFS:
+
+    - BFS is guaranteed to halt but uses exponential space.
+    - DFS uses linear space, but is not guaranteed to halt.
+
+- *Idea*: take the best from BFS and DFS --- recompute elements of the frontier <br/> rather than saving them.
+
+    - Look for paths of depth 0, then 1, then 2, then 3, etc.
+    - Depth-bounded DFS can do this in linear space.
+
+- **Iterative deepening search** calls depth-bounded DFS with increasing bounds:
+
+    - If a path cannot be found at *depth-bound*, look for a path at *depth-bound* + 1. 
+    - Increase *depth-bound* when the search fails unnaturally  
+      (i.e., if *depth-bound* was reached). 
+
+------
+
+### Iterative deepening complexity
+
+Complexity with solution at depth \\(k\\) and branching factor \\(b\\): 
+
+|--------
+| level | # nodes | BFS node visits | ID node visits
+|:---------:|:-------:|:---------:|:--------:|
+| \\(1\\) <br/> \\(2\\) <br/> \\(3\\) <br/> \\(\vdots\\) <br/> \\(k\\)  | \\(b\\) <br/> \\(b^{2}\\) <br/> \\(b^{3}\\) <br/> \\(\vdots\\) <br/> \\(b^{k}\\) | \\(1\cdot b^{1}\\) <br/> \\(1\cdot b^{2}\\) <br/> \\(1\cdot b^{3}\\) <br/> \\(\vdots\\) <br/> \\(1\cdot b^{k}\\) | \\(\,\,\,\,\,\,\,\,k\,\,\cdot b^{1}\\) <br/> \\((k{-}1)\cdot b^{2}\\) <br/> \\((k{-}2)\cdot b^{3}\\) <br/> \\(\,\,\,\,\,\,\,\,\vdots\\) <br/> \\(\,\,\,\,\,\,\,\,1\,\,\cdot b^{k}\\) 
+| **total** | | \\({}\geq b^{k}\\) | \\({}\leq b^{k}\left(\frac{b}{b-1}\right)^{2}\\)
+{:.smaller}
+
+Numerical comparison for \\(k=5\\) and \\(b=10\\): 
+
+- BFS   =  10 + 100 + 1,000 + 10,000 + 100,000  =  111,110
+- IDS   =  50 + 400 + 3,000 + 20,000 + 100,000  =  123,450
+
+*Note*: IDS recalculates shallow nodes several times,  
+but this doesn't have a big effect compared to BFS! 
+
+------
+
+### Bidirectional search
+
+*(will not be in the written examination, but could be used in Shrdlite)*
+
+- *Idea:* search backward from the goal and forward from the start simultaneously.
+
+    - This can result in an exponential saving, because \\(2b^{k/2}\ll b^{k}\\).
+
+    - The main problem is making sure the frontiers meet.
+
+- One possible implementation:
+
+    - Use BFS to gradually search backwards from the goal,  
+      building a set of locations that will lead to the goal.
+
+        - this can be done using *dynamic programming*
+
+    - Interleave this with forward heuristic search (e.g., A*)  
+      that tries to find a path to these interesting locations.
+
+------
+
+## Cost-based search
+
+### The frontier is a Priority Queue, ordered by *\\(f(n)\\)*
+
+- Uniform-cost search (this is not a heuristic algorithm)
+    - expand the node with the lowest path cost 
+    - \\( f(n) = g(n) \\)
+    - complete and optimal
+-  
+- Greedy best-first search
+    - expand the node which is closest to the goal (according to some heuristics)
+    - \\( f(n) = h(n) \\)
+    - incomplete: might fall into an infinite loop, doesn't return optimal solution
+-  
+- A* search
+    - expand the node which has the lowest estimated cost from start to goal
+    - \\( f(n) = g(n) + h(n) \\)
+      = estimated cost of the cheapest solution through \\(n\\)
+    - complete and optimal (if \\(h(n)\\) is admissible/consistent)
+
+-------
+
+### A* tree search is optimal!
+
+- A* always finds an optimal solution first, provided that:
+
+    - the branching factor is finite,
+
+    - arc costs are *bounded above zero*  
+      (i.e., there is some \\(\epsilon>0\\)
+      such that all  
+      of the arc costs are greater than \\(\epsilon\\)), and 
+
+    - \\(h(n)\\) is ***admissible***
+        - i.e., \\(h(n)\\) is *nonnegative* and an *underestimate* of  
+          the cost of the shortest path from \\(n\\) to a goal node. 
+
+These requirements ensure that \\(f\\) keeps increasing.
+
+--------------
+
+### The generic tree search algorithm
+{:.fragment data-fragment-index="1" .nospace-fragment .fade-out}
+
+### Turning tree search into graph search
+{:.fragment data-fragment-index="1" .nospace-fragment}
+
+- *Tree search*:  Don't check if nodes are visited multiple times
+- {:.highlight .fragment data-fragment-index="1"} *Graph search*:  Keep track of visited nodes
+
+<div> </div>
+
+- **function** Search(*graph*, *initialState*, *goalState*):
+  - initialise *frontier* using the *initialState*
+  - <span>initialise *exploredSet* to the empty set</span>{:.highlight .fragment data-fragment-index="1"}
+  - **while** *frontier* is not empty:
+    - **select** and **remove** *node* from *frontier*
+    - **if** *node*.state is a *goalState* **then return** *node*
+    - <span>add *node* to *exploredSet*</span>{:.highlight .fragment data-fragment-index="1"}
+    - **for each** *child* **in** ExpandChildNodes(*node*, *graph*):
+      - add *child* to *frontier*
+        <span>**if** *child* is not in *frontier* or *exploredSet*</span>{:.highlight .fragment data-fragment-index="1"}
+  - **return** failure
+{: .pseudocode}
+
+----
+
+### Graph-search = Multiple-path pruning
+
+![](img/mult_path.png){:height="150px"}
+
+- Graph search keeps track of visited nodes, so we don't visit the same node twice.
+
+  - Suppose that the first time we visit a node is not via the most optimal path
+
+          \\(\Rightarrow\\)   then graph search will return a suboptimal path
+
+  - Under which circumstances can we guarantee that A* graph search is optimal?
+
+----
+
+### When is A* graph search optimal?
+
+- If  \\( \|h(n')-h(n)\| \leq cost(n',n) \\)  for every arc  \\((n',n)\\),  
+  then A* graph search is optimal:
+-  
+  - **Lemma**: the \\(f\\) values along any path \\([...,n',n,...]\\) are nondecreasing:
+     - **Proof**: \\(g(n) = g(n') + cost(n', n)\\), therefore:
+     - \\(f(n) = g(n) + h(n) = g(n') + cost(n', n) + h(n) \geq g(n') + h(n')\\)
+     - therefore: \\(f(n) \geq f(n')\\), i.e., \\(f\\) is nondecreasing
+-  
+  - **Theorem**: whenever A* expands a node \\(n\\), the optimal path to \\(n\\) has been found
+     - ![](img/consistent-graph.png){:height="140px" style="float:right" .noborder}
+       **Proof**: Assume this is not true;
+     - then there must be some \\(n'\\) still on the frontier, which is on the optimal path to \\(n\\);
+     - but \\(f(n') \leq f(n)\\);
+     - and then \\(n'\\) must already have been expanded \\(\Longrightarrow\\) *contradiction*!
+
+----
+
+### State-space contours
+
+- The \\(f\\) values in A* are nondecreasing, therefore:
+
+    **first** | A* expands all nodes with \\( f(n) < C \\)
+    **then**  | A* expands all nodes with \\( f(n) = C \\)
+    **finally**  | A* expands all nodes with \\( f(n) > C \\)
+    {:.noborder}
+
+- A* will not expand any nodes with \\( f(n) > C\* \\),  
+  where \\(C\*\\) is the cost of an optimal solution.
+
+----
+
+### Summary of optimality of A*
+
+- A* *tree search* is optimal if:
+
+    - the heuristic function \\(h(n)\\) is **admissible**
+    - i.e., \\(h(n)\\) is nonnegative and an underestimate of the actual cost
+    - i.e., \\( h(n) \leq cost(n,goal) \\), for all nodes \\(n\\)
+
+- A* *graph search* is optimal if:
+
+    - the heuristic function \\(h(n)\\) is **consistent** (or monotone)
+    - i.e., \\( \|h(m)-h(n)\| \leq cost(m,n) \\), for all arcs \\((m,n)\\)
+
+----
+
+### Summary of tree search strategies 
+
+|Search<br/>strategy| Frontier<br/>selection    | Halts if solution? | Halts if no solution? | Space usage
+|:------------------|:----------------------|:---:|:--:|:--:
+| Depth first       | Last node added       | *No*{:.fragment data-fragment-index="1"}  | *No*{:.fragment data-fragment-index="2"} | *Linear*{:.fragment data-fragment-index="3"}
+| Breadth first     | First node added      | *Yes*{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
+| Greedy best first  | Minimal \\(h(n)\\) | *No*{:.fragment data-fragment-index="1"}  | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
+| Uniform cost | Minimal \\(g(n)\\) | *Optimal*{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
+| A*                | \\(f(n)=g(n)+h(n)\\)    | *Optimal\**{:.fragment data-fragment-index="1"} | *No*{:.fragment data-fragment-index="2"} | *Exp*{:.fragment data-fragment-index="3"}
+
+*<span class="invisible">\*\*On finite graphs with cycles, not infinite graphs.</span>*  
+*\*Provided that \\(h(n)\\) is admissible.*{:.fragment data-fragment-index="1"} 
+
+- **Halts if**: If there is a path to a goal, it can find one, even on infinite graphs.
+- **Halts if no**: Even if there is no solution, it will halt on a finite graph (with cycles).
+- **Space**: Space complexity as a function of the length of the current path.
+
+----
+
+### Summary of <span>graph search</span>{:.highlight} strategies 
+
+|Search<br/>strategy| Frontier<br/>selection | Halts if solution? | Halts if no solution? | Space usage
+|:------------------|:-----------------------|:---:|:--:|:--:
+| Depth first       | Last node added        | *(Yes)\*\**{:.highlight} | *Yes*{:.highlight} | *Exp*{:.highlight}
+| Breadth first     | First node added       | *Yes*    | *Yes*{:.highlight} | *Exp*
+| Greedy best first | Minimal \\(h(n)\\)     | *No*     | *Yes*{:.highlight} | *Exp*
+| Uniform cost      | Minimal \\(g(n)\\)     | *Optimal* | *Yes*{:.highlight} | *Exp*
+| A*                | \\(f(n)=g(n)+h(n)\\)   | *Optimal\** | *Yes*{:.highlight} | *Exp*
+
+*\*\*On finite graphs with cycles, not infinite graphs.*  
+*\*Provided that \\(h(n)\\) is <span class="highlight">consistent</span>.*
+
+- **Halts if**: If there is a path to a goal, it can find one, even on infinite graphs.
+- **Halts if no**: Even if there is no solution, it will halt on a finite graph (with cycles).
+- **Space**: Space complexity as a function of the length of the current path.
+
+----
+
+## Heuristics
+
+### Recapitulation: The 8 puzzle
+
+- \\(h\_{1}(n)\\) = number of misplaced tiles
+- \\(h\_{2}(n)\\) = total Manhattan distance  
+  (i.e., no. of squares from desired location of each tile)  
+  ![](img/8-puzzle.png){:height="200px"}
+- \\(h\_{1}(StartState)\\)  =  *8*{:.fragment}
+- \\(h\_{2}(StartState)\\)  =  *3+1+2+2+2+3+3+2 = 18*{:.fragment}
+
+----
+
+### Dominating heuristics
+
+- If (admissible) \\(h\_{2}(n)\geq h\_{1}(n)\\) for all \\(n\\),  
+  then \\(h\_{2}\\) **dominates** \\(h\_{1}\\) and is better for search.
+
+- Typical search costs (for 8-puzzle):
+
+  | **depth = 14** | DFS  ≈  3,000,000 nodes <br/> A\*(\\(h\_1\\)) = 539 nodes <br/> A\*(\\(h\_2\\)) = 113 nodes
+  | **depth = 24** | DFS  ≈  54,000,000,000 nodes <br/> A\*(\\(h\_1\\)) = 39,135 nodes <br/> A\*(\\(h\_2\\)) = 1,641 nodes
+
+- Given any admissible heuristics \\(h\_{a}\\), \\(h\_{b}\\),
+  the **maximum** heuristics \\(h(n)\\)  
+  is also admissible and dominates both:
+  \\[ h(n) = \max(h\_{a}(n),h\_{b}(n)) \\]
+
+----
+
+### Heuristics from a relaxed problem
+
+- Admissible heuristics can be derived from the exact solution cost of  
+  a relaxed problem:
+
+  - If the rules of the 8-puzzle are relaxed so that a tile can move anywhere,  
+    then \\(h\_{1}(n)\\) gives the shortest solution 
+
+  - If the rules are relaxed so that a tile can move to any adjacent square,  
+    then \\(h\_{2}(n)\\) gives the shortest solution
+
+- **Key point**: the optimal solution cost of a relaxed problem is  
+  never greater than
+  the optimal solution cost of the real problem
+
+----
+
+### Non-admissible (non-consistent) A* search
+
+- A* search with admissible (consistent) heuristics is optimal
+
+- But what happens if the heuristics is non-admissible?
+
+    - i.e., what if \\(h(n) > c(n,goal)\\), for some \\(n\\)?
+    - the solution is not guaranteed to be optimal...
+    - ...but it will find *some* solution!
+
+- Why would we want to use a non-admissible heuristics?
+
+    - sometimes it's easier to come up with a heuristics that is almost admissible
+    - and, often, the search terminates faster!
+
+-  
+
+- \* for graph search, \\( \|h(m)-h(n)\| > cost(m,n) \\), for some \\((m,n)\\)
+
+------
+
+## Non-classical search
+
+* A problem is *nondeterministic* if there are several possible outcomes of an action
+    * deterministic --- nondeterministic (chance)
+*  
+* It is *partially observable* if the agent cannot tell exactly which state it is in
+    * fully observable (perfect info.) --- partially observable (imperfect info.)
+*  
+* A problem can be either nondeterministic, or partially observable, or both:
+
+![](img/game-types.png){:height="200px" .noborder}
+
+--------
+
+### Nondeterministic search
+
+- We need a more general *result* function:
+    - instead of returning a single state, it returns a set of possible outcome states
+    - e.g., \\(\textsf{Results}(\textsf{Suck}, 1) = \\{5, 7\\}\\) and  \\(\textsf{Results}(\textsf{Suck}, 5) = \\{1, 5\\}\\)
+-  
+- We also need to generalise the notion of a *solution*:
+    - instead of a single sequence (path) from the start to the goal,  
+      we need a *strategy* (or a *contingency plan*)
+    - i.e., we need **if-then-else** constructs
+    - this is a possible solution from state 1:
+        - [*Suck*, `if` *State*=5 `then` [*Right*, *Suck*] `else` []]
+
+-----
+
+### How to find contingency plans
+
+*(will not be in the written examination)*
+
+* We need a new kind of nodes in the search tree: 
+    * ***and** nodes*:  
+      these are used whenever an action is nondeterministic
+    * normal nodes are called ***or** nodes*:  
+      they are used when we have several possible actions in a state
+*  
+* A solution for an ***and-or*** search problem is a subtree that:
+    * has a goal node at every leaf
+    * specifies exactly one action at each of its ***or** node*
+    * includes every branch at each of its ***and** node*
+
+------
+
+### A solution to the erratic vacuum cleaner
+
+*(will not be in the written examination)*
+
+![](img/erratic-vacuum-and-or-plan.png){:height="380px" .noborder}
+
+The solution subtree is shown in bold, and corresponds to the plan:  
+[*Suck*, `if` *State*=5 `then` [*Right*, *Suck*] `else` []]
+
+------
+
+### Partial observations: Belief states
+
+* Instead of searching in a graph of states, we use *belief states*
+    * A belief state is a *set of states*
+*  
+* In a sensor-less (or conformant) problem, the agent has *no information at all*
+    * The initial belief state is the set of all problem states
+        * e.g., for the vacuum world the initial state is {1,2,3,4,5,6,7,8}
+*  
+* The goal test has to check that *all* members in the belief state is a goal
+    * e.g., for the vacuum world, the following are goal states: {7}, {8}, and {7,8}
+*  
+* The result of performing an action is the *union* of all possible results
+    * i.e., \\(\textsf{Predict}(b,a) = \\{\textsf{Result}(s,a)\\)  for each  \\(s\in b\\}\\)
+    * if the problem is also nondeterministic:
+        * \\(\textsf{Predict}(b,a) = \bigcup\\{\textsf{Results}(s,a)\\)  for each  \\(s\in b\\}\\)
+
+--------
+
+### Predicting belief states in the vacuum world
+
+![](img/vacuum-prediction.png){:height="300px" .noborder}
+
+* (a) Predicting the next belief state for the sensorless vacuum world  
+  with a deterministic action, *Right*.
+
+* (b) Prediction for the same belief state and action in the nondeterministic  
+  slippery version of the sensorless vacuum world.
+
+-------
+
+
+# Adversarial search (R&N 5.1--5.5)
+
+## Types of games
+
+## Minimax search
+{:.no_toc}
+
+## Imperfect decisions
+{:.no_toc}
+
+## Stochastic games
 {:.no_toc}
 
 -----
 
-## Imperfect decisions (R&N 5.4--5.4.2)
+### Games as search problems
 
-*  
-    * H-minimax algorithm
-    * evaluation function, cutoff test
-    * features, weighted linear function
-    * quiescence search, horizon effect
+- The main difference to chapters 3--4:  
+  now we have more than one agent that have different goals. 
+
+    - All possible game sequences are represented in a game tree. 
+
+    - The nodes are states of the game, e.g. board positions in chess. 
+
+    - Initial state (root) and terminal nodes (leaves). 
+
+    - States are connected if there is a legal move/ply.  
+      (a ply is a move by one player, i.e., one layer in the game tree)
+
+    - Utility function (payoff function). Terminal nodes have utility values  
+      \\({+}x\\) (player 1 wins), \\({-}x\\) (player 2 wins) and \\(0\\) (draw).
+
+--------
+
+### Perfect information games: Zero-sum games
+
+* Perfect information games are solvable in a manner similar to  
+  fully observable single-agent systems, e.g., using forward search.
+
+* If two agents compete, so that a positive reward for one is a negative reward  
+  for the other agent, we have a two-agent *zero-sum game*. 
+
+* The value of a game zero-sum game can be characterized by a single number that one agent is trying to maximize and the other agent is trying to minimize. 
+
+* This leads to a *minimax strategy*:
+    * A node is either a MAX node (if it is controlled by the maximising agent),
+    * or is a MIN node (if it is controlled by the minimising agent).
+
+----
+
+## Minimax search
+
+The Minimax algorithm gives perfect play for deterministic, perfect-information games.
+
+![](img/minimax.png){:height="350px" .noborder}
 
 -----
 
-### Repetition: Minimax search for zero-sum games
+### \\(\alpha{-}\beta\\) pruning
 
-* Given two players called MAX and MIN:
-    * MAX wants to maximize the utility value,
-    * MIN wants to minimize the same value.
-* \\(\Rightarrow\\) MAX should choose the alternative that maximizes assuming that MIN minimizes.
+![](img/minimax.png){:height="200px" .noborder}
 
-<div> </div>
+| Minimax(*root*) | = | \\( \max(\min(3,12,8), \min(2,x,y), \min(14,5,2)) \\) |
+| | = | <span> \\( \max(3, \min(2,x,y), 2) \\) </span>{:.fragment} |
+| | = | <span> \\( \max(3, z, 2) \\)   where  \\(z = \min(2,x,y) \leq 2\\) </span>{:.fragment} |
+| | = | <span> \\( 3 \\) </span>{:.fragment} |
+{:.noborder .fragment}
+
+* {:.fragment} I.e., we don't need to know the values of \\(x\\) and \\(y\\)!
+
+
+-----
+
+
+### Minimax example, with \\(\alpha{-}\beta\\) pruning
+
+
+![](img/alpha-beta-progress-1.png){:height="350px" .noborder .fragment data-fragment-index="1" .nospace-fragment .fade-out}
+![](img/alpha-beta-progress-2.png){:height="350px" .noborder .fragment data-fragment-index="1" .nospace-fragment .current-visible}
+![](img/alpha-beta-progress-3.png){:height="350px" .noborder .fragment data-fragment-index="2" .nospace-fragment .current-visible}
+![](img/alpha-beta-progress-4.png){:height="350px" .noborder .fragment data-fragment-index="3" .nospace-fragment .current-visible}
+![](img/alpha-beta-progress-5.png){:height="350px" .noborder .fragment data-fragment-index="4" .nospace-fragment .current-visible}
+![](img/alpha-beta-progress-6.png){:height="350px" .noborder .fragment data-fragment-index="5" .nospace-fragment}
+
+----
+
+### How efficient is \\(\alpha{-}\beta\\) pruning?
+
+* The amount of pruning provided by the α-β algorithm depends on the ordering of the children of each node. 
+
+    * It works best if a highest-valued child of a MAX node is selected first and  
+      if a lowest-valued child of a MIN node is returned first. 
+    
+    * In real games, much of the effort is made to optimise the search order.
+    
+    * With a "perfect ordering", the time complexity becomes \\(O(b^{m/2})\\)
+        * this doubles the solvable search depth
+        * however, \\(35^{80/2}\\) (for chess) or \\(250^{160/2}\\) (for go) is still quite large…
+
+----
+
+### Minimax and real games
+
+* Most real games are too big to carry out minimax search, even with α-β pruning. 
+
+    * For these games, instead of stopping at leaf nodes,  
+      we have to use a cutoff test to decide when to stop.
+    
+    * The value returned at the node where the algorithm stops  
+      is an estimate of the value for this node. 
+    
+    * The function used to estimate the value is an evaluation function. 
+    
+    * Much work goes into finding good evaluation functions. 
+    
+    * There is a trade-off between the amount of computation required  
+      to compute the evaluation function and the size of the search space  
+      that can be explored in any given time. 
+
+-----
+
+## Imperfect decisions
+
+### Minimax vs H-minimax 
 
 * **function** Minimax(*state*):
     * **if** TerminalTest(*state*) **then return** Utility(*state*)
@@ -76,44 +675,19 @@ logo: "img/logo-Chalmers-GU.png"
     * **if** *state* is a MIN node **then return** \\(\min\_{a\in A}\\) Minimax(Result(*state*, *a*))
 {:.pseudocode}
 
------
+<div> </div>
 
-### H-minimax algorithm
-
-* The *Heuristic* Minimax algorithm is similar to normal Minimax
+* {:.fragment} The *Heuristic* Minimax algorithm is similar to normal Minimax
     * it replaces **TerminalTest** and **Utility** with **CutoffTest** and **Eval**
 
 <div> </div>
 
-* **function** H-Minimax(*state*, *depth*):
-    * **if** CutoffTest(*state*, *depth*) **then return** Eval(*state*)
+* **function** H-Minimax(*state*, <span>*depth*</span>{:.highlight}):
+    * **if** <span>CutoffTest</span>{:.highlight}(*state*, <span>*depth*</span>{:.highlight}) **then return** <span>Eval</span>{:.highlight}(*state*)
     * *A* := Actions(*state*)
-    * **if** *state* is a MAX node **then return** \\(\max\_{a\in A}\\) H-Minimax(Result(*state*, *a*), *depth*+1)
-    * **if** *state* is a MIN node **then return** \\(\min\_{a\in A}\\) H-Minimax(Result(*state*, *a*), *depth*+1)
-{:.pseudocode}
-
------
-
-### Chess positions: how to evaluate
-
-![](img/chess-evaluation.png){:height="500px" .noborder}
-
------
-
-### Weighted linear evaluation functions
-
-* A very common evaluation function is to use a weighted sum of features:
-  \\[ Eval(s) = w\_1 f\_1(s) + w\_2 f\_2(s) + \cdots + w\_n f\_n(s) = \sum\_{i=1}^{n} w\_i f\_i(s) \\]
-
-* This relies on a strong assumption: all features are *independent of each other*
-    * which is usually not true, so the best programs for chess  
-      (and other games) also use nonlinear feature combinations
-*  
-* The weights can be calculated using machine learning algorithms,  
-  but a human still has to come up with the features.
-    * using recent advances in deep machine learning,  
-      the computer can learn the features too
-
+    * **if** *state* is a MAX node **then return** \\(\max\_{a\in A}\\) H-Minimax(Result(*state*, *a*), <span>*depth*+1</span>{:.highlight})
+    * **if** *state* is a MIN node **then return** \\(\min\_{a\in A}\\) H-Minimax(Result(*state*, *a*), <span>*depth*+1</span>{:.highlight})
+{:.pseudocode .fragment}
 
 -----
 
@@ -121,7 +695,9 @@ logo: "img/logo-Chalmers-GU.png"
 
 ![](img/chess-evaluation3.png){:height="300px" .noborder}
 
-A naive weighted sum of features will not see the difference between these two states.
+A naive evaluation function will not see the difference between these two states.
+
+\\[ Eval(s) = w\_1 f\_1(s) + w\_2 f\_2(s) + \cdots + w\_n f\_n(s) = \sum\_{i=1}^{n} w\_i f\_i(s) \\]
 
 -------
 
@@ -136,57 +712,12 @@ A naive weighted sum of features will not see the difference between these two s
     * only cut off search in *quiescent* positions 
     * i.e., in positions that are "stable", unlikely to exhibit wild swings in value
     * non-quiescent positions should be expanded further
-*  
-* Another problem is the *horizon effect*:
-    * if a bad position is unavoidable (e.g., loss of a piece), but the system can  
-      delay it from happening, it might push the bad position "over the horizon"
-    * in the end, the resulting delayed position might be even worse
-
 
 ------
 
-### Deterministic games in practice
+## Stochastic games
 
-* Chess: 
-
-    * DeepBlue (IBM) beats world champion Garry Kasparov, 1997. 
-    * Modern chess programs: Houdini, Critter, Stockfish. 
- 
-* Checkers/Othello/Reversi: 
- 
-    * Logistello beats the world champion in Othello/Reversi, 1997. 
-    * Chinook plays checkers perfectly, 2007. It uses an endgame database  
-      defining perfect play for all 8-piece positions on the board,  
-      (a total of 443,748,401,247 positions).
- 
-* Go: 
- 
-    * AlphaGo (Google DeepMind) beats one of the world's best players,  
-      Lee Sedol by 4--1, in April 2016.
-    * Modern programs: MoGo, Zen, GNU Go, AlphaGo.
-
------------
-
-### Games of imperfect information* Imperfect information games    * e.g., card games, where the opponent’s initial cards are unknown
-
-    * typically we can calculate a probability for each possible deal
-
-    * seems just like having one big dice roll at the beginning of the game
-
-    * main idea: compute the minimax value of each action in each deal,  
-      then choose the action with highest expected value over all deals
-----
-
-## Stochastic games (R&N 5.5)
-
-*  
-    * chance nodes
-    * expected value
-    * expecti-minimax algorithm
-
------
-
-### Stochastic game example: Backgammon
+### Example: Backgammon
 
 ![](img/backgammon-position.png){:height="400px" .noborder}
 
@@ -204,12 +735,6 @@ A naive weighted sum of features will not see the difference between these two s
 
 ![](img/expectiminimax-simple.png){:height="250px" .noborder}
 
--------
-
-### Backgammon game tree
-
-![](img/backgammon-tree.png){:height="400px" .noborder}
-
 -----
 
 ### Algorithm for stochastic games
@@ -222,59 +747,35 @@ A naive weighted sum of features will not see the difference between these two s
 * **function** ExpectiMinimax(*state*):
     * **if** TerminalTest(*state*) **then return** Utility(*state*)
     * *A* := Actions(*state*)
-    * **if** *state* is a MAX node **then return** \\(\max\_{a\in A}\\) Minimax(*state*, *a*)
-    * **if** *state* is a MAX node **then return** \\(\min\_{a\in A}\\) Minimax(*state*, *a*)
-    * **if** *state* is a chance node **then return** \\(\sum\_{a\in A}P(a)\\) Minimax(*state*, *a*)
+    * **if** *state* is a MAX node **then return** \\(\max\_{a\in A}\\) ExpectiMinimax(Result(*state*, *a*))
+    * **if** *state* is a MAX node **then return** \\(\min\_{a\in A}\\) ExpectiMinimax(Result(*state*, *a*))
+    * **if** *state* is a chance node **then return** \\(\sum\_{a\in A}P(a)\\)·ExpectiMinimax(Result(*state*, *a*))
 {:.pseudocode}
 
 where \\(P(a)\\) is the probability that action *a* occurs.
 
------
-
-### Stochastic games in practice
-
-* Dice rolls increase the branching factor *b*:
-    * there are 21 possible rolls with 2 dice 
-*  
-* Backgammon has ≈20 legal moves:
-    * depth \\(4\Rightarrow20\times(21\times20)^{3}\approx1.2\times10^{9}\\) nodes
-*  
-* As depth increases, the probability of reaching a given node shrinks:
-    * value of lookahead is diminished
-    * α-β pruning is much less effective
-*  
-* TDGammon (1995) used depth-2 search + very good Eval: 
-    * the evaluation function was learned by self-play
-    * world-champion level
 
 -----
 
-# Repetition of CSP
+# Constraint satisfaction problems (R&N 4.1, 7.1--7.5)
 
-## Constraint satisfaction problems (R&N 6.1)
+## CSP as a search problem
 
-- Variables, domains, constraints (unary, binary, n-ary), constraint graph
-
-<div> </div>
-
-## CSP as a search problem (R&N 6.3–6.3.2)
+## Improving backtracking efficiency
 {:.no_toc}
 
-- Backtracking search, heuristics (minimum remaining values, degree, least constraining value),
-  forward checking, maintaining arc-consistency (MAC)
-
-<div> </div>
-
-##  Constraint progagation (R&N 6.2–6.2.2)
+## Constraint progagation
 {:.no_toc}
 
-- Consistency (node, arc, path, *k*, ...), global constratints, the AC-3 algorithm
+## Problem structure
+{:.no_toc}
 
+## Local search for CSP
+{:.no_toc}
 
 ----
 
-
-### CSP: Constraint satisfaction problems (R&N 6.1)
+### CSP: Constraint satisfaction problems
 
 - CSP is a specific kind of search problem:
     - the *state* is defined by *variables* \\(X\_{i}\\), 
@@ -314,16 +815,6 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 -----
 
-## CSP as a search problem (R&N 6.3–6.3.2)
-
--  
-    - backtracking search
-    - select variable: minimum remaining values, degree heuristic
-    - order domain values: least constraining value
-    - inference: forward checking and arc consistency
-
------
-
 ### Algorithm for backtracking search
 
 - At each depth level, decide on one single variable to assign:
@@ -349,7 +840,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 -----
 
-### Improving backtracking efficiency
+## Improving backtracking efficiency
 
 - The general-purpose algorithm gives rise to several questions:
 
@@ -361,10 +852,6 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
     - {:.fragment} What inferences should be performed at each step? 
         - {:.pseudocode} Inference(*csp*, *var*, *value*)
-
-    - {:.fragment} Can the search avoid repeating failures? 
-        - Conflict-directed backjumping, constraint learning, no-good sets  
-          (R&N 6.3.3, not covered in this course)
 
 ------
 
@@ -393,35 +880,9 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 -----
 
-##  Constraint progagation (R&N 6.2–6.2.2)
+## Constraint progagation
 
--  
-    - consistency (node, arc, path, *k*, ...)
-    - global constratints
-    - the AC-3 algorithm
-    - maintaining arc consistency
-
-----
-
-### Inference: Forward checking and arc consistency
-
-- *Forward checking* is a simple form of inference:
-    - Keep track of remaining legal values for unassigned variables  
-    - When a new variable is assigned, recalculate the legal values for its neighbors
-    ![](img/forward-checking-progress1c.pdf){:width="500px" .noborder .fragment data-fragment-index="1" .nospace-fragment .fade-out}
-    ![](img/forward-checking-progress2c.png){:width="500px" .noborder .fragment data-fragment-index="1" .nospace-fragment .current-visible}
-    ![](img/forward-checking-progress3c.png){:width="500px" .noborder .fragment data-fragment-index="2" .nospace-fragment .current-visible}
-    ![](img/forward-checking-progress4c.png){:width="500px" .noborder .fragment data-fragment-index="3" .nospace-fragment}
-
-- {:.fragment} *Arc consistency*: \\(X\rightarrow Y\\) is ac iff for every \\(x\\) in \\(X\\), there is some allowed \\(y\\) in \\(Y\\) 
-    - since NT and SA cannot both be blue, the problem becomes  
-      arc inconsistent before forward checking notices
-    - arc consistency detects failure earlier than forward checking
-
-
------
-
-### Arc consistency algorithm, AC-3
+### Inference: Arc consistency, AC-3
 
 - Keep a set of arcs to be considered: pick one arc \\((X,Y)\\) at the time and 
   make it consistent (i.e., make \\(X\\) arc consistent to \\(Y\\)).
@@ -443,24 +904,9 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 - **function** Revise(**inout** *csp*, *X*, *Y*):
   - delete every *x* from \\(D_X\\) such that
     there is no value *y* in \\(D\_Y\\) satisfying the constraint \\(C\_{XY}\\)
+  - **return** true **if** \\(D_X\\) was revised
 {:.pseudocode .fragment}
 
------
-
-### AC-3 example
-
-![](img/abccsp.png){:width="600px" .noborder}
-
-| remove | \\(D_A\\) | \\(D_B\\) | \\(D_C\\) | add | queue
-|:------------:|:-----:|:-----:|:------:|:------:|:--------------
-|              | **1234**  | **1234**  | **1234**   |           | *A<B, B<C, C>B, B>A*{:.fragment}
-| *A<B*{:.fragment} | ***123***{:.fragment} | **1234**{:.fragment} | **1234**{:.fragment}  |           | *B<C, C>B, B>A*{:.fragment}
-| *B<C*{:.fragment} | **123**{:.fragment}  | ***123***{:.fragment} | **1234**{:.fragment}  | *A<B*{:.fragment} | *C>B, B>A, **A<B***{:.fragment}
-| *C>B*{:.fragment} | **123**{:.fragment}  | **123**{:.fragment}   | ***234***{:.fragment} |           | *B>A, A<B*{:.fragment}
-| *B>A*{:.fragment} | **123**{:.fragment}  | ***23***{:.fragment}  | **234**{:.fragment}   | *C>B*{:.fragment} | *A<B, **C>B***{:.fragment}
-| *A<B*{:.fragment} | ***12***{:.fragment} | **23**{:.fragment}    | **234**{:.fragment}   |           | *C>B*{:.fragment}
-| *C>B*{:.fragment} | **12**{:.fragment}   | **23**{:.fragment}    | ***34***{:.fragment}  |           | *\\(\emptyset\\)*{:.fragment}
-| | |
 
 --------------
 
@@ -468,7 +914,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 - What if some domains have more than one element after AC?
 
-- {:.fragment} We can resort to backtracking search:
+- We can resort to backtracking search:
 
     - Select a variable and a value using some heuristics  
       (e.g., minimum-remaining-values, degree-heuristic, least-constraining-value)
@@ -476,7 +922,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
     - Backtrack and try new values/variables, if AC fails
     - Select a new variable/value, perform arc-consistency, etc.
 
-- {:.fragment} Do we need to restart AC from scratch? 
+- Do we need to restart AC from scratch? 
 
     - no, only some arcs risk becoming inconsistent after a new assignment
     - restart AC with the queue \\(\\{(Y\_i,X) \| X\rightarrow Y\_i\\}\\),  
@@ -497,44 +943,58 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
     - *\\(k\\)-consistency*: \\(k\\) variables, \\(k\\)-ary constraints (algorithms exponential in \\(k\\))
 
-    - Consistency for global constraints: 
-        - special-purpose algorithms for different constraints, e.g.:
+    - Consistency for global constraints: <br/>
+      Special-purpose algorithms for different constraints, e.g.:
         - *Alldiff(\\(X\_1,\ldots,X\_m\\))* is inconsistent if \\(m > \|D\_1\cup\cdots\cup D\_m\|\\) 
         - *Atmost(\\(n,X\_1,\ldots,X\_m\\))* is inconsistent if \\(n < \sum_i \min(D\_i)\\)
 
 
-----------
+-------
 
-# More about CSP
+## Problem structure
 
-## Local search for CSPs (R&N 6.4)
-{:.no_toc}
+### Tree-structured CSP
 
-## Problem structure (R&N 6.5)
-{:.no_toc}
+*(will not be in the written examination)*
+
+- A constraint graph is a tree when any two variables are connected by only one path.
+    - then any variable can act as root in the tree
+    - tree-structured CSP can be solved in *linear time*, in the number of variables!
+-  
+- To solve a tree-structured CSP:
+    - first pick a variable to be the root of the tree
+    - then find a *topological sort* of the variables (with the root first)
+    - finally, make each arc consistent, in reverse topological order
+
+![](img/tree-csp.png){:width="250px" .fragments .noborder}
+![](img/tree-csp-sorted.png){:width="320px" style="margin:50px 70px" .fragments .noborder}
 
 ----
 
-## Local search for CSPs (R&N 6.4)
+### Converting to tree-structured CSP
+
+*(will not be in the written examination)*
+
+- Most CSPs are *not* tree-structured, but sometimes we can reduce them to a tree
+    - one approach is to assign values to some variables,  
+      so that the remaining variables form a tree
+
+![](img/australia-csp.png){:height="200px" .noborder style="margin-bottom:-20px"}
+![](img/australia-tree.png){:height="200px" .noborder style="margin-left:100px;margin-bottom:-20px"}
+
+- If we assign a colour to South Australia, then the remaining variables form a tree
+
+    - An alternative is to assign values to {*NT,Q,V*}: But this is worse than assigning South Australia, because then we have to try 3×3×3 different assignments, and for each of them solve the remaining tree-CSP
+
+----
+
+## Local search for CSP
 
 - Given an assignment of a value to each variable:
   - A conflict is an unsatisfied constraint. 
   - The goal is an assignment with zero conflicts. 
--  
-- Local search / Greedy descent algorithm: 
-  - Start with a complete assignment.
-  - Repeat until a satisfying assignment is found: 
-    - select a variable to change 
-    - select a new value for that variable 
-
------
-
-### Min conflicts algorithm
-
-- Heuristic function to be minimized: the number of conflicts. 
+  - Heuristic function to be minimized: the number of conflicts. 
     - this is the *min-conflicts* heuristics
-- *Note*: this does not always work! 
-    - it can get stuck in a *local minimum*
 
 <div> </div>
 
@@ -553,169 +1013,73 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 ### Example: \\(n\\)-queens (revisited)
 
-- Do you remember this example?
-
-    - Put \\(n\\) queens on an \\(n\times n\\) board, in separate columns
-    - {:.fragment} Conflicts = unsatisfied constraints = n:o of threatened queens
-    - {:.fragment} Move a queen to reduce the number of conflicts
-        - repeat until we cannot move any queen anymore
-        - then we are at a local maximum --- hopefully it is global too
-
-![](img/4queens-iterative.png){:.fragment width="600px"}
-
------
-
-### Easy and hard problems
-
-- Two-step solution using min-conflicts for an 8-queens problem:
+- Put \\(n\\) queens on an \\(n\times n\\) board, in separate columns
+- Conflicts = unsatisfied constraints = n:o of threatened queens
+- Move a queen to reduce the number of conflicts
+    - repeat until we cannot move any queen anymore
+    - then we are at a local maximum --- hopefully it is global too
 
 ![](img/8queens-min-conflicts.png){:width="600px"}
 
-- {:.fragment} The runtime of min-conflicts on *n-queens* is *independent of problem size*!
-    - it solves even the *million*-queens problem ≈50 steps
+------
 
-- {:.fragment} Why is *n*-queens easy for local search?
-    - {:.fragment} because solutions are *densely distributed* throughout the state space!
+### Example: Travelling salesperson
+{:.no_toc}
+
+- Start with any complete tour, and perform pairwise exchanges
+
+  ![](img/tsp-sequence.png){:height="200px"} 
+
+
+- Variants of this approach get within 1% of optimal  
+  very quickly with thousands of cities
+
+----
+
+### Local search 
+
+Hill climbing search is also called gradient/steepest ascent/descent,  
+or greedy local search.
+
+- **function** HillClimbing(*graph*, *initialState*):
+  - *current* := *initialState*
+  - **loop**:
+    - *neighbor* := a highest-valued successor of *current*
+    - **if** *neighbor*.value ≤ *current*.value **then** **return** *current*
+    - *current* := *neighbor*
+{:.pseudocode}
+
+------
+
+### Problems with hill climbing
+
+Local maxima   ---   Ridges   ---   Plateaux
+
+![](img/Ridgec.png){:height="200px"}      
+![](img/ridge.png){:height="200px"}  
+![](img/hill-climbing.png){:height="250px"} 
 
 -----
 
-### Variants of greedy descent 
+### Randomized hill climbing
 
-- To choose a variable to change and a new value for it: 
+- As well as upward steps we can allow for: 
 
-  - Find a variable-value pair that minimizes the number of conflicts.
-  - Select a variable that participates in the most conflicts.  
-    Select a value that minimizes the number of conflicts. 
-  - Select a variable that appears in any conflict.  
-    Select a value that minimizes the number of conflicts. 
-  - Select a variable at random.  
-    Select a value that minimizes the number of conflicts. 
-  - Select a variable and value at random;  
-    accept this change if it doesn't increase the number of conflicts. 
+  - *Random steps:* (sometimes) move to a random neighbor.
 
-- All local search techniques from section 4.1 can be applied to CSPs, e.g.:
+  - *Random restart:* (sometimes) reassign random values to all variables. 
 
-    - random walk, random restarts, simulated annealing, beam search, ...
-
--------
-
-## Problem structure (R&N 6.5)
-
--  
-    - independent subproblems, connected components
-    - tree-structured CSP, topological sort
-    - converting to tree-structured CSP, cycle cutset, tree decomposition
+- Both variants can be combined!
 
 ----
 
-### Independent subproblems
+### 1-dimensional illustrative example
 
-- ![](img/australia-csp.png){:width="350px" style="float:right" .noborder}
+- Two 1-dimensional search spaces; you can step right or left:  
+  ![](img/hills-upside-down.png){:height="200px"} 
 
-- Tasmania is an *independent subproblem*: 
-  - there are efficient algorithms for finding *connected components* in a graph
+- Which method would most easily find the global maximum? 
+    - random steps or random restarts?
 
-- Suppose that each subproblem has \\(c\\) variables out of \\(n\\) total.
-  The cost of the worst-case solution  
-  is \\(n/c\cdot d^{c}\\), which is linear in \\(n\\). 
-
-- {:.fragment} E.g., \\(n=80, d=2, c=20\\):
-  - \\(2^{80}\\) = 4 billion years at 10 million nodes/sec
-
-- {:.fragment} If we divide it into 4 equal-size subproblems:
-  - \\(4\cdot2^{20}\\) =0.4 seconds at 10 million nodes/sec
-
--  
-- {:.fragment} Note: this only has a real effect if the subproblems are (roughly) equal size!
-
-----
-
-### Tree-structured CSP
-
-- A constraint graph is a tree when any two variables are connected by only one path.
-    - then any variable can act as root in the tree
-    - tree-structured CSP can be solved in *linear time*, in the number of variables!
--  
-- {:.fragment} CSP is directed arc-consistent if:
-    - there is an orderning of variables \\(X\_1,X\_2,\ldots,X\_n\\) such that
-    - every \\(X\_i\\) is arc-consistent with each \\(X\_j\\) for all \\(j>i\\)
--  
-- {:.fragment} To solve a tree-structured CSP:
-    - first pick a variable to be the root of the tree
-    - then find a *topological sort* of the variables (with the root first)
-    - finally, make each arc consistent, in reverse topological order
-
-![](img/tree-csp.png){:width="250px" style="margin-top:-20px" .fragment .noborder}
-![](img/tree-csp-sorted.png){:width="300px" style="margin-left:100px" .fragment .noborder}
-
-----
-
-### Solving tree-structured CSP
-
-- **function** TreeCSPSolver(*csp*)
-    - *n* := number of variables in *csp*
-    - *root* := any variable in *csp*
-    - \\(X_1\ldots X_n\\) := TopologicalSort(*csp*, *root*)
-    - **for** *j* := *n*, *n--1*, ..., 2:
-        - MakeArcConsistent(Parent(\\(X_j\\)), \\(X_j\\))
-        - **if** it could not be made consistent **then return** failure
-    - *assignment* := an empty assignment
-    - **for** *i* := 1, 2, ..., *n*:
-        - *assignment*[\\(X_i\\)] := any consistent value from \\(D_i\\)
-    - **return** *assignment*
-{:.pseudocode}
-
--  
-- {:.fragment} What is the runtime?
-    - to make an arc consistent, we must compare up to \\(d^2\\) domain value pairs
-    - there are \\(n{-}1\\) arcs, so the total runtime is \\(O(nd^2)\\)
-
-----
-
-### Converting to tree-structured CSP
-
-- Most CSPs are *not* tree-structured, but sometimes we can reduce a problem to a tree
-    - one approach is to assign values to some variables,  
-      so that the remaining variables form a tree
-
-![](img/australia-csp.png){:height="200px" .noborder .fragment}
-![](img/australia-tree.png){:height="200px" .noborder .fragment style="margin-left:100px"}
-
-- {:.fragment} If we assign a colour to South Australia, then the remaining variables form a tree
-    - a (worse) alternative is to assign values to {*NT,Q,V*}
-
-- {:.fragment} Why is {*NT,Q,V*} a worse alternative?
-    - because then we have to try 3×3×3 different assignments,  
-      and for each of them solve the remaining tree-CSP
-
-----
-
-### Solving almost-tree-structured CSP
-
-- **function** SolveByReducingToTreeCSP(*csp*):
-    - *S* := a cycle cutset of variables, such that *csp--S* becomes a tree
-    - **for each** assignment for *S* that satisfies all constraints on *S*:
-        - remove any inconsistent values from neighboring variables of *S*
-        - solve the remaining tree-CSP (i.e., *csp--S*)
-        - **if** there is a solution **then return** it together with the assignment for *S*
-    - **return** failure
-{:.pseudocode}
-
--  
-- {:.fragment} The set of variables that we have to assign is called a *cycle cutset*
-    - for Australia, {*SA*} is a cycle cutset and {*NT,Q,V*} is also a cycle cutset
-    - finding the smallest cycle cutset is NP-hard,  
-      but there are efficient approximation algorithms
-
-----
-
-### Tree decomposition
-
-- Another approach for reducing to a tree-CSP is *tree decomposition*:
-    - divide the original CSP into a set of connected subproblems,  
-      such that the connections form a *tree-structured graph*
-    - solve each subproblem independently
-    - since the decomposition is a tree, we can solve the main problem  
-      using directed arc consistency (the TreeCSPSolver algorithm)
-
-![](img/australia-decomposition.png){:height="300px" .noborder .fragment}
+- What if we have hundreds or thousands of dimensions? 
+    - ...where different dimensions have different structure? 
