@@ -373,7 +373,7 @@ These requirements ensure that \\(f\\) keeps increasing.
 |:------------------|:-----------------------|:---:|:--:|:--:
 | Depth first       | Last node added        | *(Yes)\*\**{:.highlight} | *Yes*{:.highlight} | *Exp*{:.highlight}
 | Breadth first     | First node added       | *Yes*    | *Yes*{:.highlight} | *Exp*
-| Greedy best first | Minimal \\(h(n)\\)     | *No*     | *Yes*{:.highlight} | *Exp*
+| Greedy best first | Minimal \\(h(n)\\)     | *(Yes)\*\**{:.highlight}     | *Yes*{:.highlight} | *Exp*
 | Uniform cost      | Minimal \\(g(n)\\)     | *Optimal* | *Yes*{:.highlight} | *Exp*
 | A*                | \\(f(n)=g(n)+h(n)\\)   | *Optimal\** | *Yes*{:.highlight} | *Exp*
 
