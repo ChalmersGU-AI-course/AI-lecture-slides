@@ -208,7 +208,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 <div> </div>
 
-##  Constraint progagation (R&N 7.2–7..2.2)
+##  Constraint propagation (R&N 7.2–7..2.2)
 {:.no_toc}
 
 - Consistency (node, arc, path, *k*, ...), global constratints, the AC-3 algorithm
@@ -336,7 +336,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 -----
 
-##  Constraint progagation (R&N 7.2–7.2.2)
+##  Constraint propagation (R&N 7.2–7.2.2)
 
 -  
     - consistency (node, arc, path, *k*, ...)
@@ -371,7 +371,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
     - Start with the set of all arcs \\(\\{(X,Y),(Y,X),(X,Z),(Z,X),\ldots\\}\\).
 -  
 - When an arc has been made arc consistent, does it ever need to be checked again? 
-    - An arc \\((X,Y)\\) needs to be revisited if the domain of \\(Y\\) is revised. 
+    - An arc \\((Z,X)\\) needs to be revisited if the domain of \\(X\\) is revised. 
 
 <div> </div>
 

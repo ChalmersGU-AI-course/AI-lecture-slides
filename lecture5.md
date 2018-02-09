@@ -453,7 +453,7 @@ Many problems can be represented in different ways as a CSP, e.g., the crossword
 
 ----
 
-# Constraint progagation <span>(R&N 7.2--7.2.2)</span>{:.nowrap}
+# Constraint propagation <span>(R&N 7.2--7.2.2)</span>{:.nowrap}
 
 ## Arc consistency
 {:.no_toc}
@@ -572,7 +572,7 @@ Draw on blackboard!!!
 
 - {:.fragment} When an arc has been made arc consistent, does it ever need to be checked again? 
 
-    - {:.fragment} An arc \\((X,Y)\\) needs to be revisited if the domain of \\(Y\\) is changed. 
+    - {:.fragment} An arc \\((Z,X)\\) needs to be revisited if the domain of \\(X\\) is changed. 
 
 - {:.fragment} Three possible outcomes when all arcs are made arc consistent:  
   (Is there a solution?) 

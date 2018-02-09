@@ -764,7 +764,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 ## Improving backtracking efficiency
 {:.no_toc}
 
-## Constraint progagation
+## Constraint propagation
 {:.no_toc}
 
 ## Problem structure
@@ -880,7 +880,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
 
 -----
 
-## Constraint progagation
+## Constraint propagation
 
 ### Inference: Arc consistency, AC-3
 
@@ -889,7 +889,7 @@ where \\(P(a)\\) is the probability that action *a* occurs.
     - Start with the set of all arcs \\(\\{(X,Y),(Y,X),(X,Z),(Z,X),\ldots\\}\\).
 -  
 - When an arc has been made arc consistent, does it ever need to be checked again? 
-    - An arc \\((X,Y)\\) needs to be revisited if the domain of \\(Y\\) is revised. 
+    - An arc \\((Z,X)\\) needs to be revisited if the domain of \\(X\\) is revised. 
 
 <div> </div>
 
